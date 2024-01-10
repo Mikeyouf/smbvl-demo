@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="fr">
+<!-- Placer les balises dans le Head de la page -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <link href="//unpkg.com/leaflet/dist/leaflet.css" rel="stylesheet">
+    <script src="./data/parcelles_ppri_0.js" type="text/javascript"></script>
+    <script src="./data/parcelles_ppri_1.js" type="text/javascript"></script>
+    <script src="./data/parcelles_ppri_2.js" type="text/javascript"></script>
+    <script src="./data/parcelles_ppri_3.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <title>Carte d'éligibilité</title>
+</head>
+
+<body>
+    <!-- Prendre à partir de cette balise div -->
+    <!-- <div class="parent"> -->
+    <div id="map"></div>
+    <div id="diagnostic-panel" class="side-panel">
+        <!-- Contenu du formulaire de pré-diagnostic -->
+        <div id="form-container">
+            <form id="diagnostic-form">
+                <div id="bouton-close" class="bouton-close">
+                    <img id="btn-fermer" src="./images/cross.png" alt="fermer le panneau latéral" class="btn-fermer" />
+                </div>
+                <h2>Formulaire de Pré-Diagnostic d'Inondation</h2>
+
+                <!-- Conteneur pour les informations de la commune -->
+                <div id="commune-infos">
+
+                </div>
+
+                <div id="info-panel" class="info-panel">
+                    <div id="bouton-close2" class="bouton-close">
+                        <img id="btn-fermer2" class="btn-fermer" src="./images/cross.png" alt="fermer le panneau latéral" />
+                    </div>
+                    <div id="dynamic-content"></div>
+                    <!-- Zone de contenu dynamique -->
+                </div>
+
+                <!-- Indicateur de progression -->
+                <div id="progress-bar-etapes">
+                    <div id="progress" style="width: 0%;"></div>
+                </div>
+
+                <!-- Section 1: Informations Générales -->
+                <div class="form-section" id="section-1">
+                    <h3>Section 1: Informations Générales</h3>
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            1. Êtes-vous propriétaire de la maison ?
+                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q1a1" name="question1" value="2">
+                            <label for="q1a1" class="option-label">Oui</label>
+                            <input type="radio" id="q1a2" name="question1" value="1">
+                            <label for="q1a2" class="option-label">Non</label>
+                        </div>
+                        <div class="infos-questions">
+                            <p>ceci est une info concernant la question 1</p>
+                        </div>
+                    </div>
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            2. Votre maison a-t-elle plus de 30 ans ?
+                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q2a1" name="question2" value="2">
+                            <label for="q2a1" class="option-label">Oui</label>
+                            <input type="radio" id="q2a2" name="question2" value="1">
+                            <label for="q2a2" class="option-label">Non</label>
+                        </div>
+                        <div class="infos-questions">
+                            <p>ceci est une info concernant la question 2</p>
+                        </div>
+                    </div>
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            3. Avez-vous des sous-sols ou des caves ?
+                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q3a1" name="question3" value="3">
+                            <label for="q3a1" class="option-label">Oui</label>
+                            <input type="radio" id="q3a2" name="question3" value="1">
+                            <label for="q3a2" class="option-label">Non</label>
+                        </div>
+                        <div class="infos-questions">
+                            <p>ceci est une info concernant la question 3</p>
+                        </div>
+                    </div>
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            4. Quel est le type de votre habitat ?
+                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q4a1" name="question4" value="2">
+                            <label for="q4a1" class="option-label">Maison individuelle</label>
+                            <input type="radio" id="q4a2" name="question4" value="1">
+                            <label for="q4a2" class="option-label">Appartement en immeuble</label>
+                            <input type="radio" id="q4a3" name="question4" value="2">
+                            <label for="q4a3" class="option-label">Autre</label>
+                        </div>
+                        <div class="infos-questions">
+                            <p>ceci est une info concernant la question 4</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Évaluation de la Zone -->
+                <div class="form-section" id="section-2">
+                    <h3>Section 2: Évaluation de la Zone</h3>
+
+                    <!-- Question 8 -->
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            8. La maison est-elle située près d'un cours d'eau ?
+                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q8a1" name="question8" value="3">
+                            <label for="q8a1" class="option-label">Oui</label>
+                            <input type="radio" id="q8a2" name="question8" value="1">
+                            <label for="q8a2" class="option-label">Non</label>
+                        </div>
+                        <div class="infos-questions">
+                            <p>ceci est une info concernant la question 8</p>
+                        </div>
+                    </div>
+
+                    <!-- Question 9 -->
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            9. Avez-vous des arbres à proximité de votre maison qui pourraient augmenter le risque en cas d'inondation ?
+                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q9a1" name="question9" value="2">
+                            <label for="q9a1" class="option-label">Oui</label>
+                            <input type="radio" id="q9a2" name="question9" value="1">
+                            <label for="q9a2" class="option-label">Non</label>
+                        </div>
+                        <div class="infos-questions">
+                            <p>ceci est une info concernant la question 9</p>
+                        </div>
+                    </div>
+
+                    <!-- Question 10 -->
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            10. La maison est-elle située dans un zone inondable ?
+                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q10a1" name="question10" value="3">
+                            <label for="q10a1" class="option-label">Oui</label>
+                            <input type="radio" id="q10a2" name="question10" value="1">
+                            <label for="q10a2" class="option-label">Non</label>
+                        </div>
+                        <div class="infos-questions">
+                            <p>ceci est une info concernant la question 10</p>
+                        </div>
+                    </div>
+                    <!-- Autres questions... -->
+                </div>
+
+                <!-- Section 3: Sécurité et Prévention -->
+                <div class="form-section" id="section-3">
+                    <h3>Section 3: Sécurité et Prévention</h3>
+
+                    <!-- Question 15 -->
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            15. Avez-vous un plan d'évacuation en cas d'inondation ?
+                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q15a1" name="question15" value="1">
+                            <label for="q15a1" class="option-label">Oui</label>
+                            <input type="radio" id="q15a2" name="question15" value="3">
+                            <label for="q15a2" class="option-label">Non</label>
+                        </div>
+                        <div class="infos-questions">
+                            <p>ceci est une info concernant la question 15</p>
+                        </div>
+                    </div>
+
+                    <!-- Question 16 -->
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            16. Des mesures préventives contre les inondations sont-elles prises dans votre quartier ?
+                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q16a1" name="question16" value="1">
+                            <label for="q16a1" class="option-label">Oui</label>
+                            <input type="radio" id="q16a2" name="question16" value="3">
+                            <label for="q16a2" class="option-label">Non</label>
+                        </div>
+                        <div class="infos-questions">
+                            <p>ceci est une info concernant la question 16</p>
+                        </div>
+                    </div>
+
+                    <!-- Autres questions pour la section 3... -->
+                </div>
+
+                <!-- Section 4: Expérience Passée -->
+                <div class="form-section" id="section-4">
+                    <h3>Section 4: Expérience Passée</h3>
+
+                    <!-- Question 22 -->
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            22. Votre propriété a-t-elle déjà été inondée ?
+                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q22a1" name="question22" value="3">
+                            <label for="q22a1" class="option-label">Oui</label>
+                            <input type="radio" id="q22a2" name="question22" value="1">
+                            <label for="q22a2" class="option-label">Non</label>
+                        </div>
+                        <div class="infos-questions">
+                            <p>ceci est une info concernant la question 22</p>
+                        </div>
+                    </div>
+
+                    <!-- Question 23 -->
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            23. Si oui, à quelle fréquence ?
+                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q23a1" name="question23" value="0">
+                            <label for="q23a1" class="option-label">Jamais</label>
+                            <input type="radio" id="q23a2" name="question23" value="1">
+                            <label for="q23a2" class="option-label">1x par an</label>
+                            <input type="radio" id="q23a3" name="question23" value="2">
+                            <label for="q23a3" class="option-label">2x par an</label>
+                            <input type="radio" id="q23a4" name="question23" value="4">
+                            <label for="q23a4" class="option-label">> à 2x par an</label>
+                        </div>
+                        <div class="infos-questions">
+                            <p>ceci est une info concernant la question 23</p>
+                        </div>
+                    </div>
+
+                    <!-- Autres questions pour la section 4... -->
+                </div>
+
+                <!-- Boutons de navigation -->
+                <div class="navigation-buttons">
+                    <button type="button" id="prev-button">Précédent</button>
+                    <button type="button" id="next-button">Suivant</button>
+                    <button type="submit" id="submit-button">Voir les Résultats</button>
+                </div>
+                <!-- Section 5: Résultats -->
+                <div class="form-section" id="section-5">
+                    <h3>Résultats</h3>
+                    <div id="result-container">
+                        <div id="result-text"></div>
+                        <div id="progress-bar-container">
+                            <div id="progress-bar"></div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="choix-commune">
+        <div id="bouton">
+            <img id="house" src="./images/house.png" alt="choix de ma commune" />
+        </div>
+        <div id="selectCommune">
+            <h4>1. Je choisis ma commune</h4>
+            <select class="select" id="select">
+                <option class="option" value="" selected>Choisir ma commune</option>
+                <option class="option" value="Bollène">Bollène</option>
+                <option class="option" value="Bouchet">Bouchet</option>
+                <option class="option" value="Chamaret">Chamaret</option>
+                <option class="option" value="Colonzelle">Colonzelle</option>
+                <option class="option" value="Grignan">Grignan</option>
+                <option class="option" value="Grillon">Grillon</option>
+                <option class="option" value="La Baume-de-Transit">La Baume-de-Transit</option>
+                <option class="option" value="Lagarde-Paréol">Lagarde-Paréol</option>
+                <option class="option" value="Le Pègue">Le Pègue</option>
+                <option class="option" value="Mondragon">Mondragon</option>
+                <option class="option" value="Montbrison-sur-Lez">Montbrison-sur-Lez</option>
+                <option class="option" value="Montjoux">Montjoux</option>
+                <option class="option" value="Montségur-sur-Lauzon">Montségur-sur-Lauzon</option>
+                <option class="option" value="Mornas">Mornas</option>
+                <option class="option" value="Richerenches">Richerenches</option>
+                <option class="option" value="Rochegude">Rochegude</option>
+                <option class="option" value="Roche-Saint-Secret-Béconne">Roche-Saint-Secret-Béconne</option>
+                <option class="option" value="Saint-Pantaléon-les-Vignes">Saint-Pantaléon-les-Vignes</option>
+                <option class="option" value="Suze-la-Rousse">Suze-la-Rousse</option>
+                <option class="option" value="Taulignan">Taulignan</option>
+                <option class="option" value="Teyssières">Teyssières</option>
+                <option class="option" value="Tulette">Tulette</option>
+                <option class="option" value="Valréas">Valréas</option>
+                <option class="option" value="Venterol">Venterol</option>
+                <option class="option" value="Vesc">Vesc</option>
+                <option class="option" value="Vinsobres">Vinsobres</option>
+                <option class="option" value="Visan">Visan</option>
+            </select>
+        </div>
+    </div>
+    <div class="info-commune" id="info-commune">
+        <img src="./images/cross.png" alt="croix blanche" id="croix-right" />
+        <div id="liens">
+            <div>
+                <h2>2. Je suis éligible, je complète le formulaire</h2>
+                <form action="/success.html" method="POST" data-netlify="true" name="contact-eligibilite" netlify-honeypot="bot-field">
+                    <p class="hidden" hidden>
+                        <label>
+                          Don’t fill this out if you’re human: <input name="bot-field" />
+                      </label>
+                    </p>
+                    <input type="hidden" name="form-name" value="contact-eligibilite">
+                    <div class="form-group">
+                        <label for="nom">Nom*</label>
+                        <input type="text" id="nom" name="nom" placeholder="votre nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="prenom">Prénom*</label>
+                        <input type="text" id="prenom" name="prenom" placeholder="votre prénom" required>
+                    </div>
+                    <input type="text" id="cadastre" name="cadastre" value="${lengthOfResult}" hidden>
+                    <input type="text" id="idProprio" name="idProprio" value="${idProprio}" hidden>
+                    <div class="form-group adresse">
+                        <label for="adresse">Adresse*</label>
+                        <input type="text" id="adresse" name="adresse" placeholder="votre adresse" value="${communeIsCorrect ? street : " " }" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="codePostal">Code postal*</label>
+                        <input type="text" id="codePostal" name="codePostal" placeholder="votre code postal" value="${communeIsCorrect ? postaleCode : " "}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="commune">Commune*</label>
+                        <input type="text" id="commune" name="commune" value="${commune}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telephone">Numéro de téléphone</label>
+                        <input type="text" id="telephone" name="telephone" placeholder="votre numéro de téléphone">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email*</label>
+                        <input type="email" id="email" name="email" placeholder="votre email" required>
+                    </div>
+                    <input type="submit" value="Envoyer">
+                </form>
+            </div>
+        </div>
+    </div>
+    <div id="message-boite" class="goUp">
+        <img src="./images/cross.png" alt="croix blanche" id="croix" />
+        <p>Erreur avec la géolocalisation de votre commune, veuillez la sélectionner dans le panneau de gauche</p>
+    </div>
+    <!-- </div> -->
+    <script src="script.js" type="text/javascript" defer></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+    <!-- jusqu'ici -->
+</body>
+
+</html>
