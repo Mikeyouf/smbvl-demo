@@ -1,3 +1,19 @@
+// Configuration Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyCaDh7N18VrM_-UQtr9kSXMA4_pLSUn2yE",
+    authDomain: "form-diag-5d719.firebaseapp.com",
+    projectId: "form-diag-5d719",
+    storageBucket: "form-diag-5d719.appspot.com",
+    messagingSenderId: "799317471286",
+    appId: "1:799317471286:web:eef61dbaf2fe400ee92897",
+    databaseURL: "https://form-diag-5d719-default-rtdb.europe-west1.firebasedatabase.app"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+// Accédez à la base de données Firebase
+const database = firebase.database();
+
 let isMobile;
 
 function isMobileDevice() {
@@ -389,11 +405,11 @@ searchControl.on('markgeocode', function (e) {
     xhr.onload = function () {
         if (xhr.status === 200) {
             var result = JSON.parse(xhr.responseText);
-            console.log("result", result);
+            // console.log("result", result);
             postaleCode = result.address.postcode;
             street = result.address.road
-            console.log(postaleCode);
-            console.log(street);
+            // console.log(postaleCode);
+            // console.log(street);
 
             // function removeAccents(str) {
             //     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -605,9 +621,9 @@ function preDiagnostic() {
         }
     });
 
+    let score = 0;
 
     function calculateAndDisplayResult() {
-        let score = 0;
         const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
         const radios = document.querySelectorAll('input[type="radio"]:checked');
 
@@ -636,7 +652,7 @@ function preDiagnostic() {
             resultTextEl.textContent = 'Risque Léger';
             progressBar.style.width = '33%';
         } else if (score <= 20) {
-            resultTextEl.textContent = 'Risque Moyen';
+            resultTextEl.textContent = 'Risque Modéré';
             progressBar.style.width = '66%';
         } else {
             resultTextEl.textContent = 'Risque Fort';
@@ -647,9 +663,63 @@ function preDiagnostic() {
         changeSection();
     }
 
+    function submitToFirebase() {
+        // ... (initialisation de Firebase et autres)
+
+        // Récupérez les valeurs des champs du formulaire
+        const question1Input = document.querySelector('input[name="question1"]:checked').getAttribute('datatext');
+        const question2Input = document.querySelector('input[name="question2"]:checked').getAttribute('datatext');
+        const question3Input = document.querySelector('input[name="question3"]:checked').getAttribute('datatext');
+        const question4Input = document.querySelector('input[name="question4"]:checked').getAttribute('datatext');
+        const question8Input = document.querySelector('input[name="question8"]:checked').getAttribute('datatext');
+        const question9Input = document.querySelector('input[name="question9"]:checked').getAttribute('datatext');
+        const question10Input = document.querySelector('input[name="question10"]:checked').getAttribute('datatext');
+        const question15Input = document.querySelector('input[name="question15"]:checked').getAttribute('datatext');
+        const question16Input = document.querySelector('input[name="question16"]:checked').getAttribute('datatext');
+        const question22Input = document.querySelector('input[name="question22"]:checked').getAttribute('datatext');
+        const question23Input = document.querySelector('input[name="question23"]:checked').getAttribute('datatext');
+
+        score = score <= 10 ? 'Risque Léger' : score <= 20 ? 'Risque Modéré' : 'Risque Fort';
+        // Exemple de données à envoyer
+        const data = {
+            nom_commune: communeData.nomCommune,
+            cadastre: communeData.cadastre,
+            aléas: communeData.niveauAlea,
+            bâti_inondable: communeData.batiInondable,
+            éligible: communeData.isEligible,
+            score: score,
+            question1: question1Input,
+            question2: question2Input,
+            question3: question3Input,
+            question4: question4Input,
+            question8: question8Input,
+            question9: question9Input,
+            question10: question10Input,
+            question15: question15Input,
+            question16: question16Input,
+            question22: question22Input,
+            question23: question23Input,
+            // Ajoutez d'autres réponses de formulaire ici...
+        };
+
+
+        // Utilisez la méthode .ref() avec l'ID "cadastre" pour ajouter les données
+        const cadastreValue = communeData.cadastre;
+        const ref = database.ref('form-diag').child(cadastreValue);
+
+        ref.set(data, function (error) {
+            if (error) {
+                console.error("Erreur lors de l'envoi des données : ", error);
+            } else {
+                console.log("Données envoyées avec succès !");
+            }
+        });
+    }
+
     submitButton.addEventListener('click', function (event) {
         event.preventDefault();
         calculateAndDisplayResult();
+        submitToFirebase();
     });
 }
 // Appeler preDiagnostic une seule fois lors du chargement de la page

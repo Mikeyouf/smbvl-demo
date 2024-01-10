@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
     <link href="//unpkg.com/leaflet/dist/leaflet.css" rel="stylesheet">
+    <!-- Firebase (version 8, non modulaire) -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
     <script src="./data/parcelles_ppri_0.js" type="text/javascript"></script>
     <script src="./data/parcelles_ppri_1.js" type="text/javascript"></script>
     <script src="./data/parcelles_ppri_2.js" type="text/javascript"></script>
@@ -25,7 +29,7 @@
     <div id="diagnostic-panel" class="side-panel">
         <!-- Contenu du formulaire de pré-diagnostic -->
         <div id="form-container">
-            <form id="diagnostic-form">
+            <form id="diagnostic-form" method="post">
                 <div id="bouton-close" class="bouton-close">
                     <img id="btn-fermer" src="./images/cross.png" alt="fermer le panneau latéral" class="btn-fermer" />
                 </div>
@@ -55,12 +59,12 @@
                     <div class="form-section-question">
                         <label class="question-label">
                             1. Êtes-vous propriétaire de la maison ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                            <img src="./images/info.png" alt="info question" class="bulle-info" />
                         </label>
                         <div class="question-options">
-                            <input type="radio" id="q1a1" name="question1" value="2">
+                            <input type="radio" id="q1a1" name="question1" value="2" datatext="Oui">
                             <label for="q1a1" class="option-label">Oui</label>
-                            <input type="radio" id="q1a2" name="question1" value="1">
+                            <input type="radio" id="q1a2" name="question1" value="1" datatext="Non">
                             <label for="q1a2" class="option-label">Non</label>
                         </div>
                         <div class="infos-questions">
@@ -70,12 +74,12 @@
                     <div class="form-section-question">
                         <label class="question-label">
                             2. Votre maison a-t-elle plus de 30 ans ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                            <img src="./images/info.png" alt="info question" class="bulle-info" />
                         </label>
                         <div class="question-options">
-                            <input type="radio" id="q2a1" name="question2" value="2">
+                            <input type="radio" id="q2a1" name="question2" value="2" datatext="Oui">
                             <label for="q2a1" class="option-label">Oui</label>
-                            <input type="radio" id="q2a2" name="question2" value="1">
+                            <input type="radio" id="q2a2" name="question2" value="1" datatext="Non">
                             <label for="q2a2" class="option-label">Non</label>
                         </div>
                         <div class="infos-questions">
@@ -85,12 +89,12 @@
                     <div class="form-section-question">
                         <label class="question-label">
                             3. Avez-vous des sous-sols ou des caves ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                            <img src="./images/info.png" alt="info question" class="bulle-info" />
                         </label>
                         <div class="question-options">
-                            <input type="radio" id="q3a1" name="question3" value="3">
+                            <input type="radio" id="q3a1" name="question3" value="3" datatext="Oui">
                             <label for="q3a1" class="option-label">Oui</label>
-                            <input type="radio" id="q3a2" name="question3" value="1">
+                            <input type="radio" id="q3a2" name="question3" value="1" datatext="Non">
                             <label for="q3a2" class="option-label">Non</label>
                         </div>
                         <div class="infos-questions">
@@ -100,14 +104,14 @@
                     <div class="form-section-question">
                         <label class="question-label">
                             4. Quel est le type de votre habitat ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                            <img src="./images/info.png" alt="info question" class="bulle-info" />
                         </label>
                         <div class="question-options">
-                            <input type="radio" id="q4a1" name="question4" value="2">
+                            <input type="radio" id="q4a1" name="question4" value="2" datatext="Maison individuelle">
                             <label for="q4a1" class="option-label">Maison individuelle</label>
-                            <input type="radio" id="q4a2" name="question4" value="1">
+                            <input type="radio" id="q4a2" name="question4" value="1" datatext="Appartement en immeuble">
                             <label for="q4a2" class="option-label">Appartement en immeuble</label>
-                            <input type="radio" id="q4a3" name="question4" value="2">
+                            <input type="radio" id="q4a3" name="question4" value="2" datatext="Autre">
                             <label for="q4a3" class="option-label">Autre</label>
                         </div>
                         <div class="infos-questions">
@@ -124,12 +128,12 @@
                     <div class="form-section-question">
                         <label class="question-label">
                             8. La maison est-elle située près d'un cours d'eau ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                            <img src="./images/info.png" alt="info question" class="bulle-info" />
                         </label>
                         <div class="question-options">
-                            <input type="radio" id="q8a1" name="question8" value="3">
+                            <input type="radio" id="q8a1" name="question8" value="3" datatext="Oui">
                             <label for="q8a1" class="option-label">Oui</label>
-                            <input type="radio" id="q8a2" name="question8" value="1">
+                            <input type="radio" id="q8a2" name="question8" value="1" datatext="Non">
                             <label for="q8a2" class="option-label">Non</label>
                         </div>
                         <div class="infos-questions">
@@ -140,13 +144,14 @@
                     <!-- Question 9 -->
                     <div class="form-section-question">
                         <label class="question-label">
-                            9. Avez-vous des arbres à proximité de votre maison qui pourraient augmenter le risque en cas d'inondation ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                            9. Avez-vous des arbres à proximité de votre maison qui pourraient augmenter le risque en
+                            cas d'inondation ?
+                            <img src="./images/info.png" alt="info question" class="bulle-info" />
                         </label>
                         <div class="question-options">
-                            <input type="radio" id="q9a1" name="question9" value="2">
+                            <input type="radio" id="q9a1" name="question9" value="2" datatext="Oui">
                             <label for="q9a1" class="option-label">Oui</label>
-                            <input type="radio" id="q9a2" name="question9" value="1">
+                            <input type="radio" id="q9a2" name="question9" value="1" datatext="Non">
                             <label for="q9a2" class="option-label">Non</label>
                         </div>
                         <div class="infos-questions">
@@ -158,12 +163,12 @@
                     <div class="form-section-question">
                         <label class="question-label">
                             10. La maison est-elle située dans un zone inondable ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                            <img src="./images/info.png" alt="info question" class="bulle-info" />
                         </label>
                         <div class="question-options">
-                            <input type="radio" id="q10a1" name="question10" value="3">
+                            <input type="radio" id="q10a1" name="question10" value="3" datatext="Oui">
                             <label for="q10a1" class="option-label">Oui</label>
-                            <input type="radio" id="q10a2" name="question10" value="1">
+                            <input type="radio" id="q10a2" name="question10" value="1" datatext="Non">
                             <label for="q10a2" class="option-label">Non</label>
                         </div>
                         <div class="infos-questions">
@@ -181,12 +186,12 @@
                     <div class="form-section-question">
                         <label class="question-label">
                             15. Avez-vous un plan d'évacuation en cas d'inondation ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                            <img src="./images/info.png" alt="info question" class="bulle-info" />
                         </label>
                         <div class="question-options">
-                            <input type="radio" id="q15a1" name="question15" value="1">
+                            <input type="radio" id="q15a1" name="question15" value="1" datatext="Oui">
                             <label for="q15a1" class="option-label">Oui</label>
-                            <input type="radio" id="q15a2" name="question15" value="3">
+                            <input type="radio" id="q15a2" name="question15" value="3" datatext="Non">
                             <label for="q15a2" class="option-label">Non</label>
                         </div>
                         <div class="infos-questions">
@@ -198,12 +203,12 @@
                     <div class="form-section-question">
                         <label class="question-label">
                             16. Des mesures préventives contre les inondations sont-elles prises dans votre quartier ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                            <img src="./images/info.png" alt="info question" class="bulle-info" />
                         </label>
                         <div class="question-options">
-                            <input type="radio" id="q16a1" name="question16" value="1">
+                            <input type="radio" id="q16a1" name="question16" value="1" datatext="Oui">
                             <label for="q16a1" class="option-label">Oui</label>
-                            <input type="radio" id="q16a2" name="question16" value="3">
+                            <input type="radio" id="q16a2" name="question16" value="3" datatext="Non">
                             <label for="q16a2" class="option-label">Non</label>
                         </div>
                         <div class="infos-questions">
@@ -222,7 +227,52 @@
                     <div class="form-section-question">
                         <label class="question-label">
                             22. Votre propriété a-t-elle déjà été inondée ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                            <img src="./images/info.png" alt="info question" class="bulle-info" />
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q22a1" name="question22" value="3" datatext="Oui">
+                            <label for="q22a1" class="option-label">Oui</label>
+                            <input type="radio" id="q22a2" name="question22" value="1" datatext="Non">
+                            <label for="q22a2" class="option-label">Non</label>
+                        </div>
+                        <div class="infos-questions">
+                            <p>ceci est une info concernant la question 22</p>
+                        </div>
+                    </div>
+
+                    <!-- Question 23 -->
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            23. Si oui, à quelle fréquence ?
+                            <img src="./images/info.png" alt="info question" class="bulle-info" />
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q23a1" name="question23" value="0" datatext="Jamais">
+                            <label for="q23a1" class="option-label">Jamais</label>
+                            <input type="radio" id="q23a2" name="question23" value="1" datatext="1x par an">
+                            <label for="q23a2" class="option-label">1x par an</label>
+                            <input type="radio" id="q23a3" name="question23" value="2" datatext="2x par an">
+                            <label for="q23a3" class="option-label">2x par an</label>
+                            <input type="radio" id="q23a4" name="question23" value="4" datatext="> à 2x par an">
+                            <label for="q23a4" class="option-label">> à 2x par an</label>
+                        </div>
+                        <div class="infos-questions">
+                            <p>ceci est une info concernant la question 23</p>
+                        </div>
+                    </div>
+                    <!-- Autres questions pour la section 4... -->
+                </div>
+
+
+                <!-- Section 4: Expérience Passée -->
+                <div class="form-section" id="section-4">
+                    <h3>Section 4: Expérience Passée</h3>
+
+                    <!-- Question 22 -->
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            22. Votre propriété a-t-elle déjà été inondée ?
+                            <img src="./images/info.png" alt="info question" class="bulle-info" />
                         </label>
                         <div class="question-options">
                             <input type="radio" id="q22a1" name="question22" value="3">
@@ -239,7 +289,7 @@
                     <div class="form-section-question">
                         <label class="question-label">
                             23. Si oui, à quelle fréquence ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info"/>
+                            <img src="./images/info.png" alt="info question" class="bulle-info" />
                         </label>
                         <div class="question-options">
                             <input type="radio" id="q23a1" name="question23" value="0">
@@ -325,8 +375,8 @@
                 <form action="/success.html" method="POST" data-netlify="true" name="contact-eligibilite" netlify-honeypot="bot-field">
                     <p class="hidden" hidden>
                         <label>
-                          Don’t fill this out if you’re human: <input name="bot-field" />
-                      </label>
+                            Don’t fill this out if you’re human: <input name="bot-field" />
+                        </label>
                     </p>
                     <input type="hidden" name="form-name" value="contact-eligibilite">
                     <div class="form-group">
@@ -369,7 +419,8 @@
         <p>Erreur avec la géolocalisation de votre commune, veuillez la sélectionner dans le panneau de gauche</p>
     </div>
     <!-- </div> -->
-    <script src="script.js" type="text/javascript" defer></script>
+    <!-- <script src="https://apis.google.com/js/api.js"></script> -->
+    <script src="script.js" type="module" defer></script>
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
     <!-- jusqu'ici -->
