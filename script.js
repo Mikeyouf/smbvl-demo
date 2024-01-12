@@ -664,8 +664,6 @@ function preDiagnostic() {
     }
 
     function submitToFirebase() {
-        // ... (initialisation de Firebase et autres)
-
         // Récupérez les valeurs des champs du formulaire
         const question1Input = document.querySelector('input[name="question1"]:checked').getAttribute('datatext');
         const question2Input = document.querySelector('input[name="question2"]:checked').getAttribute('datatext');
@@ -686,7 +684,7 @@ function preDiagnostic() {
             cadastre: communeData.cadastre,
             aléas: communeData.niveauAlea,
             bâti_inondable: communeData.batiInondable,
-            éligible: communeData.isEligible,
+            éligible: communeData.isEligible ? 'Oui' : 'Non',
             score: score,
             question1: question1Input,
             question2: question2Input,
