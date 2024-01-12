@@ -664,6 +664,21 @@ function preDiagnostic() {
     }
 
     function submitToFirebase() {
+        const cadastreValue = communeData.cadastre;
+        const ref = database.ref('form-diag').child(cadastreValue);
+
+        ref.once('value', snapshot => {
+            const userData = snapshot.val();
+            const infoDiv = document.querySelector('.para-info');
+
+            if (userData && userData.envois >= 3) {
+                infoDiv.textContent = "Vous avez atteint le nombre maximal d'envois.";
+                infoDiv.style.color = 'red'; // Changez la couleur du texte pour une alerte
+                return;
+            }
+
+        // Continuez avec l'envoi des données
+        const envois = userData && userData.envois ? userData.envois + 1 : 1;
         // Récupérez les valeurs des champs du formulaire
         const question1Input = document.querySelector('input[name="question1"]:checked').getAttribute('datatext');
         const question2Input = document.querySelector('input[name="question2"]:checked').getAttribute('datatext');
@@ -680,6 +695,7 @@ function preDiagnostic() {
         score = score <= 10 ? 'Risque Léger' : score <= 20 ? 'Risque Modéré' : 'Risque Fort';
         // Exemple de données à envoyer
         const data = {
+            envois: envois,
             nom_commune: communeData.nomCommune,
             cadastre: communeData.cadastre,
             aléas: communeData.niveauAlea,
@@ -708,10 +724,16 @@ function preDiagnostic() {
         ref.set(data, function (error) {
             if (error) {
                 console.error("Erreur lors de l'envoi des données : ", error);
+                infoDiv.textContent = "Une erreur s'est produite lors de l'envoi du formulaire.";
+                infoDiv.style.color = 'red';
             } else {
                 console.log("Données envoyées avec succès !");
+                infoDiv.textContent = "Formulaire envoyé avec succès !";
+                infoDiv.style.color = 'green';
             }
         });
+
+    });
     }
 
     submitButton.addEventListener('click', function (event) {
