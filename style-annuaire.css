@@ -1,0 +1,85 @@
+/* Styles de base du tableau */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #007BFF; /* Couleur d'en-tête */
+    color: white;
+}
+td {
+    background-color: #f8f8f8;
+}
+
+/* Effet de survol sur les lignes */
+tr:hover td {
+    background-color: #e2e2e2; /* Couleur au survol */
+}
+
+/* Styles pour les liens */
+a {
+    color: #007BFF;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* Styles pour l'en-tête et le bouton */
+.en-tete {
+    display: flex;
+    justify-content: space-between; /* Alignement horizontal */
+    align-items: center; /* Alignement vertical */
+    margin-bottom: 20px;
+    color: #007BFF;
+}
+
+.en-tete h1 {
+    margin: 0; /* Ajuster selon vos besoins */
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #007BFF; /* Couleur de fond */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3; /* Couleur au survol */
+}
+
+/* Styles pour les champs de filtre */
+.filters input[type="text"] {
+    background-color: transparent; /* Arrière-plan transparent */
+    border: none; /* Supprimer les bordures */
+    border-bottom: 2px solid #007BFF; /* Ligne du bas bleue */
+    font-size: 16px; /* Taille de la police */
+    margin-right: 10px; /* Marge à droite */
+    padding: 8px 5px; /* Padding */
+    color: #333; /* Couleur du texte */
+    outline: none; /* Supprimer l'outline au focus */
+}
+
+.filters input[type="text"]:focus {
+    border-bottom-color: #0056b3; /* Couleur de la ligne du bas lors du focus */
+}
+
+/* Responsive design pour mobiles */
+@media screen and (max-width: 600px) {
+    .responsive-table {
+        overflow-x: auto; /* Permet le défilement horizontal sur les écrans de petite taille */
+    }
+    table {
+        min-width: 760px; /* Largeur minimale pour justifier le défilement */
+    }
+}
