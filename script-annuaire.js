@@ -47,16 +47,14 @@ function updateTable(data) {
 function downloadPDF() {
     const element = document.getElementById('annuaire'); // Remplacez par l'ID de votre tableau
 
-    html2canvas(element).then(canvas => {
+    html2canvas(element, { scale: 2 }).then(canvas => {
         const imgData = canvas.toDataURL('image/png');
-        // Créer un document PDF en format paysage
-        // 'l' pour landscape (paysage), 'mm' pour les unités en millimètres, et 'a4' pour la taille du papier
-        const pdf = new jspdf.jsPDF('l', 'mm', 'a4');
-
-        // Vous devrez peut-être ajuster les dimensions et la position pour mieux adapter le tableau
-        pdf.addImage(imgData, 'PNG', 10, 10, 280, 150); // Ajustez ces valeurs selon les besoins
-        pdf.save("tableau.pdf"); // Nom du fichier PDF
-    });
+        const pdf = new jspdf.jsPDF('l', 'mm', 'a4'); // Format paysage
+        const imgWidth = 297; // Ajuster la largeur de l'image
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+        pdf.save("annuaire-artisans.pdf");
+    });    
 }
 
 function removeAccents(str) {
