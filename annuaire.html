@@ -2,6 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
     <title>Annuaire Artisans</title>
     <style>
         /* Styles de base du tableau */
@@ -36,7 +38,50 @@
         a:hover {
             text-decoration: underline;
         }
-    
+
+        /* Styles pour l'en-tête et le bouton */
+        .en-tete {
+            display: flex;
+            justify-content: space-between; /* Alignement horizontal */
+            align-items: center; /* Alignement vertical */
+            margin-bottom: 20px;
+            color: #007BFF;
+        }
+
+        .en-tete h1 {
+            margin: 0; /* Ajuster selon vos besoins */
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF; /* Couleur de fond */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Couleur au survol */
+        }
+
+        /* Styles pour les champs de filtre */
+        .filters input[type="text"] {
+            background-color: transparent; /* Arrière-plan transparent */
+            border: none; /* Supprimer les bordures */
+            border-bottom: 2px solid #007BFF; /* Ligne du bas bleue */
+            font-size: 16px; /* Taille de la police */
+            margin-right: 10px; /* Marge à droite */
+            padding: 8px 5px; /* Padding */
+            color: #333; /* Couleur du texte */
+            outline: none; /* Supprimer l'outline au focus */
+        }
+
+        .filters input[type="text"]:focus {
+            border-bottom-color: #0056b3; /* Couleur de la ligne du bas lors du focus */
+        }
+
         /* Responsive design pour mobiles */
         @media screen and (max-width: 600px) {
             .responsive-table {
@@ -50,7 +95,15 @@
     
 </head>
 <body>
-    <h1>Annuaire Artisans</h1>
+    <div class="en-tete">
+        <h1>Annuaire des Artisans</h1>
+        <div class="filters">
+            <input type="text" id="filterNom" onkeyup="filterTable()" placeholder="Filtrer par nom...">
+            <input type="text" id="filterVille" onkeyup="filterTable()" placeholder="Filtrer par ville...">
+            <!-- Ajoutez d'autres filtres si nécessaire -->
+        </div>        
+        <button onclick="downloadPDF()">Télécharger le PDF</button>
+    </div>
     <div class="responsive-table">
         <table id="annuaire">
             <thead>
@@ -80,7 +133,7 @@
             .then(response => response.json())
             .then(data => {
                 // Supposons que 'data' est un tableau d'objets, chaque objet représentant une ligne
-                console.log(data);
+                // console.log(data);
                 updateTable(data);
             })
             .catch(error => console.error('Erreur:', error));
@@ -116,6 +169,48 @@
                     else {
                         var cellText = document.createTextNode(cellValue);
                         newCell.appendChild(cellText);
+                    }
+                }
+            }
+        }
+
+        function downloadPDF() {
+            const element = document.getElementById('annuaire'); // Remplacez par l'ID de votre tableau
+
+            html2canvas(element).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                // Créer un document PDF en format paysage
+                // 'l' pour landscape (paysage), 'mm' pour les unités en millimètres, et 'a4' pour la taille du papier
+                const pdf = new jspdf.jsPDF('l', 'mm', 'a4');
+
+                // Vous devrez peut-être ajuster les dimensions et la position pour mieux adapter le tableau
+                pdf.addImage(imgData, 'PNG', 10, 10, 280, 150); // Ajustez ces valeurs selon les besoins
+                pdf.save("tableau.pdf"); // Nom du fichier PDF
+            });
+        }
+        
+        function removeAccents(str) {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
+        }
+
+        function filterTable() {
+            var inputNom = document.getElementById("filterNom");
+            var inputVille = document.getElementById("filterVille");
+            var filterNom = removeAccents(inputNom.value);
+            var filterVille = removeAccents(inputVille.value);
+            var table = document.getElementById("annuaire");
+            var tr = table.getElementsByTagName("tr");
+
+            for (var i = 0; i < tr.length; i++) {
+                var tdNom = tr[i].getElementsByTagName("td")[0]; 
+                var tdVille = tr[i].getElementsByTagName("td")[4]; 
+                if (tdNom && tdVille) {
+                    var txtValueNom = removeAccents(tdNom.textContent || tdNom.innerText);
+                    var txtValueVille = removeAccents(tdVille.textContent || tdVille.innerText);
+                    if (txtValueNom.indexOf(filterNom) > -1 && txtValueVille.indexOf(filterVille) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
                     }
                 }
             }
