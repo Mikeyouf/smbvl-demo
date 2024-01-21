@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Annuaire Artisans</title>
+    <style>
+        /* Styles de base du tableau */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #007BFF; /* Couleur d'en-tête */
+            color: white;
+        }
+        td {
+            background-color: #f8f8f8;
+        }
+    
+        /* Effet de survol sur les lignes */
+        tr:hover td {
+            background-color: #e2e2e2; /* Couleur au survol */
+        }
+    
+        /* Styles pour les liens */
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    
+        /* Responsive design pour mobiles */
+        @media screen and (max-width: 600px) {
+            .responsive-table {
+                overflow-x: auto; /* Permet le défilement horizontal sur les écrans de petite taille */
+            }
+            table {
+                min-width: 760px; /* Largeur minimale pour justifier le défilement */
+            }
+        }
+    </style>        
+    
+</head>
+<body>
+    <h1>Annuaire Artisans</h1>
+    <div class="responsive-table">
+        <table id="annuaire">
+            <thead>
+                <tr>
+                    <th>Nom de l'entreprise</th>
+                    <th>Adresse</th>
+                    <th>Code postal</th>
+                    <th>Département</th>
+                    <th>Ville</th>
+                    <th>Numéro de téléphone</th>
+                    <th>Mail</th>
+                    <th>Site internet</th>
+                    <th>Corps de métier principal</th>
+                    <th>Mesures</th>
+                    <th>Fiche technique fournie</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Les lignes de données seront ajoutées ici -->
+            </tbody>
+        </table>
+    </div>    
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('https://form-diag-5d719-default-rtdb.europe-west1.firebasedatabase.app/nouvellesDonnees.json')
+            .then(response => response.json())
+            .then(data => {
+                // Supposons que 'data' est un tableau d'objets, chaque objet représentant une ligne
+                console.log(data);
+                updateTable(data);
+            })
+            .catch(error => console.error('Erreur:', error));
+        });
+        
+        function updateTable(data) {
+            var tableBody = document.getElementById('annuaire').getElementsByTagName('tbody')[0];
+            tableBody.innerHTML = ''; // Effacer les anciennes lignes
+
+            for (var i = 1; i < data.length; i++) { // Ignorer les en-têtes
+                var row = data[i];
+                var newRow = tableBody.insertRow();
+                for (var j = 0; j < row.length; j++) {
+                    var newCell = newRow.insertCell();
+                    var cellValue = row[j];
+
+                    // Si c'est la colonne email (7ème colonne, index 6)
+                    if (j === 6 && cellValue) {
+                        var emailLink = document.createElement('a');
+                        emailLink.href = 'mailto:' + cellValue;
+                        emailLink.textContent = cellValue;
+                        newCell.appendChild(emailLink);
+                    }
+                    // Si c'est la colonne site web (8ème colonne, index 7)
+                    else if (j === 7 && cellValue) {
+                        var websiteLink = document.createElement('a');
+                        websiteLink.href = cellValue;
+                        websiteLink.target = '_blank'; // Ouvrir dans un nouvel onglet
+                        websiteLink.textContent = cellValue;
+                        newCell.appendChild(websiteLink);
+                    }
+                    // Pour toutes les autres colonnes
+                    else {
+                        var cellText = document.createTextNode(cellValue);
+                        newCell.appendChild(cellText);
+                    }
+                }
+            }
+        }
+
+    </script>        
+</body>
+</html>
