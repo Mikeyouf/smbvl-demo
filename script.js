@@ -465,8 +465,47 @@ function preDiagnostic() {
     const diagnosticPanel = document.getElementById('diagnostic-panel');
     const sections = document.querySelectorAll('.form-section');
     let currentSectionIndex = 0;
-    let totalSections = 5;
+    let totalSections = 11;
     const submitButton = document.getElementById('submit-button');
+    const progressBarContainer = document.getElementById('progress-bar-etapes');
+
+    // AFFICHE LES QUESTIONS ENTREPRISE
+    var selectTypeDeBien = document.getElementById('type-de-bien');
+    console.log(selectTypeDeBien);
+
+    selectTypeDeBien.addEventListener('change', function () {
+        var value = this.value;
+        var question1_1 = document.getElementById('question-1-1');
+        var question1_2 = document.getElementById('question-1-2');
+        console.log(value);
+        if (value === 'entreprise') {
+            question1_1.style.display = 'block';
+            question1_2.style.display = 'block';
+        } else {
+            question1_1.style.display = 'none';
+            question1_2.style.display = 'none';
+        }
+    });
+
+    //AFFICHE QESTION 8 SI 7 = NON
+    // Sélectionnez les boutons radio de la question 7
+    const question8Radios = document.querySelectorAll('input[name="question8"]');
+
+    // Itérez sur chaque bouton radio pour ajouter un écouteur d'événements
+    question8Radios.forEach(function (radio) {
+        radio.addEventListener('change', function () {
+            const isNoSelected = document.getElementById('q8a2').checked;
+
+            const question8 = document.getElementById('question-8');
+
+            if (isNoSelected) {
+                question8.style.display = 'block';
+            } else {
+                question8.style.display = 'none';
+            }
+        });
+    });
+
 
     function openPanel() {
         diagnosticPanel.classList.add('open');
@@ -476,10 +515,10 @@ function preDiagnostic() {
         // Mettre à jour les informations de la commune
         const communeInfosEl = document.getElementById('commune-infos');
         if (communeInfosEl && communeData) {
-            communeInfosEl.innerHTML = `<span class="info-label">Commune:</span> ${communeData.nomCommune}, 
-                                            <span class="info-label">Bâti Inondable:</span> ${communeData.batiInondable}` +
-                (communeData.niveauAlea !== null ? `, <span class="info-label">Niveau d'Aléa:</span> ${communeData.niveauAlea}` : '') +
-                `, <span class="info-label">Éligible:</span> ${communeData.isEligible ? 'Oui' : 'Non'}`;
+            communeInfosEl.innerHTML = `➔<span class="info-label"> Commune :</span> ${communeData.nomCommune} ➔
+                <span class="info-label"> Bâti Inondable :</span> ${communeData.batiInondable}` +
+                (communeData.niveauAlea !== null ? ` ➔ <span class="info-label"> Niveau d'Aléa :</span> ${communeData.niveauAlea}` : '') +
+                ` ➔ <span class="info-label"> Éligible :</span> ${communeData.isEligible ? 'Oui' : 'Non'}`;
         }
         const infoImg = document.getElementById('bulle-info'); // Remplacez par l'ID de votre image
         // Gérer le survol ou le clic
@@ -526,6 +565,26 @@ function preDiagnostic() {
         }
     }
 
+    // INFO SECTION 3
+    const infoSection3 = document.getElementById('section-3-info');
+    // console.log(infoSection3);
+    infoSection3.addEventListener('mouseover', function () {
+        openInfoPanelSection3(infoSection3);
+    });
+
+    function openInfoPanelSection3(icon) {
+        // Assurez-vous que le sélecteur utilise correctement les classes sans espace incorrect ou guillemet supplémentaire.
+        const infoContent = icon.closest('.header-question').nextElementSibling; // Cible directement l'élément suivant .header-question qui devrait être .infos-questions
+
+        const dynamicContent = document.getElementById('dynamic-content');
+        const infoPanel = document.getElementById('info-panel');
+
+        if (infoContent) {
+            dynamicContent.innerHTML = infoContent.innerHTML;
+            infoPanel.classList.add('open');
+        }
+    }
+
     function resetForm() {
         // Sélectionnez votre formulaire par son ID ou sa classe
         const form = document.getElementById('diagnostic-form');
@@ -546,6 +605,9 @@ function preDiagnostic() {
 
             // Réinitialiser l'index de la section actuelle si nécessaire
             currentSectionIndex = 0;
+            if (progressBarContainer) {
+                progressBarContainer.style.display = 'none';
+            }
             changeSection();
         }
     }
@@ -574,24 +636,24 @@ function preDiagnostic() {
     });
 
     function updateNavigationButtons() {
-        // Masquer les boutons "Suivant" et "Précédent" dans la section des résultats
         if (currentSectionIndex === totalSections - 1) {
             nextButton.style.display = 'none';
             prevButton.style.display = 'none';
         } else {
-            // Masquer le bouton "Suivant" dans la section 4 (juste avant les résultats)
             nextButton.style.display = currentSectionIndex === totalSections - 2 ? 'none' : 'block';
-
-            // Masquer le bouton "Précédent" dans la première section
             prevButton.style.display = currentSectionIndex === 0 ? 'none' : 'block';
         }
 
-        // Afficher le bouton "Voir les Résultats" uniquement dans la section 4
-        submitButton.style.display = currentSectionIndex === totalSections - 2 ? 'block' : 'none';
+        // Modifier ici pour masquer la barre de progression dans la première et dernière section
+        if (currentSectionIndex >= 1 && currentSectionIndex < totalSections - 1) {
+            progressBarContainer.style.display = 'block';
+        } else {
+            progressBarContainer.style.display = 'none';
+        }
 
-        // Mettre à jour la barre de progression des étapes
+        submitButton.style.display = currentSectionIndex === totalSections - 2 ? 'block' : 'none';
         const progressEl = document.getElementById('progress');
-        progressEl.style.width = (currentSectionIndex / (totalSections - 1)) * 100 + '%';
+        progressEl.style.width = (currentSectionIndex / (totalSections - 2)) * 100 + '%';
     }
 
     function changeSection() {
@@ -624,8 +686,11 @@ function preDiagnostic() {
     let score = 0;
 
     function calculateAndDisplayResult() {
+        let score = 0; // Initialise le score
+
         const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
         const radios = document.querySelectorAll('input[type="radio"]:checked');
+        const selects = document.querySelectorAll('select');
 
         checkboxes.forEach(function (checkbox) {
             let val = parseInt(checkbox.value, 10);
@@ -640,7 +705,16 @@ function preDiagnostic() {
                 score += val;
             }
         });
-        // console.log(score);
+
+        selects.forEach(function (select) {
+            let val = parseInt(select.options[select.selectedIndex].value, 10);
+            if (!isNaN(val)) {
+                score += val;
+            }
+            // Si la valeur n'est pas numérique, vous pouvez décider ici comment gérer la valeur.
+            // Par exemple, assigner un score fixe ou ignorer l'option.
+        });
+
         displayResult(score);
     }
 
@@ -677,63 +751,95 @@ function preDiagnostic() {
                 return;
             }
 
-        // Continuez avec l'envoi des données
-        const envois = userData && userData.envois ? userData.envois + 1 : 1;
-        // Récupérez les valeurs des champs du formulaire
-        const question1Input = document.querySelector('input[name="question1"]:checked').getAttribute('datatext');
-        const question2Input = document.querySelector('input[name="question2"]:checked').getAttribute('datatext');
-        const question3Input = document.querySelector('input[name="question3"]:checked').getAttribute('datatext');
-        const question4Input = document.querySelector('input[name="question4"]:checked').getAttribute('datatext');
-        const question8Input = document.querySelector('input[name="question8"]:checked').getAttribute('datatext');
-        const question9Input = document.querySelector('input[name="question9"]:checked').getAttribute('datatext');
-        const question10Input = document.querySelector('input[name="question10"]:checked').getAttribute('datatext');
-        const question15Input = document.querySelector('input[name="question15"]:checked').getAttribute('datatext');
-        const question16Input = document.querySelector('input[name="question16"]:checked').getAttribute('datatext');
-        const question22Input = document.querySelector('input[name="question22"]:checked').getAttribute('datatext');
-        const question23Input = document.querySelector('input[name="question23"]:checked').getAttribute('datatext');
+            //SECTION 1
+            // Récupération de la valeur pour le type de bien
+            const typeDeBienInput = document.querySelector('#type-de-bien').value;
+            // Initialisation des variables pour les questions 1.1 et 1.2
+            let question1_1Input = '';
+            let question1_2Input = '';
+            // Vérifie si "Entreprise" est sélectionné
+            if (typeDeBienInput === 'entreprise') {
+                // Récupère la valeur de la question 1.1 s'il y a une entrée (assurez-vous que l'input text a une valeur par défaut ou n'est pas null)
+                const input1_1 = document.querySelector('#q1.1a1');
+                question1_1Input = input1_1 ? input1_1.value : '';
 
-        score = score <= 10 ? 'Risque Léger' : score <= 20 ? 'Risque Modéré' : 'Risque Fort';
-        // Exemple de données à envoyer
-        const data = {
-            envois: envois,
-            nom_commune: communeData.nomCommune,
-            cadastre: communeData.cadastre,
-            aléas: communeData.niveauAlea,
-            bâti_inondable: communeData.batiInondable,
-            éligible: communeData.isEligible ? 'Oui' : 'Non',
-            score: score,
-            question1: question1Input,
-            question2: question2Input,
-            question3: question3Input,
-            question4: question4Input,
-            question8: question8Input,
-            question9: question9Input,
-            question10: question10Input,
-            question15: question15Input,
-            question16: question16Input,
-            question22: question22Input,
-            question23: question23Input,
-            // Ajoutez d'autres réponses de formulaire ici...
-        };
-
-
-        // Utilisez la méthode .ref() avec l'ID "cadastre" pour ajouter les données
-        const cadastreValue = communeData.cadastre;
-        const ref = database.ref('form-diag').child(cadastreValue);
-
-        ref.set(data, function (error) {
-            if (error) {
-                console.error("Erreur lors de l'envoi des données : ", error);
-                infoDiv.textContent = "Une erreur s'est produite lors de l'envoi du formulaire.";
-                infoDiv.style.color = 'red';
-            } else {
-                console.log("Données envoyées avec succès !");
-                infoDiv.textContent = "Formulaire envoyé avec succès !";
-                infoDiv.style.color = 'green';
+                // Pour la question 1.2, récupère l'attribut datatext de l'option cochée
+                const radio1_2Checked = document.querySelector('input[name="question1.2"]:checked');
+                question1_2Input = radio1_2Checked ? radio1_2Checked.getAttribute('datatext') : '';
             }
-        });
+            // Récupération des valeurs pour les autres questions comme avant
+            const question2Input = document.querySelector('input[name="question2"]:checked') ? document.querySelector('input[name="question2"]:checked').getAttribute('datatext') : '';
 
-    });
+            // SECTION 2
+            const question3Input = document.querySelector('input[name="question3"]:checked') ? document.querySelector('input[name="question3"]:checked').getAttribute('datatext') : '';
+            const question4_1Input = document.querySelector('q4a1');
+            const question4_2Input = document.querySelector('q4a2');
+            const question4_3Input = document.querySelector('q4a3');
+            const question4_4Input = document.querySelector('q4a4');
+
+            // SECTION 3
+            const question5Input = document.querySelector('input[name="question5"]:checked') ? document.querySelector('input[name="question5"]:checked').getAttribute('datatext') : '';
+            // Et ainsi de suite pour les autres questions
+
+
+
+
+
+
+            // Continuez avec l'envoi des données
+            const envois = userData && userData.envois ? userData.envois + 1 : 1;
+            // Récupérez les valeurs des champs du formulaire
+
+            const question8Input = document.querySelector('input[name="question8"]:checked').getAttribute('datatext');
+            const question9Input = document.querySelector('input[name="question9"]:checked').getAttribute('datatext');
+            const question10Input = document.querySelector('input[name="question10"]:checked').getAttribute('datatext');
+            const question15Input = document.querySelector('input[name="question15"]:checked').getAttribute('datatext');
+            const question16Input = document.querySelector('input[name="question16"]:checked').getAttribute('datatext');
+            const question22Input = document.querySelector('input[name="question22"]:checked').getAttribute('datatext');
+            const question23Input = document.querySelector('input[name="question23"]:checked').getAttribute('datatext');
+
+            score = score <= 10 ? 'Risque Léger' : score <= 20 ? 'Risque Modéré' : 'Risque Fort';
+            // Exemple de données à envoyer
+            const data = {
+                envois: envois,
+                nom_commune: communeData.nomCommune,
+                cadastre: communeData.cadastre,
+                aléas: communeData.niveauAlea,
+                bâti_inondable: communeData.batiInondable,
+                éligible: communeData.isEligible ? 'Oui' : 'Non',
+                score: score,
+                question1: question1Input,
+                question2: question2Input,
+                question3: question3Input,
+                question4: question4Input,
+                question8: question8Input,
+                question9: question9Input,
+                question10: question10Input,
+                question15: question15Input,
+                question16: question16Input,
+                question22: question22Input,
+                question23: question23Input,
+                // Ajoutez d'autres réponses de formulaire ici...
+            };
+
+
+            // Utilisez la méthode .ref() avec l'ID "cadastre" pour ajouter les données
+            const cadastreValue = communeData.cadastre;
+            const ref = database.ref('form-diag').child(cadastreValue);
+
+            ref.set(data, function (error) {
+                if (error) {
+                    console.error("Erreur lors de l'envoi des données : ", error);
+                    infoDiv.textContent = "Une erreur s'est produite lors de l'envoi du formulaire.";
+                    infoDiv.style.color = 'red';
+                } else {
+                    console.log("Données envoyées avec succès !");
+                    infoDiv.textContent = "Formulaire envoyé avec succès !";
+                    infoDiv.style.color = 'green';
+                }
+            });
+
+        });
     }
 
     submitButton.addEventListener('click', function (event) {

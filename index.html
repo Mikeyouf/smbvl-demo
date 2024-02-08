@@ -33,11 +33,10 @@
                 <div id="bouton-close" class="bouton-close">
                     <img id="btn-fermer" src="./images/cross.png" alt="fermer le panneau latéral" class="btn-fermer" />
                 </div>
-                <h2>Formulaire de Pré-Diagnostic d'Inondation</h2>
-
-                <!-- Conteneur pour les informations de la commune -->
-                <div id="commune-infos">
-
+                <div class="header-infos">
+                    <h2>Pré-diagnostic de vulnérabilité aux inondations</h2>
+                    <!-- Conteneur pour les informations de la commune -->
+                    <div id="commune-infos"></div>
                 </div>
 
                 <div id="info-panel" class="info-panel">
@@ -53,273 +52,374 @@
                     <div id="progress" style="width: 0%;"></div>
                 </div>
 
-                <!-- Section 1: Informations Générales -->
+                <!-- Section 0: Informations Générales -->
                 <div class="form-section" id="section-1">
-                    <h3>Section 1: Informations Générales</h3>
+                    <div class="header-diag">
+                        <img src="images/logo-alabri-smbvl.webp" alt="alabri SMBVL" class="logo" />
+                    </div>
+                    <div class="form-section-question accueil-text">
+                        <p>
+                            Ce pré-diagnostic est proposé par <strong>le syndicat Mixte du Bassin Versant du Lez (SMBVL),</strong> dans le cadre de son dispositif <strong>ALABRI par le SMBVL - Réduire sa vulnérabilité aux inondations.</strong>
+                        </p>
+                        <p>
+                            Il s'adresse aux propriétaires de biens en zone inondable du<strong> Plan de Prévention du Risque Inondation (PPRi).</strong><img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info" />
+                            <div class="infos-questions">
+                                <h3><img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />Le Plan de Prévention du Risque inondation (PPRi) </h3>
+                                <p>Le PPRi défini les zones inondables et règlemente l’urbanisation.</p>
+                                <p>Il dresse une liste de préconisations à appliquer pour les nouvelles constructions, et dans certains cas, pour les biens existants.</p>
+                                <p>Tous les PPR approuvés ces dernières années intègrent des mesures obligatoires à réaliser pour adapter les biens existants au risque.</p>
+                                <p>Plus d’informations sur le PPRi du bassin versant du Lez sur : <a href="https://smbvlalabri.fr/" target="_blank">https://smbvlalabri.fr</a>
+                                </p>
+                            </div>
+                        </p>
+                        <p>
+                            Si votre bien est hors zonage, mais a déjà été inondé, vous pouvez également réaliser votre pré-diagnostic.
+                        </p>
+                        <p>
+                            <strong>Les objectifs</strong><img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info" />
+                            <div class="infos-questions">
+                                <p>ceci est une info concernant les objectifs</p>
+                            </div>
+                        </p>
+                        <ul class="custom-list">
+                            <li>sensibiliser au risque inondation</li>
+                            <li>estimer l'exposition et la vulnérabilité du bien</li>
+                            <li>connaître les mesures de réduction de la vulnérabilité, en identifiant les préconisations du PPRi</li>
+                            <li>confirmer ou non la nécessité d'engager un diagnostic complet, réalisé par un expert mandaté par le SMBVL</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Section 1: Informations Générales -->
+                <div class="form-section" id="section-2">
+                    <div class="header-question">
+                        <img src="./images/section-1.png" alt="info question" class="picto-section" />
+                        <h3>Section 1 : Informations Générales</h3>
+                    </div>
                     <div class="form-section-question">
-                        <label class="question-label">
-                            1. Êtes-vous propriétaire de la maison ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info" />
+                        <label for="type-de-bien" class="question-label">
+                            1. Type de bien concerné
                         </label>
                         <div class="question-options">
-                            <input type="radio" id="q1a1" name="question1" value="2" datatext="Oui">
-                            <label for="q1a1" class="option-label">Oui</label>
-                            <input type="radio" id="q1a2" name="question1" value="1" datatext="Non">
-                            <label for="q1a2" class="option-label">Non</label>
+                            <select id="type-de-bien" name="typeDeBien">
+                                <option value="Choisir mon type de bien" data-text="Choisir mon type de bien">Choisir mon type de bien</option>
+                                <option value="habitation" data-text="Habitation">Habitation</option>
+                                <option value="entreprise" data-text="Entreprise">Entreprise</option>
+                                <option value="exploitationAgricole" data-text="Exploitation agricole">Exploitation agricole</option>
+                            </select>
                         </div>
-                        <div class="infos-questions">
-                            <p>ceci est une info concernant la question 1</p>
+                    </div>
+                    <div class="form-section-question" id="question-1-1">
+                        <label class="question-label">
+                            1.1. Pour une entreprise, nom de l'établissement
+                        </label>
+                        <div class="question-options">
+                            <input type="text" id="q1.1a1" name="question1.1" value="" datatext="">
+                        </div>
+                    </div>
+                    <div class="form-section-question" id="question-1-2">
+                        <label class="question-label">
+                            1.2. Pour une entreprise, nombre de salariés
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q1.2a1" name="question1.2" value="0" datatext="- de 20 salariés">
+                            <label for="q1.2a1" class="option-label">- de 20 salariés</label>
+                            <input type="radio" id="q1.2a2" name="question1.2" value="0" datatext="+ de 20 salariés">
+                            <label for="q1.2a2" class="option-label">+ de 20 salariés</label>
                         </div>
                     </div>
                     <div class="form-section-question">
                         <label class="question-label">
-                            2. Votre maison a-t-elle plus de 30 ans ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info" />
+                            2. Le bien est occupé par ou accueille des personnes vulnérables ? 
+                            <img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info" />
                         </label>
                         <div class="question-options">
-                            <input type="radio" id="q2a1" name="question2" value="2" datatext="Oui">
+                            <input type="radio" id="q2a1" name="question4" value="3" datatext="Oui">
                             <label for="q2a1" class="option-label">Oui</label>
-                            <input type="radio" id="q2a2" name="question2" value="1" datatext="Non">
+                            <input type="radio" id="q2a2" name="question4" value="0" datatext="Non">
                             <label for="q2a2" class="option-label">Non</label>
                         </div>
                         <div class="infos-questions">
-                            <p>ceci est une info concernant la question 2</p>
-                        </div>
-                    </div>
-                    <div class="form-section-question">
-                        <label class="question-label">
-                            3. Avez-vous des sous-sols ou des caves ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info" />
-                        </label>
-                        <div class="question-options">
-                            <input type="radio" id="q3a1" name="question3" value="3" datatext="Oui">
-                            <label for="q3a1" class="option-label">Oui</label>
-                            <input type="radio" id="q3a2" name="question3" value="1" datatext="Non">
-                            <label for="q3a2" class="option-label">Non</label>
-                        </div>
-                        <div class="infos-questions">
-                            <p>ceci est une info concernant la question 3</p>
-                        </div>
-                    </div>
-                    <div class="form-section-question">
-                        <label class="question-label">
-                            4. Quel est le type de votre habitat ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info" />
-                        </label>
-                        <div class="question-options">
-                            <input type="radio" id="q4a1" name="question4" value="2" datatext="Maison individuelle">
-                            <label for="q4a1" class="option-label">Maison individuelle</label>
-                            <input type="radio" id="q4a2" name="question4" value="1" datatext="Appartement en immeuble">
-                            <label for="q4a2" class="option-label">Appartement en immeuble</label>
-                            <input type="radio" id="q4a3" name="question4" value="2" datatext="Autre">
-                            <label for="q4a3" class="option-label">Autre</label>
-                        </div>
-                        <div class="infos-questions">
-                            <p>ceci est une info concernant la question 4</p>
+                            <img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />
+                            <p>Les personnes vulnérables sont considérées comme non autonomes (ne pouvant pas faire face seule à la survenue d’une inondation).</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Section 2: Évaluation de la Zone -->
-                <div class="form-section" id="section-2">
-                    <h3>Section 2: Évaluation de la Zone</h3>
-
-                    <!-- Question 8 -->
+                <div class="form-section" id="section-3">
+                    <div class="header-question">
+                        <img src="./images/section-2.png" alt="info question" class="picto-section" />
+                        <h3>Section 2 : Vécu d'une inondation</h3>
+                    </div>
+                    <!-- Question 3 -->
                     <div class="form-section-question">
                         <label class="question-label">
-                            8. La maison est-elle située près d'un cours d'eau ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info" />
+                            3. Lors d'une inondation passée
                         </label>
-                        <div class="question-options">
-                            <input type="radio" id="q8a1" name="question8" value="3" datatext="Oui">
-                            <label for="q8a1" class="option-label">Oui</label>
-                            <input type="radio" id="q8a2" name="question8" value="1" datatext="Non">
-                            <label for="q8a2" class="option-label">Non</label>
-                        </div>
-                        <div class="infos-questions">
-                            <p>ceci est une info concernant la question 8</p>
+                        <div class="question-options question-column">
+                            <input type="radio" id="q3a1" name="question3" value="6" datatext="L’intérieur du bien (habitable ou fonctionnel) a déjà été inondé">
+                            <label for="q3a1" class="option-label">L’intérieur du bien (habitable ou fonctionnel) a déjà été inondé</label>
+                            </br>
+                            <input type="radio" id="q3a2" name="question3" value="4" datatext="Les annexes uniquement (ex : garage ou sous-sol), comprenant des enjeux, ont déjà été inondées">
+                            <label for="q3a2" class="option-label">Les annexes uniquement (ex : garage ou sous-sol), comprenant des enjeux, ont déjà été inondées</label>
+                            </br>
+                            <input type="radio" id="q3a3" name="question3" value="2" datatext="Seuls les annexes sans enjeux et les extérieurs ont été inondés">
+                            <label for="q3a3" class="option-label">Seuls les annexes sans enjeux et les extérieurs ont été inondés</label>
+                            </br>
+                            <input type="radio" id="q3a4" name="question3" value="0" datatext="Le terrain et le bâti n’ont déjà été inondés">
+                            <label for="q3a4" class="option-label">Le terrain et le bâti n’ont déjà été inondés</label>
                         </div>
                     </div>
 
-                    <!-- Question 9 -->
+                    <!-- Question 4 -->
                     <div class="form-section-question">
                         <label class="question-label">
-                            9. Avez-vous des arbres à proximité de votre maison qui pourraient augmenter le risque en
-                            cas d'inondation ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info" />
+                            4. Si un sinistre est déjà survenu, renseignez les données suivantes :
+                            
                         </label>
                         <div class="question-options">
-                            <input type="radio" id="q9a1" name="question9" value="2" datatext="Oui">
-                            <label for="q9a1" class="option-label">Oui</label>
-                            <input type="radio" id="q9a2" name="question9" value="1" datatext="Non">
-                            <label for="q9a2" class="option-label">Non</label>
+                            <label for="q4a1" class="option-label">Type d'aléa :</label>
+                            <img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info" />
+                            <input type="text" id="q4a1" name="question4" value="" datatext="Type d'aléa ">
+                            </br>
+                            <label for="q4a2" class="option-label">Hauteur d’eau dans le bâtiment principal :</label>
+                            <input type="text" id="q4a2" name="question4" value="" datatext="Hauteur d’eau dans le bâtiment principal">
+                            </br>
+                            <label for="q4a3" class="option-label">Année :</label>
+                            <input type="text" id="q4a3" name="question4" value="" datatext="Année">
+                            </br>
+                            <label for="q4a4" class="option-label">Hauteur d’eau à l’extérieur :</label>
+                            <input type="text" id="q4a4" name="question4" value="" datatext="Hauteur d’eau à l’extérieur">
                         </div>
                         <div class="infos-questions">
-                            <p>ceci est une info concernant la question 9</p>
+                            <img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />
+                            <p>Débordement de cours d’eau, ruissellement pluvial, etc.</p>
                         </div>
                     </div>
-
-                    <!-- Question 10 -->
-                    <div class="form-section-question">
-                        <label class="question-label">
-                            10. La maison est-elle située dans un zone inondable ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info" />
-                        </label>
-                        <div class="question-options">
-                            <input type="radio" id="q10a1" name="question10" value="3" datatext="Oui">
-                            <label for="q10a1" class="option-label">Oui</label>
-                            <input type="radio" id="q10a2" name="question10" value="1" datatext="Non">
-                            <label for="q10a2" class="option-label">Non</label>
-                        </div>
-                        <div class="infos-questions">
-                            <p>ceci est une info concernant la question 10</p>
-                        </div>
-                    </div>
-                    <!-- Autres questions... -->
                 </div>
 
                 <!-- Section 3: Sécurité et Prévention -->
-                <div class="form-section" id="section-3">
-                    <h3>Section 3: Sécurité et Prévention</h3>
+                <div class="form-section" id="section-4">
+                    <div class="header-question">
+                        <img src="./images/section-3.png" alt="info question" class="picto-section" />
+                        <h3>Section 3 : Evacuation du bien</h3>
+                        <img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info" id="section-3-info" />
+                    </div>
+                    <div class="infos-questions infos-questions-section-3">
+                        <img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />
+                        <p>En cas d’inondation il est conseillé de disposer, à l’étage et au RDC du bien, d’au moins un ouvrant permettant l’évacuation vers l’extérieur (de dimensions suffisantes, non dépendant du réseau électrique et non équipé de barreaux).
+                        </p>
+                    </div>
 
                     <!-- Question 15 -->
                     <div class="form-section-question">
                         <label class="question-label">
-                            15. Avez-vous un plan d'évacuation en cas d'inondation ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info" />
+                            5. Au niveau des ouvrants
                         </label>
                         <div class="question-options">
-                            <input type="radio" id="q15a1" name="question15" value="1" datatext="Oui">
-                            <label for="q15a1" class="option-label">Oui</label>
-                            <input type="radio" id="q15a2" name="question15" value="3" datatext="Non">
-                            <label for="q15a2" class="option-label">Non</label>
-                        </div>
-                        <div class="infos-questions">
-                            <p>ceci est une info concernant la question 15</p>
-                        </div>
-                    </div>
-
-                    <!-- Question 16 -->
-                    <div class="form-section-question">
-                        <label class="question-label">
-                            16. Des mesures préventives contre les inondations sont-elles prises dans votre quartier ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info" />
-                        </label>
-                        <div class="question-options">
-                            <input type="radio" id="q16a1" name="question16" value="1" datatext="Oui">
-                            <label for="q16a1" class="option-label">Oui</label>
-                            <input type="radio" id="q16a2" name="question16" value="3" datatext="Non">
-                            <label for="q16a2" class="option-label">Non</label>
-                        </div>
-                        <div class="infos-questions">
-                            <p>ceci est une info concernant la question 16</p>
+                            <input type="radio" id="q5a1" name="question5" value="6" datatext="Toutes les possibilités de sortie ou d’évacuation sont dépendantes du réseau électrique ">
+                            <label for="q5a1" class="option-label">Toutes les possibilités de sortie ou d’évacuation sont dépendantes du réseau électrique </label>
+                            </br>
+                            <input type="radio" id="q5a2" name="question5" value="2" datatext="Au moins un ouvrant par niveau (RDC et étage) est actionnable manuellement et permet l’évacuation">
+                            <label for="q5a2" class="option-label">Au moins un ouvrant par niveau (RDC et étage) est actionnable manuellement et permet l’évacuation</label>
+                            </br>
+                            <input type="radio" id="q5a3" name="question5" value="0" datatext="Tous les ouvrants permettent l’évacuation (pas de dépendance au réseau électrique)">
+                            <label for="q5a3" class="option-label">Tous les ouvrants permettent l’évacuation (pas de dépendance au réseau électrique)</label>
                         </div>
                     </div>
-
-                    <!-- Autres questions pour la section 3... -->
                 </div>
 
                 <!-- Section 4: Expérience Passée -->
-                <div class="form-section" id="section-4">
-                    <h3>Section 4: Expérience Passée</h3>
+                <div class="form-section" id="section-5">
+                    <div class="header-question">
+                        <img src="./images/section-4.png" alt="info question" class="picto-section" />
+                        <h3>Section 4 : Configuration et structure du bien </h3>
+                    </div>
 
-                    <!-- Question 22 -->
+                    <!-- Question 6 -->
                     <div class="form-section-question">
                         <label class="question-label">
-                            22. Votre propriété a-t-elle déjà été inondée ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info" />
+                            6. Le plancher du bien est
+                            <img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info" />
                         </label>
                         <div class="question-options">
-                            <input type="radio" id="q22a1" name="question22" value="3" datatext="Oui">
-                            <label for="q22a1" class="option-label">Oui</label>
-                            <input type="radio" id="q22a2" name="question22" value="1" datatext="Non">
-                            <label for="q22a2" class="option-label">Non</label>
+                            <input type="radio" id="q6a1" name="question6" value="6" datatext="En contrebas ou à même le sol">
+                            <label for="q6a1" class="option-label">En contrebas ou à même le sol</label>
+                            </br>
+                            <input type="radio" id="q6a2" name="question6" value="4" datatext="Surélevé, à moins de 50 cm du sol (ex : sur vide-sanitaire)">
+                            <label for="q6a2" class="option-label">Surélevé, à moins de 50 cm du sol (ex : sur vide-sanitaire)</label>
+                            </br>
+                            <input type="radio" id="q6a3" name="question6" value="2" datatext="Surélevé à plus de 50 cm du sol (ex : sur vide-sanitaire)">
+                            <label for="q6a3" class="option-label">Surélevé à plus de 50 cm du sol (ex : sur vide-sanitaire)</label>
                         </div>
                         <div class="infos-questions">
-                            <p>ceci est une info concernant la question 22</p>
+                            <img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />
+                            <p>Un bien dont le plancher est surélevé sera moins vulnérable aux Inondations.</p>
                         </div>
                     </div>
 
-                    <!-- Question 23 -->
                     <div class="form-section-question">
                         <label class="question-label">
-                            23. Si oui, à quelle fréquence ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info" />
+                            7. Le bien est équipé : 
+                            <img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info" />
                         </label>
                         <div class="question-options">
-                            <input type="radio" id="q23a1" name="question23" value="0" datatext="Jamais">
-                            <label for="q23a1" class="option-label">Jamais</label>
-                            <input type="radio" id="q23a2" name="question23" value="1" datatext="1x par an">
-                            <label for="q23a2" class="option-label">1x par an</label>
-                            <input type="radio" id="q23a3" name="question23" value="2" datatext="2x par an">
-                            <label for="q23a3" class="option-label">2x par an</label>
-                            <input type="radio" id="q23a4" name="question23" value="4" datatext="> à 2x par an">
-                            <label for="q23a4" class="option-label">> à 2x par an</label>
+                            <input type="radio" id="q7a1" name="question7" value="18" datatext="D’un sous-sol dont au moins une partie à un usage d’habitation">
+                            <label for="q7a1" class="option-label">D’un sous-sol dont au moins une partie à un usage d’habitation</label>
+                            </br>
+                            <input type="radio" id="q7a2" name="question7" value="6" datatext="D’un sous-sol à usage technique (équipements de chauffage, réseau électrique, etc.)">
+                            <label for="q7a2" class="option-label">D’un sous-sol à usage technique (équipements de chauffage, réseau électrique, etc.)</label>
+                            </br>
+                            <input type="radio" id="q7a3" name="question7" value="2" datatext="D’un sous-sol à usage de stockage uniquement">
+                            <label for="q7a3" class="option-label">D’un sous-sol à usage de stockage uniquement</label>
+                            </br>
+                            <input type="radio" id="q7a4" name="question7" value="0" datatext="Le bien ne comprend pas de sous-sol ">
+                            <label for="q7a4" class="option-label">Le bien ne comprend pas de sous-sol </label>
                         </div>
                         <div class="infos-questions">
-                            <p>ceci est une info concernant la question 23</p>
+                            <img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />
+                            <p>Après une inondation, l’évacuation de l’eau peut s’avérer difficile dans les caves ou les sous-sols. L’acquisition d’une pompe permet d’évacuer l’eau plus rapidement, d’assurer un séchage plus rapide et donc de limiter les
+                                dommages sur la structure du bien. La pompe n’a pas vocation à se prémunir d’une inondation, mais permet un retour à la normale plus rapide post-crue.</p>
+                            <img src="./images/pompe-vide-cave.png" alt="info question" class="img-infos" />
                         </div>
                     </div>
-                    <!-- Autres questions pour la section 4... -->
                 </div>
-
 
                 <!-- Section 4: Expérience Passée -->
-                <div class="form-section" id="section-4">
-                    <h3>Section 4: Expérience Passée</h3>
+                <div class="form-section" id="section-6">
+                    <div class="header-question">
+                        <img src="./images/section-4.png" alt="info question" class="picto-section" />
+                        <h3>Section 4 : Configuration et structure du bien </h3>
+                    </div>
 
-                    <!-- Question 22 -->
                     <div class="form-section-question">
                         <label class="question-label">
-                            22. Votre propriété a-t-elle déjà été inondée ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info" />
+                            8. Le bien est-il de plain-pied ?
                         </label>
                         <div class="question-options">
-                            <input type="radio" id="q22a1" name="question22" value="3">
-                            <label for="q22a1" class="option-label">Oui</label>
-                            <input type="radio" id="q22a2" name="question22" value="1">
-                            <label for="q22a2" class="option-label">Non</label>
-                        </div>
-                        <div class="infos-questions">
-                            <p>ceci est une info concernant la question 22</p>
+                            <input type="radio" id="q8a1" name="question8" value="6" datatext="Oui">
+                            <label for="q8a1" class="option-label">Oui</label>
+                            </br>
+                            <input type="radio" id="q8a2" name="question8" value="-6" datatext="Non">
+                            <label for="q8a2" class="option-label">Non</label>
                         </div>
                     </div>
 
-                    <!-- Question 23 -->
-                    <div class="form-section-question">
+                    <div class="form-section-question" id="question-8">
                         <label class="question-label">
-                            23. Si oui, à quelle fréquence ?
-                            <img src="./images/info.png" alt="info question" class="bulle-info" />
+                            8.1. Si non, l’espace refuge est-il conforme ?
+                            <img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info" />
                         </label>
                         <div class="question-options">
-                            <input type="radio" id="q23a1" name="question23" value="0">
-                            <label for="q23a1" class="option-label">Jamais</label>
-                            <input type="radio" id="q23a2" name="question23" value="1">
-                            <label for="q23a2" class="option-label">1x par an</label>
-                            <input type="radio" id="q23a3" name="question23" value="2">
-                            <label for="q23a3" class="option-label">2x par an</label>
-                            <input type="radio" id="q23a4" name="question23" value="4">
-                            <label for="q23a4" class="option-label">> à 2x par an</label>
+                            <input type="radio" id="q8.1a1" name="question8.1" value="-2" datatext="Oui">
+                            <label for="q8.1a1" class="option-label">Oui</label>
+                            </br>
+                            <input type="radio" id="q8.1a2" name="question8.1" value="2" datatext="Non">
+                            <label for="q8.1a2" class="option-label">Non</label>
                         </div>
                         <div class="infos-questions">
-                            <p>ceci est une info concernant la question 23</p>
+                            <img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />
+                            <p>Mesure obligatoire dans le PPRi du bassin versant du Lez (Zones rouge et orange uniquement)</p>
+                            <p>Création ou aménagement d’un espace refuge</p>
+                            <p>Un espace refuge est une zone hors d’eau permettant la mise en sécurité des occupants en cas d’inondation.</p>
+                            <p>Un espace refuge conforme est : </p>
+                            <ul>
+                                <li>accessible depuis l’intérieur</li>
+                                <li>équipé d’au moins un accès vers l’extérieur permettant l’évacuation</li>
+                                <li>d’une superficie suffisante pour patienter dans de bonnes conditions</li>
+                            </ul>
+                            <p>Pour une entreprise, la mise en sécurité des usagers peut également correspondre, en amont, à : </p>
+                            <ul>
+                                <li>la délocalisation temporaire de l’activité dans une zone hors d’eau</li>
+                                <li>la fermeture du site et l’arrêt temporaire de l’activité</li>
+                            </ul>
+                            <img src="./images/espace-refuge.png" alt="info question" class="img-infos" />
                         </div>
                     </div>
 
-                    <!-- Autres questions pour la section 4... -->
+                </div>
+                <!-- Section 6: Nouvelle Section -->
+                <div class="form-section" id="section-7">
+                    <div class="header-question">
+                        <img src="./images/section-4.png" alt="info question" class="picto-section" />
+                        <h3>Section 4 : Configuration et structure du bien </h3>
+                    </div>
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            9. La structure du bien est : 
+                            <img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info" />
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q9a1" name="question9" value="6" datatext="Non étanche (ex : structure bois)">
+                            <label for="q9a1" class="option-label">Non étanche (ex : structure bois)</label>
+                            </br>
+                            <input type="radio" id="q9a2" name="question9" value="4" datatext="En partie étanche (ex : mur en béton et plancher bois)">
+                            <label for="q9a2" class="option-label">En partie étanche (ex : mur en béton et plancher bois)</label>
+                            </br>
+                            <input type="radio" id="q9a3" name="question9" value="1" datatext="Complètement étanche (ex : sol et mur en béton)">
+                            <label for="q9a3" class="option-label">Complètement étanche (ex : sol et mur en béton)</label>
+                        </div>
+                        <div class="infos-questions">
+                            <img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />
+                            <p>Une structure étanche sera plus résistante aux entrées d’eau.</p>
+                            <p>Si votre bien présente une structure non étanche, des travaux de renforcement de sa structure seront à prévoir (dalle béton au sol, cuvelage du sous-sol, etc.).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            10. Le bien présente-t-il des matériaux de second-œuvre sensibles à l’immersion temporaire ?
+                            <img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info" />
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q10a1" name="question10" value="2" datatext="Oui">
+                            <label for="q10a1" class="option-label">Oui</label>
+                            </br>
+                            <input type="radio" id="q10a2" name="question10" value="0" datatext="Non">
+                            <label for="q10a2" class="option-label">Non</label>
+                        </div>
+                        <div class="infos-questions">
+                            <img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />
+                            <p>Certains matériaux de second-œuvre sont sensibles à l’immersion temporaire : </p>
+                            <ul id="mauvais">
+                                <li>laines minérales</li>
+                                <li>plaques de plâtre</li>
+                                <li>parquet, tapisserie</li>
+                                <li>ouvrants en bois</li>
+                            </ul>
+                            <p>Dans le cadre d’une rénovation du bien ou suite à un sinistre, il est préférable d’utiliser : </p>
+                            <ul id="bon">
+                                <li>du polystyrène </li>
+                                <li>des maçonneries pleines</li>
+                                <li>de la peinture</li>
+                                <li>des ouvrants en PVC ou Aluminium</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Section 6: Nouvelle Section -->
+                <div class="form-section" id="section-8">
+                    <h3>Section 7: [Titre de la Nouvelle Section]</h3>
+                    <!-- Contenu de la nouvelle section ici... -->
+                </div>
+                <!-- Section 6: Nouvelle Section -->
+                <div class="form-section" id="section-9">
+                    <h3>Section 8: [Titre de la Nouvelle Section]</h3>
+                    <!-- Contenu de la nouvelle section ici... -->
+                </div>
+                <!-- Section 6: Nouvelle Section -->
+                <div class="form-section" id="section-10">
+                    <h3>Section 9: [Titre de la Nouvelle Section]</h3>
+                    <!-- Contenu de la nouvelle section ici... -->
                 </div>
 
-                <!-- Boutons de navigation -->
-                <div class="navigation-buttons">
-                    <button type="button" id="prev-button">Précédent</button>
-                    <button type="button" id="next-button">Suivant</button>
-                    <button type="submit" id="submit-button">Voir les Résultats</button>
-                </div>
                 <div class="info-submit">
                     <p class="para-info"></p>
                 </div>
                 <!-- Section 5: Résultats -->
-                <div class="form-section" id="section-5">
+                <div class="form-section" id="section-11">
                     <h3>Résultats</h3>
                     <div id="result-container">
                         <div id="result-text"></div>
@@ -329,6 +429,12 @@
                     </div>
                 </div>
             </form>
+            <!-- Boutons de navigation -->
+            <div class="navigation-buttons">
+                <button type="button" id="prev-button">Précédent</button>
+                <button type="button" id="next-button">Suivant</button>
+                <button type="submit" id="submit-button">Voir les Résultats</button>
+            </div>
         </div>
     </div>
 
