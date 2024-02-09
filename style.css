@@ -262,8 +262,35 @@
 }
 
 .img-infos {
-    max-width: 60%;
+    max-width: 80%;
     margin: 40px auto 0 auto;
+}
+
+.liste-img {
+    max-width: 90px;
+    margin: 0;
+    padding-right: 24px;
+}
+
+.liste-img-1,
+.liste-img-2 {
+    max-width: 55%;
+    margin: 0;
+}
+
+.ul-contenaire {
+    padding-left: 0;
+}
+
+.li-last-child {
+    margin-left: 114px;
+    margin-bottom: 24px;
+}
+
+.list-img-contenaire {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
 }
 
 #dynamic-content {
@@ -307,6 +334,10 @@
     text-align: left;
     padding-left: 24px;
     margin: 0;
+}
+
+.header-question>.bulle-info {
+    width: 24px;
 }
 
 .infos-questions {
@@ -366,7 +397,10 @@
 
 #question-1-1,
 #question-1-2,
-#question-8 {
+#question-8,
+#question-15-1,
+#question-22-1,
+#question-22-2 {
     display: none;
 }
 

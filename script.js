@@ -465,25 +465,34 @@ function preDiagnostic() {
     const diagnosticPanel = document.getElementById('diagnostic-panel');
     const sections = document.querySelectorAll('.form-section');
     let currentSectionIndex = 0;
-    let totalSections = 11;
+    let totalSections = 14;
     const submitButton = document.getElementById('submit-button');
     const progressBarContainer = document.getElementById('progress-bar-etapes');
 
     // AFFICHE LES QUESTIONS ENTREPRISE
     var selectTypeDeBien = document.getElementById('type-de-bien');
-    console.log(selectTypeDeBien);
+    // console.log(selectTypeDeBien);
 
     selectTypeDeBien.addEventListener('change', function () {
         var value = this.value;
         var question1_1 = document.getElementById('question-1-1');
         var question1_2 = document.getElementById('question-1-2');
-        console.log(value);
+        var question15_1 = document.getElementById('question-15-1');
+        var question22_1 = document.getElementById('question-22-1');
+        var question22_2 = document.getElementById('question-22-2');
+
         if (value === 'entreprise') {
             question1_1.style.display = 'block';
             question1_2.style.display = 'block';
+            question15_1.style.display = 'block';
+            question22_1.style.display = 'block';
+            question22_2.style.display = 'block';
         } else {
             question1_1.style.display = 'none';
             question1_2.style.display = 'none';
+            question15_1.style.display = 'none';
+            question22_1.style.display = 'none';
+            question22_2.style.display = 'none';
         }
     });
 
@@ -565,11 +574,13 @@ function preDiagnostic() {
         }
     }
 
-    // INFO SECTION 3
-    const infoSection3 = document.getElementById('section-3-info');
+    // INFO SECTIONS
+    const infoSection = document.querySelectorAll('.section-info');
     // console.log(infoSection3);
-    infoSection3.addEventListener('mouseover', function () {
-        openInfoPanelSection3(infoSection3);
+    infoSection.forEach(icon => {
+        icon.addEventListener('mouseover', function () {
+            openInfoPanelSection3(icon);
+        });
     });
 
     function openInfoPanelSection3(icon) {
@@ -584,6 +595,26 @@ function preDiagnostic() {
             infoPanel.classList.add('open');
         }
     }
+
+    // OBJECTIFS SECTION 1
+    const objectifsInfoIcon = document.getElementById('objectifs-infos');
+    if (objectifsInfoIcon) {
+        objectifsInfoIcon.addEventListener('mouseover', function () {
+            openObjectifsInfoPanel();
+        });
+    }
+
+    function openObjectifsInfoPanel() {
+        const infoContent = document.getElementById('objectifs-infos-questions');
+        const dynamicContent = document.getElementById('dynamic-content');
+        const infoPanel = document.getElementById('info-panel');
+
+        if (infoContent && dynamicContent && infoPanel) {
+            dynamicContent.innerHTML = infoContent.innerHTML;
+            infoPanel.classList.add('open');
+        }
+    }
+
 
     function resetForm() {
         // Sélectionnez votre formulaire par son ID ou sa classe

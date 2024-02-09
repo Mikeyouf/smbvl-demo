@@ -64,7 +64,8 @@
                         <p>
                             Il s'adresse aux propriétaires de biens en zone inondable du<strong> Plan de Prévention du Risque Inondation (PPRi).</strong><img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info" />
                             <div class="infos-questions">
-                                <h3><img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />Le Plan de Prévention du Risque inondation (PPRi) </h3>
+                                <img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />
+                                <h3>Le Plan de Prévention du Risque inondation (PPRi) </h3>
                                 <p>Le PPRi défini les zones inondables et règlemente l’urbanisation.</p>
                                 <p>Il dresse une liste de préconisations à appliquer pour les nouvelles constructions, et dans certains cas, pour les biens existants.</p>
                                 <p>Tous les PPR approuvés ces dernières années intègrent des mesures obligatoires à réaliser pour adapter les biens existants au risque.</p>
@@ -76,9 +77,12 @@
                             Si votre bien est hors zonage, mais a déjà été inondé, vous pouvez également réaliser votre pré-diagnostic.
                         </p>
                         <p>
-                            <strong>Les objectifs</strong><img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info" />
-                            <div class="infos-questions">
-                                <p>ceci est une info concernant les objectifs</p>
+                            <strong>Les objectifs</strong><img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info" id="objectifs-infos" />
+                            <div class="infos-questions" id="objectifs-infos-questions">
+                                <img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />
+                                <p>Ce pré-diagnostic ne remplace en aucun cas la visite et l’avis d’un expert en risque inondation, il permet un premier niveau d’information.</p>
+                                <p>Pour une approche plus concrète, il est recommandé de vérifier auprès du SMBVL la situation de votre bien et la nécessité de réaliser un diagnostic complet.</p>
+                                <p>Vous pourrez transmettre les résultats de votre pré-diagnostic à l’expert si vous poursuivez la démarche.</p>
                             </div>
                         </p>
                         <ul class="custom-list">
@@ -175,8 +179,7 @@
                     <!-- Question 4 -->
                     <div class="form-section-question">
                         <label class="question-label">
-                            4. Si un sinistre est déjà survenu, renseignez les données suivantes :
-                            
+                            4. Si un sinistre est déjà survenu, renseignez les données suivantes :  
                         </label>
                         <div class="question-options">
                             <label for="q4a1" class="option-label">Type d'aléa :</label>
@@ -204,7 +207,7 @@
                     <div class="header-question">
                         <img src="./images/section-3.png" alt="info question" class="picto-section" />
                         <h3>Section 3 : Evacuation du bien</h3>
-                        <img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info" id="section-3-info" />
+                        <img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info section-info" />
                     </div>
                     <div class="infos-questions infos-questions-section-3">
                         <img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />
@@ -401,26 +404,372 @@
                 </div>
                 <!-- Section 6: Nouvelle Section -->
                 <div class="form-section" id="section-8">
-                    <h3>Section 7: [Titre de la Nouvelle Section]</h3>
-                    <!-- Contenu de la nouvelle section ici... -->
+                    <div class="header-question">
+                        <img src="./images/section-5.png" alt="info question" class="picto-section" />
+                        <h3>Section 5 : Entrée d'eau</h3>
+                        <img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info section-info" />
+                    </div>
+                    <div class="infos-questions infos-questions-section-3">
+                        <img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />
+                        <p>Mesure obligatoire dans le PPRi du bassin versant du Lez</p>
+                        <p>Limiter les entrées d’eau</p>
+                        <p>Plusieurs équipements permettent de protéger des entrées d’eau jusqu’à 1 m :</p>
+                        <ul class="ul-contenaire">
+                            <div class="list-img-contenaire">
+                                <img src="./images/batadeau.png" alt="info question" class="img-infos liste-img" />
+                                <li>Barrières anti-inondation (batardeaux) pour les portes, baies vitrées, fenêtres</li>
+                            </div>
+                            <div class="list-img-contenaire">
+                                <img src="./images/occultation-temporaire.png" alt="info question" class="img-infos liste-img" />
+                                <li>Dispositifs d’occultation temporaire pour les aérations basses et les accès vide-sanitaire</li>
+                            </div>
+                            <div class="list-img-contenaire">
+                                <img src="./images/clapet-anti-retour.png" alt="info question" class="img-infos liste-img" />
+                                <li>Clapet anti-retour pour le réseau des eaux usées, afin d’éviter les remontées par les sanitaires (WC, bacs de douches, etc.)</li>
+                            </div>
+                            <li class="li-last-child">Pour les entreprises, murage du bas des vitrines</li>
+                        </ul>
+                        <p>En complément, les fissures et gaines de réseaux non étanches peuvent être colmatées à l’aide de ciment ou de mortier.</p>
+                        <p>Ces dispositifs sont efficaces jusqu’à 1 m. Au-delà, ils permettront de réduire les dommages causés par l’inondation.</p>
+                    </div>
+
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            11. Le bien est équipé :
+                        </label>
+                        <p>a. De nombreuses surfaces vitrées (type : grandes baies vitrées, vitrine, etc.) ?</p>
+                        <div class="question-options">
+                            <input type="radio" id="q11a1" name="question11a" value="4" datatext="Oui">
+                            <label for="q11a1" class="option-label">Oui</label>
+                            </br>
+                            <input type="radio" id="q11a2" name="question11a" value="2" datatext="Non">
+                            <label for="q11a2" class="option-label">Non</label>
+                        </div>
+                        <p>b. D’aérations en position basse (en bas des murs) ?</p>
+                        <div class="question-options">
+                            <input type="radio" id="q11b1" name="question11b" value="3" datatext="Oui">
+                            <label for="q11b1" class="option-label">Oui</label>
+                            </br>
+                            <input type="radio" id="q11b2" name="question11b" value="0" datatext="Non">
+                            <label for="q11b2" class="option-label">Non</label>
+                        </div>
+                        <p>c. De sanitaires ou d’évacuations d’eaux usées en RDC – Sous-sol ?</p>
+                        <div class="question-options">
+                            <input type="radio" id="q11c1" name="question11c" value="2" datatext="Oui">
+                            <label for="q11c1" class="option-label">Oui</label>
+                            </br>
+                            <input type="radio" id="q11c2" name="question11c" value="0" datatext="Non">
+                            <label for="q11c2" class="option-label">Non</label>
+                        </div>
+                        <p>d. Si le bien est équipé d’un vide-sanitaire, la trappe d’accès est positionnée à l’intérieur du bien ?</p>
+                        <div class="question-options">
+                            <input type="radio" id="q11d1" name="question11d" value="3" datatext="Oui">
+                            <label for="q11d1" class="option-label">Oui</label>
+                            </br>
+                            <input type="radio" id="q11d2" name="question11d" value="0" datatext="Non">
+                            <label for="q11d2" class="option-label">Non</label>
+                        </div>
+                    </div>
                 </div>
                 <!-- Section 6: Nouvelle Section -->
                 <div class="form-section" id="section-9">
-                    <h3>Section 8: [Titre de la Nouvelle Section]</h3>
-                    <!-- Contenu de la nouvelle section ici... -->
+                    <div class="header-question">
+                        <img src="./images/section-5.png" alt="info question" class="picto-section" />
+                        <h3>Section 5 : Entrée d'eau</h3>
+                        <img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info section-info" />
+                    </div>
+                    <div class="infos-questions infos-questions-section-3">
+                        <img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />
+                        <p>Mesure obligatoire dans le PPRi du bassin versant du Lez</p>
+                        <p>Limiter les entrées d’eau</p>
+                        <p>Plusieurs équipements permettent de protéger des entrées d’eau jusqu’à 1 m :</p>
+                        <ul class="ul-contenaire">
+                            <div class="list-img-contenaire">
+                                <img src="./images/batadeau.png" alt="info question" class="img-infos liste-img" />
+                                <li>Barrières anti-inondation (batardeaux) pour les portes, baies vitrées, fenêtres</li>
+                            </div>
+                            <div class="list-img-contenaire">
+                                <img src="./images/occultation-temporaire.png" alt="info question" class="img-infos liste-img" />
+                                <li>Dispositifs d’occultation temporaire pour les aérations basses et les accès vide-sanitaire</li>
+                            </div>
+                            <div class="list-img-contenaire">
+                                <img src="./images/clapet-anti-retour.png" alt="info question" class="img-infos liste-img" />
+                                <li>Clapet anti-retour pour le réseau des eaux usées, afin d’éviter les remontées par les sanitaires (WC, bacs de douches, etc.)</li>
+                            </div>
+                            <li class="li-last-child">Pour les entreprises, murage du bas des vitrines</li>
+                        </ul>
+                        <p>En complément, les fissures et gaines de réseaux non étanches peuvent être colmatées à l’aide de ciment ou de mortier.</p>
+                        <p>Ces dispositifs sont efficaces jusqu’à 1 m. Au-delà, ils permettront de réduire les dommages causés par l’inondation.</p>
+                    </div>
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            12.	Le bien présente des fissures et/ou des gaines de réseaux non étanches en position basse ? 
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q12a1" name="question12" value="2" datatext="Oui">
+                            <label for="q12a1" class="option-label">Oui</label>
+                            </br>
+                            <input type="radio" id="q12a2" name="question12" value="0" datatext="Non">
+                            <label for="q12a2" class="option-label">Non</label>
+                        </div>
+                    </div>
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            13.	Le bien est équipé de dispositifs de protection anti-inondation sur les entrées d’eau (ex : batardeaux, clapet anti-retour sur le réseau des usées, etc.) ? 
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q13a1" name="question13" value="-6" datatext="Oui, sur toutes les entrées d’eau">
+                            <label for="q13a1" class="option-label">Oui, sur toutes les entrées d’eau</label>
+                            </br>
+                            <input type="radio" id="q13a2" name="question13" value="2" datatext="En partie seulement">
+                            <label for="q13a2" class="option-label">En partie seulement</label>
+                            </br>
+                            <input type="radio" id="q13a3" name="question13" value="3" datatext="Non">
+                            <label for="q13a3" class="option-label">Non</label>
+                        </div>
+                    </div>
                 </div>
                 <!-- Section 6: Nouvelle Section -->
                 <div class="form-section" id="section-10">
-                    <h3>Section 9: [Titre de la Nouvelle Section]</h3>
-                    <!-- Contenu de la nouvelle section ici... -->
+                    <div class="header-question">
+                        <img src="./images/section-6.png" alt="info question" class="picto-section" />
+                        <h3>Section 6 : Réseaux</h3>
+                        <img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info section-info" />
+                    </div>
+                    <div class="infos-questions infos-questions-section-3">
+                        <img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />
+                        <p>Les réseaux électrique et de chauffage sont particulièrement vulnérables. Un contact avec l’eau, même de courte durée, peut imposer le remplacement de ces équipements</p>
+                        <p>Mesures obligatoires dans le PPRi du bassin versant du Lez</p>
+                        <p>Le positionnement de ces équipements en hauteur ou leur protection permet de limiter les impacts de l’inondation et de remettre rapidement en fonctionnement le bien. </p>
+                        <p>Modification des circuits électriques</p>
+                        <p>Un réseau électrique séparatif (pour isoler les pièces non inondables) et descendant (du plafond vers le sol) est moins vulnérable.</p>
+                        <img src="./images/rehausse-equipement.png" alt="info question" class="img-infos" />
+                    </div>
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            14.	Tout ou partie des équipements de commandes électriques (ex : tableau, disjoncteur général) est en position basse (à moins de 1 m de hauteur ou en sous-sol) ? 
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q14a1" name="question14" value="3" datatext="Oui">
+                            <label for="q14a1" class="option-label">Oui</label>
+                            </br>
+                            <input type="radio" id="q14a2" name="question14" value="0" datatext="Non">
+                            <label for="q14a2" class="option-label">Non</label>
+                        </div>
+                    </div>
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            15.	Tout ou partie des équipements de chauffage (ex : chauffe-eau, chaudière, groupe extérieur de climatisation) est en position basse (à moins de 1 m de hauteur ou en sous-sol) ?
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q15a1" name="question15" value="3" datatext="Oui">
+                            <label for="q15a1" class="option-label">Oui</label>
+                            </br>
+                            <input type="radio" id="q15a2" name="question15" value="0" datatext="Non">
+                            <label for="q15a2" class="option-label">Non</label>
+                        </div>
+                    </div>
+                    <div class="form-section-question" id="question-15-1">
+                        <label class="question-label">
+                            15.1.	Pour les entreprises : l’activité est-elle dépendante d’une connexion internet ou du réseau de téléphonie ? 
+                            <img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info" />
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q15.1a1" name="question15.1" value="4" datatext="Oui">
+                            <label for="q15.1a1" class="option-label">Oui</label>
+                            </br>
+                            <input type="radio" id="q15.1a2" name="question15.1" value="0" datatext="Non">
+                            <label for="q15.1a2" class="option-label">Non</label>
+                        </div>
+                        <div class="infos-questions">
+                            <img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />
+                            <p>Si l’entreprise est dépendante de son réseau informatique, une procédure est à définir pour la poursuite de l’activité en mode dégradé. Cette procédure sera à mentionner dans un plan de gestion spécifique.</p>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="form-section" id="section-11">
+                    <div class="header-question">
+                        <img src="./images/section-7.png" alt="info question" class="picto-section" />
+                        <h3>Section 7 : Équipements du bien </h3>
+                        <img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info section-info" />
+                    </div>
+                    <div class="infos-questions infos-questions-section-3">
+                        <img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />
+                        <p>L’électroménager, les biens de valeur (économique ou sentimentale), l’administratif, les équipements informatiques, les équipements liés à l’activité d’une entreprise, les stocks, les produits périssables ou dangereux, etc. sont,
+                            dans la mesure du possible à rehausser.</p>
+                        <p>Plusieurs solutions existent :</p>
+                        <ul>
+                            <li>Déplacement permanent ou temporaire des équipements les plus sensibles (à prioriser)</li>
+                            <li>Mise en place de rayonnages</li>
+                            <li>Mise en place de murets étanches</li>
+                            <li>Acquisition d’armoires étanches (pour les polluants)</li>
+                        </ul>
+                        <img src="./images/rayonnage-armoires.png" alt="info question" class="img-infos" />
+                    </div>
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            16.	Du matériel, des équipements sensibles ou des objets de valeur sont localisés en position basse (à moins de 1 m de hauteur ou en sous-sol) ?  
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q16a1" name="question16" value="3" datatext="Oui">
+                            <label for="q16a1" class="option-label">Oui</label>
+                            </br>
+                            <input type="radio" id="q16a2" name="question16" value="0" datatext="Non">
+                            <label for="q16a2" class="option-label">Non</label>
+                        </div>
+                    </div>
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            17.	Si oui, le bien est équipé d’un étage ou d’une plateforme de stockage pour les entreprises, d’une surface suffisante pour permettre le déplacement permanent ou provisoire de ces équipements ?
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q17a1" name="question17" value="-2" datatext="Oui">
+                            <label for="q17a1" class="option-label">Oui</label>
+                            </br>
+                            <input type="radio" id="q17a2" name="question17" value="3" datatext="Non">
+                            <label for="q17a2" class="option-label">Non</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section" id="section-12">
+                    <div class="header-question">
+                        <img src="./images/section-8.png" alt="info question" class="picto-section" />
+                        <h3>Section 8 : Extérieurs</h3>
+                        <img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info section-info" />
+                    </div>
+                    <div class="infos-questions infos-questions-section-3">
+                        <img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />
+                        <p>La protection des équipements extérieurs permet d’éviter les effets domino dommageables. </p>
+                        <p>Par exemple, les piscines enterrées ne sont plus visibles une fois recouvertes par l’eau. Il est préférable de les matérialiser avec des barrières ou des mâts pour éviter les sur-accidents.</p>
+                        <p>Mesure obligatoire dans le PPRi du bassin versant du Lez</p>
+                        <p>Les objets flottants (matériaux stockés ou équipements extérieurs) ou polluants sont à arrimer ou mettre hors d’eau pour éviter les phénomènes de pollution et d’embâcle.</p>
+                        <img src="./images/arrimage.png" alt="info question" class="img-infos liste-img-1" />
+                        <p>La création d’ouvertures au pied des murs de clôtures permet d’éviter que la clôture ne fasse obstacle aux écoulements des crues et augmente le risque localement.</p>
+                        <img src="./images/ouverture-cloture.png" alt="info question" class="img-infos liste-img-2" />
+                    </div>
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            18.	La parcelle comprend-elle des bassins enterrés ou des piscines non matérialisés ?
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q18a1" name="question18" value="3" datatext="Oui">
+                            <label for="q18a1" class="option-label">Oui</label>
+                            </br>
+                            <input type="radio" id="q18a2" name="question18" value="0" datatext="Non">
+                            <label for="q18a2" class="option-label">Non</label>
+                        </div>
+                    </div>
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            19.	Des polluants sont-ils stockés sur la parcelle (ex : cuve d’hydrocarbures) ?
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q19a1" name="question19" value="3" datatext="Oui">
+                            <label for="q19a1" class="option-label">Oui</label>
+                            </br>
+                            <input type="radio" id="q19a2" name="question19" value="0" datatext="Non">
+                            <label for="q19a2" class="option-label">Non</label>
+                        </div>
+                    </div>
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            20.	Des équipements flottants sont-ils stockés sur la parcelle (remorque, tas de bois, etc.) ?
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q20a1" name="question20" value="2" datatext="Oui">
+                            <label for="q20a1" class="option-label">Oui</label>
+                            </br>
+                            <input type="radio" id="q20a2" name="question20" value="0" datatext="Non">
+                            <label for="q20a2" class="option-label">Non</label>
+                        </div>
+                    </div>
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            21.	La parcelle est clôturée par :
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q21a1" name="question21" value="3" datatext="Un mur plein sans ouverture">
+                            <label for="q21a1" class="option-label">Un mur plein sans ouverture</label>
+                            </br>
+                            <input type="radio" id="q21a2" name="question21" value="2" datatext="Un mur équipé d’évacuation en pied de mur">
+                            <label for="q21a2" class="option-label">Un mur équipé d’évacuation en pied de mur</label>
+                            </br>
+                            <input type="radio" id="q21a3" name="question21" value="1" datatext="du grillage, de la végétation, rien">
+                            <label for="q21a3" class="option-label">du grillage, de la végétation, rien</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section" id="section-13">
+                    <div class="header-question">
+                        <img src="./images/section-9.png" alt="info question" class="picto-section" />
+                        <h3>Section 9 : Gestion de crise</h3>
+                        <img src="./images/picto-info-formulaire.png" alt="info question" class="bulle-info section-info" />
+                    </div>
+                    <div class="infos-questions infos-questions-section-3">
+                        <img src="./images/picto-info-bulle.png" alt="info question" class="bulle-info-2" />
+                        <p>En complément des mesures structurelles de protection du bien, la mise en place de mesures organisationnelles permet de savoir agir avant, pendant et après une inondation.</p>
+                        <p>Ces mesures organisationnelles peuvent être renseignées dans :</p>
+                        <ul>
+                            <li>le Plan Familial de Mise en Sûreté (PFMS) pour une habitation</li>
+                            <li>le Plan d’Organisation de Mise en Sureté de l’Etablissement (POMSE) pour une entreprise</li>
+                        </ul>
+                        <p>Pour vous aider, des modèles de ces documents sont téléchargeables gratuitement sur le site de l’Irma :</p>
+                        <ul>
+                            <li><a href="https://tinyurl.com/PlanFamilialDeMiseEnSurete" target="_blank">Télécharger le PFMS de l’IRMA</a></li>
+                            <li><a href="https://tinyurl.com/PlanOrgaMiseEnSureteEtab" target="_blank">Télécharger le POMSE de l’IRMA</a></li>
+                        </ul>
+                    </div>
+                    <div class="form-section-question">
+                        <label class="question-label">
+                            22.	Avez-vous connaissance des consignes de sécurité et des bons gestes à entreprendre en cas d’alerte inondation ?
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q22a1" name="question22" value="0" datatext="Oui">
+                            <label for="q22a1" class="option-label">Oui</label>
+                            </br>
+                            <input type="radio" id="q22a2" name="question22" value="3" datatext="Non">
+                            <label for="q22a2" class="option-label">Non</label>
+                        </div>
+                    </div>
+                    <div class="form-section-question" id="question-22-1">
+                        <label class="question-label">
+                            22.1 Si le bien est une entreprise, une procédure de gestion de crise, spécifique au risque inondation, est-elle en place au niveau du bien ?
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q22.1a1" name="question22.1" value="0" datatext="Oui">
+                            <label for="q22.1a1" class="option-label">Oui</label>
+                            </br>
+                            <input type="radio" id="q22.1a2" name="question22.1" value="6" datatext="Non">
+                            <label for="q22.1a2" class="option-label">Non</label>
+                        </div>
+                    </div>
+                    <div class="form-section-question" id="question-22-2">
+                        <label class="question-label">
+                            22.2 Si le bien est une entreprise, la poursuite de l’activité est-elle possible en télétravail ou en mode dégradé ?
+                        </label>
+                        <div class="question-options">
+                            <input type="radio" id="q22.2a1" name="question22.2" value="0" datatext="Oui">
+                            <label for="q22.2a1" class="option-label">Oui</label>
+                            </br>
+                            <input type="radio" id="q22.2a2" name="question22.2" value="4" datatext="Non">
+                            <label for="q22.2a2" class="option-label">Non</label>
+                        </div>
+                    </div>
+                </div>
+
 
                 <div class="info-submit">
                     <p class="para-info"></p>
                 </div>
                 <!-- Section 5: Résultats -->
-                <div class="form-section" id="section-11">
-                    <h3>Résultats</h3>
+                <div class="form-section" id="section-14">
+                    <div class="header-question">
+                        <img src="./images/section-9.png" alt="info question" class="picto-section" />
+                        <h3>Résultats</h3>
+                    </div>
                     <div id="result-container">
                         <div id="result-text"></div>
                         <div id="progress-bar-container">
@@ -433,7 +782,7 @@
             <div class="navigation-buttons">
                 <button type="button" id="prev-button">Précédent</button>
                 <button type="button" id="next-button">Suivant</button>
-                <button type="submit" id="submit-button">Voir les Résultats</button>
+                <button type="submit" id="submit-button">Visualiser mon niveau de vulnérabilité</button>
             </div>
         </div>
     </div>
