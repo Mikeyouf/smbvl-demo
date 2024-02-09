@@ -40,6 +40,7 @@
     flex-direction: column;
     height: 100% !important;
     max-height: 85vh;
+    min-height: 85vh;
     justify-content: flex-start;
     flex-grow: 1;
     border-radius: 8px;
@@ -56,6 +57,8 @@
     display: flex;
     flex-direction: column;
     height: 140px;
+    min-height: 140px;
+    max-height: 140px;
     justify-content: center;
 }
 
@@ -82,7 +85,7 @@
 }
 
 .form-section-question {
-    padding: 20px 0;
+    padding: 16px 0;
     border-bottom: 1px solid #004587;
 }
 
@@ -97,28 +100,26 @@
 
 .form-section h2 {
     color: #2c3e50;
-    /* Bleu foncé */
 }
 
 .form-section h3 {
     color: #b81547;
-    /* Bordeaux */
 }
 
 #submit-button {
-    background-color: #2c3e50;
-    /* Bleu foncé */
+    background-color: #b81547;
     color: white;
     padding: 10px 20px;
-    border: none;
+    border: 1px solid #b81547;
     border-radius: 4px;
     cursor: pointer;
     display: none;
+    transition: all 0.3s ease-in;
 }
 
 #submit-button:hover {
-    background-color: #34495e;
-    /* Bleu foncé plus clair */
+    background-color: #ffffff;
+    color: #b81547;
 }
 
 .header-diag {
@@ -163,12 +164,12 @@
     cursor: pointer;
     margin-right: 10px;
     min-width: 120px;
+    transition: all 0.3s ease-in;
 }
 
 #prev-button:hover,
 #next-button:hover {
     background-color: #B81447;
-    /* Vert plus clair */
 }
 
 #result-container {
@@ -210,9 +211,7 @@
     right: 10px;
     cursor: pointer;
     background-color: #2c3e50;
-    /* Bleu foncé */
     border-radius: 6px;
-    /* Ajoutez si nécessaire : */
     display: block;
     visibility: visible;
     opacity: 1;
@@ -248,7 +247,6 @@
     top: 0;
     right: calc(-30vw - 16px);
     width: 30vw;
-    /* height: 100%; */
     background-color: white;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.25);
     transition: right 0.5s;
@@ -317,7 +315,6 @@
 
 .info-panel.open {
     right: 0;
-    /* Glisse dans l'écran */
 }
 
 .header-question {
@@ -411,33 +408,21 @@
 #mauvais li,
 #bon li {
     list-style-type: none;
-    /* Enlève les puces par défaut */
     padding-left: 40px;
-    /* Fait de la place pour l'image de la puce, ajustez selon la taille de votre image */
     background-repeat: no-repeat;
-    /* Empêche l'image de se répéter */
     background-position: 0 center;
-    /* Positionne l'image à gauche et au centre verticalement */
     background-size: 24px 24px;
-    /* Définit la taille de l'image de fond */
     margin-bottom: 10px;
-    /* Espacement entre les éléments de la liste */
     line-height: 24px;
-    /* Ajustez la hauteur de ligne pour centrer le texte avec l'image, si nécessaire */
 }
 
 #mauvais li {
     background-image: url('./images/mauvais-materiaux.png');
-    /* Chemin vers votre image pour les mauvais matériaux */
 }
 
 #bon li {
     background-image: url('./images/bon-materiaux.png');
-    /* Chemin vers votre image pour les bons matériaux */
 }
-
-
-/* @media only screen and (max-height: 800px) {} */
 
 form {
     display: grid;
@@ -925,10 +910,9 @@ h4 {
         top: 30%;
     }
 
-    /* FORM DIAG */
+    /* FORMULAIRE DIAG */
     .side-panel {
         right: -80vw;
-        /* Commence hors de l'écran */
         width: 80vw;
         height: 100vh;
     }
@@ -936,17 +920,115 @@ h4 {
     #form-container {
         min-height: 90vh;
         margin: 10px 40px;
+        padding: 0;
     }
 
     #form-container form {
-        min-height: 80vh;
-        max-height: 80vh;
+        min-height: 90vh;
+        max-height: 90vh;
     }
 
-    .info-panel {
-        right: -400px;
-        width: 400px;
-        height: 100vh;
+    #section-8 p {
+        margin: 0;
+    }
+
+    .header-infos {
+        max-height: 120px !important;
+        min-height: 120px;
+    }
+
+    .header-infos,
+    .form-section {
+        padding: 15px 40px;
+        /* Réduit le padding */
+    }
+
+    .header-question h3,
+    .form-section h3,
+    .question-label,
+    .option-label {
+        font-size: 14px;
+    }
+
+    .header-question img,
+    .bulle-info,
+    .bulle-info-2 {
+        width: 24px;
+    }
+
+    .form-section-question {
+        padding: 8px 0;
+    }
+
+    .form-section-question p,
+    .form-section-question li {
+        font-size: 14px;
+        margin: 0.5em;
+        padding: 8px 0;
+    }
+
+    .navigation-buttons {
+        margin-top: 0;
+    }
+
+    .navigation-buttons #prev-button,
+    .navigation-buttons #next-button {
+        padding: 8px 15px;
+        /* Ajuste le padding des boutons */
+        font-size: 14px;
+        /* Réduit la taille de la police des boutons */
+    }
+
+    .question-options {
+        margin-top: 8px;
+    }
+
+    .question-options select {
+        height: 32px;
+        /* Ajuste la hauteur des éléments select */
+        font-size: 12px;
+        /* Réduit la taille de la police à l'intérieur du select */
+    }
+
+    .question-options input[type="text"] {
+        min-height: 32px;
+        /* Ajuste la hauteur des inputs de type texte */
+    }
+
+    #dynamic-content {
+        padding: 40px;
+        /* Ajuste le padding du contenu dynamique */
+        font-size: 14px;
+        /* Réduit la taille de la police du contenu dynamique */
+    }
+
+    #dynamic-content h3 {
+        font-size: 14px;
+        /* Ajuste la taille pour les titres à l'intérieur du contenu dynamique */
+    }
+
+    .infos-questions {
+        font-size: 12px;
+        /* Réduit la taille de la police pour les infos questions */
+    }
+
+    .accueil-text {
+        padding-right: 40px;
+        line-height: 18px;
+    }
+
+    .accueil-text p {
+        margin: 0;
+    }
+
+    .accueil-text ul {
+        margin: 0;
+        padding-left: 20px;
+    }
+
+    .custom-list li {
+        position: relative;
+        padding-left: 20px;
     }
 }
 
