@@ -468,6 +468,14 @@ function preDiagnostic() {
     let totalSections = 14;
     const submitButton = document.getElementById('submit-button');
     const progressBarContainer = document.getElementById('progress-bar-etapes');
+    let typeDebien = '';
+    let niveauAlea = communeData.niveauAlea;
+    let batiInondable = communeData.batiInondable;
+    let isEligible = communeData.isEligible;
+    let score = 0;
+    let formData = {
+        score: 0,
+    };
 
     // AFFICHE LES QUESTIONS ENTREPRISE
     var selectTypeDeBien = document.getElementById('type-de-bien');
@@ -475,6 +483,8 @@ function preDiagnostic() {
 
     selectTypeDeBien.addEventListener('change', function () {
         var value = this.value;
+        typeDebien = value;
+        // console.log(typeDebien);
         var question1_1 = document.getElementById('question-1-1');
         var question1_2 = document.getElementById('question-1-2');
         var question15_1 = document.getElementById('question-15-1');
@@ -496,7 +506,7 @@ function preDiagnostic() {
         }
     });
 
-    //AFFICHE QESTION 8 SI 7 = NON
+    //AFFICHE QUESTION 8 SI 7 = NON
     // Sélectionnez les boutons radio de la question 7
     const question8Radios = document.querySelectorAll('input[name="question8"]');
 
@@ -714,10 +724,9 @@ function preDiagnostic() {
         }
     });
 
-    let score = 0;
-
     function calculateAndDisplayResult() {
         let score = 0; // Initialise le score
+        formData.score = 0; 
 
         const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
         const radios = document.querySelectorAll('input[type="radio"]:checked');
@@ -726,42 +735,72 @@ function preDiagnostic() {
         checkboxes.forEach(function (checkbox) {
             let val = parseInt(checkbox.value, 10);
             if (!isNaN(val)) {
-                score += val;
+                formData.score += val;
             }
         });
 
         radios.forEach(function (radio) {
             var val = parseInt(radio.value, 10);
             if (!isNaN(val)) {
-                score += val;
+                formData.score += val;
             }
         });
 
         selects.forEach(function (select) {
             let val = parseInt(select.options[select.selectedIndex].value, 10);
             if (!isNaN(val)) {
-                score += val;
+                formData.score += val;
             }
-            // Si la valeur n'est pas numérique, vous pouvez décider ici comment gérer la valeur.
-            // Par exemple, assigner un score fixe ou ignorer l'option.
         });
+        
+        if(niveauAlea === null) {
+            formData.score += 0;
+        }else if(niveauAlea === "Aléa faible") {
+            formData.score += 6;
+        }else if(niveauAlea === "Aléa modéré") {
+            formData.score += 12;
+        }else {
+            formData.score += 18;
+        }
 
-        displayResult(score);
+        if(batiInondable) {
+            formData.score += 6;
+        }else if(!batiInondable) {
+            formData.score += 4;
+        }else {
+            formData.score += 0;
+        }
+
+        displayResult(formData.score);
     }
 
     function displayResult(score) {
+        console.log(typeDebien, score);
         var resultTextEl = document.getElementById('result-text');
         var progressBar = document.getElementById('progress-bar');
 
-        if (score <= 10) {
-            resultTextEl.textContent = 'Risque Léger';
-            progressBar.style.width = '33%';
-        } else if (score <= 20) {
-            resultTextEl.textContent = 'Risque Modéré';
-            progressBar.style.width = '66%';
+        if(typeDebien === "entreprise") {
+            if (score <= 45) {
+                resultTextEl.textContent = 'Peu exposé';
+                progressBar.style.width = '33%';
+            } else if (score <= 90) {
+                resultTextEl.textContent = 'Modéré';
+                progressBar.style.width = '66%';
+            } else {
+                resultTextEl.textContent = 'Fort';
+                progressBar.style.width = '100%';
+            }
         } else {
-            resultTextEl.textContent = 'Risque Fort';
-            progressBar.style.width = '100%';
+            if (score <= 40) {
+                resultTextEl.textContent = 'Peu exposé';
+                progressBar.style.width = '33%';
+            } else if (score <= 80) {
+                resultTextEl.textContent = 'Modéré';
+                progressBar.style.width = '66%';
+            } else {
+                resultTextEl.textContent = 'Fort';
+                progressBar.style.width = '100%';
+            }
         }
 
         currentSectionIndex = totalSections - 1;
@@ -791,7 +830,7 @@ function preDiagnostic() {
             // Vérifie si "Entreprise" est sélectionné
             if (typeDeBienInput === 'entreprise') {
                 // Récupère la valeur de la question 1.1 s'il y a une entrée (assurez-vous que l'input text a une valeur par défaut ou n'est pas null)
-                const input1_1 = document.querySelector('#q1.1a1');
+                const input1_1 = document.querySelector('#q1\\.1a1');
                 question1_1Input = input1_1 ? input1_1.value : '';
 
                 // Pour la question 1.2, récupère l'attribut datatext de l'option cochée
@@ -803,33 +842,66 @@ function preDiagnostic() {
 
             // SECTION 2
             const question3Input = document.querySelector('input[name="question3"]:checked') ? document.querySelector('input[name="question3"]:checked').getAttribute('datatext') : '';
-            const question4_1Input = document.querySelector('q4a1');
-            const question4_2Input = document.querySelector('q4a2');
-            const question4_3Input = document.querySelector('q4a3');
-            const question4_4Input = document.querySelector('q4a4');
+            const question4_1Input = document.querySelector('#q4a1') ? document.querySelector('#q4a1').value : '';
+            const question4_2Input = document.querySelector('#q4a2') ? document.querySelector('#q4a2').value : '';
+            const question4_3Input = document.querySelector('#q4a3') ? document.querySelector('#q4a3').value : '';
+            const question4_4Input = document.querySelector('#q4a4') ? document.querySelector('#q4a4').value : '';
 
             // SECTION 3
             const question5Input = document.querySelector('input[name="question5"]:checked') ? document.querySelector('input[name="question5"]:checked').getAttribute('datatext') : '';
-            // Et ainsi de suite pour les autres questions
+            
+            // SECTION 4
+            const question6Input = document.querySelector('input[name="question6"]:checked') ? document.querySelector('input[name="question6"]:checked').getAttribute('datatext') : '';
+            const question7Input = document.querySelector('input[name="question7"]:checked') ? document.querySelector('input[name="question7"]:checked').getAttribute('datatext') : '';
 
+            const question8Input = document.querySelector('input[name="question8"]:checked') ? document.querySelector('input[name="question8"]:checked').getAttribute('datatext') : '';
+            const question8_1Input = document.querySelector('input[name="question8.1"]:checked') ? document.querySelector('input[name="question8.1"]:checked').getAttribute('datatext') : '';
 
+            const question9Input = document.querySelector('input[name="question9"]:checked') ? document.querySelector('input[name="question9"]:checked').getAttribute('datatext') : '';
+            const question10Input = document.querySelector('input[name="question10"]:checked') ? document.querySelector('input[name="question10"]:checked').getAttribute('datatext') : '';
 
+            //SECTION 5
+            const question11aInput = document.querySelector('input[name="question11a"]:checked') ? document.querySelector('input[name="question11a"]:checked').getAttribute('datatext') : '';
+            const question11bInput = document.querySelector('input[name="question11b"]:checked') ? document.querySelector('input[name="question11b"]:checked').getAttribute('datatext') : '';
+            const question11cInput = document.querySelector('input[name="question11c"]:checked') ? document.querySelector('input[name="question11c"]:checked').getAttribute('datatext') : '';
+            const question11dInput = document.querySelector('input[name="question11d"]:checked') ? document.querySelector('input[name="question11d"]:checked').getAttribute('datatext') : '';
 
+            const question12Input = document.querySelector('input[name="question12"]:checked') ? document.querySelector('input[name="question12"]:checked').getAttribute('datatext') : '';
+            const question13Input = document.querySelector('input[name="question13"]:checked') ? document.querySelector('input[name="question13"]:checked').getAttribute('datatext') : '';
 
+            //SECTION 6
+            const question14Input = document.querySelector('input[name="question14"]:checked') ? document.querySelector('input[name="question14"]:checked').getAttribute('datatext') : '';
+            const question15Input = document.querySelector('input[name="question15"]:checked') ? document.querySelector('input[name="question15"]:checked').getAttribute('datatext') : '';
+            const question15_1Input = document.querySelector('input[name="question15.1"]:checked') ? document.querySelector('input[name="question15.1"]:checked').getAttribute('datatext') : '';
+
+            //SECTION 7
+            const question16Input = document.querySelector('input[name="question16"]:checked') ? document.querySelector('input[name="question16"]:checked').getAttribute('datatext') : '';
+            const question17Input = document.querySelector('input[name="question17"]:checked') ? document.querySelector('input[name="question17"]:checked').getAttribute('datatext') : '';
+
+            //SECTION 8
+            const question18Input = document.querySelector('input[name="question18"]:checked') ? document.querySelector('input[name="question18"]:checked').getAttribute('datatext') : '';
+            const question19Input = document.querySelector('input[name="question19"]:checked') ? document.querySelector('input[name="question19"]:checked').getAttribute('datatext') : '';
+            const question20Input = document.querySelector('input[name="question20"]:checked') ? document.querySelector('input[name="question20"]:checked').getAttribute('datatext') : '';
+            const question21Input = document.querySelector('input[name="question21"]:checked') ? document.querySelector('input[name="question21"]:checked').getAttribute('datatext') : '';
+
+            //SECTION 9
+            const question22Input = document.querySelector('input[name="question22"]:checked') ? document.querySelector('input[name="question22"]:checked').getAttribute('datatext') : '';
+            const question22_1Input = document.querySelector('input[name="question22.1"]:checked') ? document.querySelector('input[name="question22.1"]:checked').getAttribute('datatext') : '';
+            const question22_2Input = document.querySelector('input[name="question22.2"]:checked') ? document.querySelector('input[name="question22.2"]:checked').getAttribute('datatext') : '';
 
             // Continuez avec l'envoi des données
             const envois = userData && userData.envois ? userData.envois + 1 : 1;
-            // Récupérez les valeurs des champs du formulaire
 
-            const question8Input = document.querySelector('input[name="question8"]:checked').getAttribute('datatext');
-            const question9Input = document.querySelector('input[name="question9"]:checked').getAttribute('datatext');
-            const question10Input = document.querySelector('input[name="question10"]:checked').getAttribute('datatext');
-            const question15Input = document.querySelector('input[name="question15"]:checked').getAttribute('datatext');
-            const question16Input = document.querySelector('input[name="question16"]:checked').getAttribute('datatext');
-            const question22Input = document.querySelector('input[name="question22"]:checked').getAttribute('datatext');
-            const question23Input = document.querySelector('input[name="question23"]:checked').getAttribute('datatext');
+            // console.log("avant :", formData.score);
 
-            score = score <= 10 ? 'Risque Léger' : score <= 20 ? 'Risque Modéré' : 'Risque Fort';
+            if (typeDeBienInput === 'entreprise') {
+                formData.score = formData.score <= 45 ? 'Risque Léger' : formData.score <= 90 ? 'Risque Modéré' : 'Risque Fort';
+            } else {
+                formData.score = formData.score <= 40 ? 'Risque Léger' : formData.score <= 80 ? 'Risque Modéré' : 'Risque Fort';
+            }
+
+            // console.log("après :", formData.score);
+            
             // Exemple de données à envoyer
             const data = {
                 envois: envois,
@@ -838,19 +910,41 @@ function preDiagnostic() {
                 aléas: communeData.niveauAlea,
                 bâti_inondable: communeData.batiInondable,
                 éligible: communeData.isEligible ? 'Oui' : 'Non',
-                score: score,
-                question1: question1Input,
+                score: formData.score,
+                question1: typeDeBienInput,
+                question1_1: question1_1Input,
+                question1_2: question1_2Input,
                 question2: question2Input,
                 question3: question3Input,
-                question4: question4Input,
+                question4_1: question4_1Input,
+                question4_2: question4_2Input,
+                question4_3: question4_3Input,
+                question4_4: question4_4Input,
+                question5: question5Input,
+                question6: question6Input,
+                question7: question7Input,
                 question8: question8Input,
+                question8_1: question8_1Input,
                 question9: question9Input,
                 question10: question10Input,
+                question11a: question11aInput,
+                question11b: question11bInput,
+                question11c: question11cInput,
+                question11d: question11dInput,
+                question12: question12Input,
+                question13: question13Input,
+                question14: question14Input,
                 question15: question15Input,
+                question15_1: question15_1Input,
                 question16: question16Input,
+                question17: question17Input,
+                question18: question18Input,
+                question19: question19Input,
+                question20: question20Input,
+                question21: question21Input,
                 question22: question22Input,
-                question23: question23Input,
-                // Ajoutez d'autres réponses de formulaire ici...
+                question22_1: question22_1Input,
+                question22_2: question22_2Input,
             };
 
 
