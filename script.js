@@ -649,6 +649,8 @@ function preDiagnostic() {
             if (progressBarContainer) {
                 progressBarContainer.style.display = 'none';
             }
+            const infoDiv = document.querySelector('.para-info');
+            infoDiv.textContent = '';
             changeSection();
         }
     }
@@ -673,7 +675,7 @@ function preDiagnostic() {
     const btnFermer = document.getElementById('btn-fermer');
     btnFermer.addEventListener('click', function () {
         diagnosticPanel.classList.remove('open');
-        resetForm(); // Si vous souhaitez réinitialiser le formulaire lors de la fermeture
+        resetForm();
     });
 
     function updateNavigationButtons() {
@@ -775,31 +777,53 @@ function preDiagnostic() {
     }
 
     function displayResult(score) {
-        console.log(typeDebien, score);
-        var resultTextEl = document.getElementById('result-text');
-        var progressBar = document.getElementById('progress-bar');
+        let resultTextEl = document.getElementById('result-text');
+        let progressBar = document.getElementById('progress-bar');
+        let infoTextResult = document.getElementById('info-text-resultat');
+        let buttonFinal = document.getElementById('diag-complet');
+        let divElt = document.getElementById("info-commune");
+
+        buttonFinal.textContent = communeData.isEligible ? "Pour bénéficier d'un diagnostic complet" : "Pour en savoir plus, contactez-nous";
+        if(communeData.isEligible) {
+            buttonFinal.addEventListener('click', function() {
+                divElt.classList.add('show');
+                divElt.style.zIndex = '1000';
+            });
+        }else {
+            buttonFinal.addEventListener('click', function() {
+                divElt.classList.remove('show');
+                divElt.style.zIndex = '1000';
+                window.location.href = "mailto:smbvl-alabri@smbvl.net"; 
+            });
+        }
 
         if(typeDebien === "entreprise") {
             if (score <= 45) {
                 resultTextEl.textContent = 'Peu exposé';
                 progressBar.style.width = '33%';
+                infoTextResult.innerHTML = `<p>La réalisation d’un diagnostic complet n’est pas forcément nécessaire (à confirmer auprès du SMBVL).</p>`;
             } else if (score <= 90) {
                 resultTextEl.textContent = 'Modéré';
                 progressBar.style.width = '66%';
+                infoTextResult.innerHTML = `<p>Un diagnostic complet est conseillé pour identifier plus précisément les vulnérabilités de votre bien et vous proposer des solutions adaptées pour le protéger et limiter les délais de retour à la normale post-inondation. </p>`;
             } else {
                 resultTextEl.textContent = 'Fort';
                 progressBar.style.width = '100%';
+                infoTextResult.innerHTML = `<p>Un diagnostic complet est vivement recommandé afin de bénéficier d’un accompagnement personnalisé pour la mise en sécurité des occupants, de votre bien et de ses équipements.</p>`;
             }
         } else {
             if (score <= 40) {
                 resultTextEl.textContent = 'Peu exposé';
                 progressBar.style.width = '33%';
+                infoTextResult.innerHTML = `<p>La réalisation d’un diagnostic complet n’est pas forcément nécessaire (à confirmer auprès du SMBVL).</p>`;
             } else if (score <= 80) {
                 resultTextEl.textContent = 'Modéré';
                 progressBar.style.width = '66%';
+                infoTextResult.innerHTML = `<p>Un diagnostic complet est conseillé pour identifier plus précisément les vulnérabilités de votre bien et vous proposer des solutions adaptées pour le protéger et limiter les délais de retour à la normale post-inondation. </p>`;
             } else {
                 resultTextEl.textContent = 'Fort';
                 progressBar.style.width = '100%';
+                infoTextResult.innerHTML = `<p>Un diagnostic complet est vivement recommandé afin de bénéficier d’un accompagnement personnalisé pour la mise en sécurité des occupants, de votre bien et de ses équipements.</p>`;
             }
         }
 
