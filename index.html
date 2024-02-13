@@ -780,7 +780,6 @@
                     </div>
                     <div class="contenaire-section-14">
                         <div class="button-footer-infos">
-                            <button type="submit" id="envois-mail-resultats">Recevoir les conclusions par mail</button>
                             <button type="button" id="diag-complet">Pour bénéficier d'un diagnostic complet</button>
                         </div>
                         <div class="footer-infos">
@@ -795,9 +794,18 @@
             </form>
             <!-- Boutons de navigation -->
             <div class="navigation-buttons">
-                <button type="button" id="prev-button">Précédent</button>
-                <button type="button" id="next-button">Suivant</button>
-                <button type="submit" id="submit-button">Visualiser mon niveau de vulnérabilité</button>
+                <div class="navigation-buttons-flex">
+                    <button type="button" id="prev-button">Précédent</button>
+                    <button type="button" id="next-button">Suivant</button>
+                </div>
+                <div id="email-section">
+                    <input type="email" placeholder="Mon e-mail" id="mon-email" required>
+                    <div>
+                        <input type="checkbox" id="validate-email" name="validate-email">
+                        <label for="validate-email" class="option-label">Recevoir mes conclusions par email</label>
+                    </div>
+                    <button type="submit" id="submit-button">Visualiser mon niveau de vulnérabilité</button>
+                </div>
             </div>
         </div>
     </div>

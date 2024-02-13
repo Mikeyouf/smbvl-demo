@@ -525,7 +525,6 @@ function preDiagnostic() {
         });
     });
 
-
     function openPanel() {
         diagnosticPanel.classList.add('open');
         changeSection();
@@ -707,6 +706,14 @@ function preDiagnostic() {
         var currentSection = document.getElementById('section-' + (currentSectionIndex + 1));
         if (currentSection) {
             currentSection.classList.add('active');
+        }
+
+        // Gérer la visibilité de la section email
+        const emailSection = document.getElementById('email-section');
+        if (currentSectionIndex === totalSections - 2) {
+            emailSection.style.display = 'flex'; // Affiche à la dernière étape
+        } else {
+            emailSection.style.display = 'none'; // Cache dans les autres étapes
         }
 
         updateNavigationButtons();
@@ -913,6 +920,11 @@ function preDiagnostic() {
             const question22_1Input = document.querySelector('input[name="question22.1"]:checked') ? document.querySelector('input[name="question22.1"]:checked').getAttribute('datatext') : '';
             const question22_2Input = document.querySelector('input[name="question22.2"]:checked') ? document.querySelector('input[name="question22.2"]:checked').getAttribute('datatext') : '';
 
+
+            //RECUPERER EMAIL ET CHECK SI COCHE
+            const emailClient = document.getElementById('mon-email') ? document.getElementById('mon-email').value : '';
+            const validateEmail = document.querySelector('input[name="validate-email"]:checked') ? true : false;
+
             // Continuez avec l'envoi des données
             const envois = userData && userData.envois ? userData.envois + 1 : 1;
 
@@ -928,6 +940,8 @@ function preDiagnostic() {
             
             // Exemple de données à envoyer
             const data = {
+                emailClient: emailClient,
+                validateEmail: validateEmail,
                 envois: envois,
                 nom_commune: communeData.nomCommune,
                 cadastre: communeData.cadastre,
