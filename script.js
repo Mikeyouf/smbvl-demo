@@ -48,33 +48,33 @@ croixRightElt.addEventListener('click', function () {
 })
 
 const communeDataVariables = {
-    "Bollène": dataParcelles_2,
-    "Bouchet": dataParcelles_0,
-    "Chamaret": dataParcelles_0,
-    "Colonzelle": dataParcelles_0,
-    "Grignan": dataParcelles_0,
-    "Grillon": dataParcelles_3,
-    "La Baume-de-Transit": dataParcelles_0,
-    "Lagarde-Paréol": dataParcelles_3,
-    "Le Pègue": dataParcelles_1,
-    "Mondragon": dataParcelles_3,
-    "Montbrison-sur-Lez": dataParcelles_0,
-    "Montjoux": dataParcelles_0,
-    "Montségur-sur-Lauzon": dataParcelles_1,
-    "Mornas": dataParcelles_3,
-    "Richerenches": dataParcelles_3,
-    "Rochegude": dataParcelles_1,
-    "Roche-Saint-Secret-Béconne": dataParcelles_1,
-    "Saint-Pantaléon-les-Vignes": dataParcelles_1,
-    "Suze-la-Rousse": dataParcelles_1,
-    "Taulignan": dataParcelles_2,
-    "Teyssières": dataParcelles_2,
-    "Tulette": dataParcelles_2,
-    "Valréas": dataParcelles_3,
-    "Venterol": dataParcelles_2,
-    "Vesc": dataParcelles_2,
-    "Vinsobres": dataParcelles_2,
-    "Visan": dataParcelles_3
+    "Bollène": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_2.geojson',
+    "Bouchet": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_0.geojson',
+    "Chamaret": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_0.geojson',
+    "Colonzelle": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_0.geojson',
+    "Grignan": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_0.geojson',
+    "Grillon": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_3.geojson',
+    "La Baume-de-Transit": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_0.geojson',
+    "Lagarde-Paréol": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_3.geojson',
+    "Le Pègue": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_1.geojson',
+    "Mondragon": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_3.geojson',
+    "Montbrison-sur-Lez": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_0.geojson',
+    "Montjoux": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_0.geojson',
+    "Montségur-sur-Lauzon": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_1.geojson',
+    "Mornas": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_3.geojson',
+    "Richerenches": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_3.geojson',
+    "Rochegude": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_1.geojson',
+    "Roche-Saint-Secret-Béconne": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_1.geojson',
+    "Saint-Pantaléon-les-Vignes": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_1.geojson',
+    "Suze-la-Rousse": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_1.geojson',
+    "Taulignan": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_2.geojson',
+    "Teyssières": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_2.geojson',
+    "Tulette": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_2.geojson',
+    "Valréas": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_3.geojson',
+    "Venterol": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_2.geojson',
+    "Vesc": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_2.geojson',
+    "Vinsobres": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_2.geojson',
+    "Visan": 'https://storage.googleapis.com/parcelle_ppri/parcelles_ppri_3.geojson'
 };
 
 // Je récupère la position de l'utilisateur si il est ok
@@ -188,41 +188,64 @@ function showMessageBoite(errorMessage) {
     messageBoite.classList.toggle("goUp");
 }
 
+// SPINNER
+function showSpinner() {
+    document.getElementById('loadingSpinner').style.visibility = 'visible';
+}
+
+function hideSpinner() {
+    document.getElementById('loadingSpinner').style.visibility = 'hidden';
+}  
+
 // CHOIX COMMUNES
 let geoJSONLayer;
 
 function choixCommune() {
-    select.addEventListener('change', function () {
+    select.addEventListener('change', async function () {
         selectedCommune = select.options[select.selectedIndex].value;
-        // console.log(selectedCommune)
-
-        // Obtenir les données appropriées
-        let data = communeDataVariables[selectedCommune];
-
-        // console.log(data)
 
         if (geoJSONLayer) {
             geoJSONLayer.clearLayers();
         }
 
-        geoJSONLayer = L.geoJSON(data, {
-            style: style,
-            onEachFeature: onEachFeature,
-            filter: function (feature, layer) {
-                return feature.properties.nom_commune === selectedCommune;
-            },
-            renderer: canvasRenderer,
-        }).addTo(map);
+        // Afficher le spinner avant de commencer le chargement
+        showSpinner();
 
-        // on cache le menu latéral gauche
-        const houseDivElt = document.getElementById("choix-commune");
-        houseDivElt.classList.toggle('isVisible');
+        // Utilisez `communeDataVariables` ici au lieu de `communeDataUrls`
+        const geoJsonUrl = communeDataVariables[selectedCommune];
 
-        // on zoom sur la partie de la carte choisie
-        let bounds = geoJSONLayer.getBounds();
-        map.fitBounds(bounds, {
-            maxZoom: 16
-        });
+        try {
+            const response = await fetch(geoJsonUrl);
+            const data = await response.json();
+
+            geoJSONLayer = L.geoJSON(data, {
+                style: style,
+                onEachFeature: onEachFeature,
+                filter: function (feature, layer) {
+                    return feature.properties.nom_commune === selectedCommune;
+                },
+                renderer: canvasRenderer,
+            }).addTo(map);
+
+            // Cache le spinner une fois les données chargées
+            hideSpinner();
+
+            // on cache le menu latéral gauche
+            const houseDivElt = document.getElementById("choix-commune");
+            houseDivElt.classList.toggle('isVisible');
+
+            // Zoom sur la partie de la carte choisie
+            let bounds = geoJSONLayer.getBounds();
+            map.fitBounds(bounds, {
+                maxZoom: 16
+            });
+
+        } catch (error) {
+            console.error('Erreur lors du chargement du GeoJSON:', error);
+            // Cache le spinner en cas d'erreur
+            hideSpinner();
+            // Afficher un message d'erreur si nécessaire
+        }
     });
 }
 

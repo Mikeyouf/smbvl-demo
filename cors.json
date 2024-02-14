@@ -1,0 +1,9 @@
+[
+    {
+      "origin": ["http://127.0.0.1:5500"],
+      "responseHeader": ["Content-Type"],
+      "method": ["GET", "HEAD"],
+      "maxAgeSeconds": 3600
+    }
+  ]
+  
