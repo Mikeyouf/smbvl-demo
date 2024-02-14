@@ -78,78 +78,58 @@ const communeDataVariables = {
 };
 
 // Je récupère la position de l'utilisateur si il est ok
-let lat;
-let lng;
-let adresse;
-let selectedCommune;
-let communeIsCorrect = false;
-let postaleCode;
-let street;
+// Utilisation de la position de l'utilisateur
+let lat, lng, adresse, selectedCommune, communeIsCorrect = false, postaleCode, street;
+
 if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function (position) {
+    navigator.geolocation.getCurrentPosition(async function (position) {
         lat = position.coords.latitude;
         lng = position.coords.longitude;
-        // Utilisez lat et lng pour afficher la position sur la carte Leaflet
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + lat + '&lon=' + lng);
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                var result = JSON.parse(xhr.responseText);
-                adresse = result.address.road + ', ' + result.address.postcode + ' ' + result.address.village;
-                postaleCode = result.address.postcode;
-                street = result.address.road
-                // ON TEST SI ON EST DANS LA BONNE COMMUNE
-                // selectedCommune = "Grignan" // décommenter / commenter pour test
-                // function removeAccents(str) {
-                //     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-                // }
-                selectedCommune = result.address.village || result.address.city;
-                // selectedCommune = removeAccents(selectedCommune).toUpperCase();
-                // console.log(removeAccents(selectedCommune).toUpperCase());
-                const communes = ["Bollène", "Bouchet", "Chamaret", "Colonzelle", "Grignan", "Grillon", "La Baume-de-Transit", "Lagarde-Paréol", "Le Pègue", "Mondragon", "Montbrison-sur-Lez", "Montjoux", "Montségur-sur-Lauzon", "Mornas", "Richerenches", "Rochegude", "Roche-Saint-Secret-Béconne", "Saint-Pantaléon-les-Vignes", "Suze-la-Rousse", "Taulignan", "Teyssières", "Tulette", "Valréas", "Venterol", "Vesc", "Vinsobres", "Visan"];
-                if (communes.includes(selectedCommune)) {
-                    // Utilisez l'adresse pour afficher l'adresse sur la page
-                    // console.log("géo ok");
 
-                    // Obtenir les données appropriées
-                    let data = communeDataVariables[selectedCommune];
+        try {
+            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`);
+            const result = await response.json();
+            adresse = `${result.address.road}, ${result.address.postcode} ${result.address.village}`;
+            postaleCode = result.address.postcode;
+            street = result.address.road;
+            selectedCommune = result.address.village || result.address.city;
 
-                    let geoJSONLayer = L.geoJSON(data, {
+            const communes = ["Bollène", "Bouchet", "Chamaret", "Colonzelle", "Grignan", "Grillon", "La Baume-de-Transit", "Lagarde-Paréol", "Le Pègue", "Mondragon", "Montbrison-sur-Lez", "Montjoux", "Montségur-sur-Lauzon", "Mornas", "Richerenches", "Rochegude", "Roche-Saint-Secret-Béconne", "Saint-Pantaléon-les-Vignes", "Suze-la-Rousse", "Taulignan", "Teyssières", "Tulette", "Valréas", "Venterol", "Vesc", "Vinsobres", "Visan"];
+
+            if (communes.includes(selectedCommune)) {
+                showSpinner();
+                let data = communeDataVariables[selectedCommune];
+                fetch(data).then(response => response.json()).then(data => {
+                    geoJSONLayer = L.geoJSON(data, {
                         style: style,
                         onEachFeature: onEachFeature,
                         filter: function (feature, layer) {
                             return feature.properties.nom_commune === selectedCommune;
                         }
                     }).addTo(map);
-
-                    geoJSONLayer.clearLayers();
-                    geoJSONLayer.addData(data);
-
-                    // on cache le menu latéral gauche
-                    const houseDivElt = document.getElementById("choix-commune");
-                    houseDivElt.classList.toggle('isVisible');
-
-                    // on zoom sur la partie de la carte choisie
+                    hideSpinner();
                     let bounds = geoJSONLayer.getBounds();
-                    map.fitBounds(bounds, {
-                        maxZoom: 16
-                    });
-
-                    communeIsCorrect = true;
-                } else {
-                    boiteMessErreur.classList.toggle('goUp');
-                    communeIsCorrect = false;
-                }
+                    map.fitBounds(bounds, { maxZoom: 16 });
+                }).catch(error => {
+                    console.error('Erreur lors du chargement du GeoJSON:', error);
+                    hideSpinner();
+                });
+                communeIsCorrect = true;
             } else {
-                // Erreur lors de la requête
-                choixCommune();
+                hideSpinner();
+                boiteMessErreur.classList.toggle('goUp');
+                communeIsCorrect = false;
             }
-        };
-        xhr.send();
-
+        } catch (error) {
+            console.error('Erreur lors de la requête Nominatim:', error);
+            hideSpinner();
+        }
+    }, function(error) {
+        console.error('Erreur de géolocalisation:', error);
+        choixCommune();
     });
 } else {
-    // Géolocalisation non supportée par le navigateur
+    console.warn('Géolocalisation non supportée par le navigateur.');
     choixCommune();
 }
 
@@ -422,59 +402,57 @@ let searchControl = L.Control.geocoder({
 }).addTo(map);
 
 searchControl.on('markgeocode', function (e) {
-    // Utilisez les coordonnées pour faire une requête à l'API Nominatim pour obtenir les informations de la commune
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + e.geocode.center.lat + '&lon=' + e.geocode.center.lng);
-    xhr.onload = function () {
-        if (xhr.status === 200) {
-            var result = JSON.parse(xhr.responseText);
-            // console.log("result", result);
-            postaleCode = result.address.postcode;
-            street = result.address.road
-            // console.log(postaleCode);
-            // console.log(street);
+    // Afficher le spinner pendant le chargement
+    showSpinner();
 
-            // function removeAccents(str) {
-            //     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            // }
+    // Utilisation de l'API fetch pour une syntaxe plus moderne
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${e.geocode.center.lat}&lon=${e.geocode.center.lng}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Réponse réseau non ok');
+            }
+            return response.json();
+        })
+        .then(result => {
+            postaleCode = result.address.postcode;
+            street = result.address.road;
             selectedCommune = String(result.address.city || result.address.village);
-            console.log("selectedCommune :", selectedCommune)
-            // selectedCommune = removeAccents(selectedCommune).toUpperCase();
-            // console.log(removeAccents(selectedCommune).toUpperCase());
+            console.log("selectedCommune :", selectedCommune);
+
             const communes = ["Bollène", "Bouchet", "Chamaret", "Colonzelle", "Grignan", "Grillon", "La Baume-de-Transit", "Lagarde-Paréol", "Le Pègue", "Mondragon", "Montbrison-sur-Lez", "Montjoux", "Montségur-sur-Lauzon", "Mornas", "Richerenches", "Rochegude", "Roche-Saint-Secret-Béconne", "Saint-Pantaléon-les-Vignes", "Suze-la-Rousse", "Taulignan", "Teyssières", "Tulette", "Valréas", "Venterol", "Vesc", "Vinsobres", "Visan"];
             if (communes.includes(selectedCommune)) {
-                // Obtenir les données appropriées
                 let data = communeDataVariables[selectedCommune];
-                console.log("data : ", data);
 
-                // Utilisez l'adresse pour afficher l'adresse sur la page
-                let geoJSONLayer = L.geoJSON(data, {
+                geoJSONLayer = L.geoJSON(data, {
                     style: style,
                     onEachFeature: onEachFeature,
                     filter: function (feature, layer) {
                         return feature.properties.nom_commune === selectedCommune;
                     }
                 }).addTo(map);
+
                 geoJSONLayer.clearLayers();
                 geoJSONLayer.addData(data);
-                // on cache le menu latéral gauche
+                
+                // Cache le spinner une fois les données chargées
+                hideSpinner();
+
+                // Cache le menu latéral gauche
                 const houseDivElt = document.getElementById("choix-commune");
                 houseDivElt.classList.toggle('isVisible');
-
+                
                 communeIsCorrect = true;
             } else {
-                console.log("ok")
+                console.log("La commune n'est pas dans la liste.")
                 boiteMessErreur.classList.toggle('goUp');
                 communeIsCorrect = false;
+                hideSpinner();
             }
-
-            // Reste du code pour filtrer les parcelles par commune
-        } else {
-            // Erreur lors de la requête
-            choixCommune();
-        }
-    };
-    xhr.send();
+        })
+        .catch(error => {
+            console.error('Erreur lors de la requête Nominatim:', error);
+            hideSpinner();
+        });
 });
 
 document.addEventListener('DOMContentLoaded', function () {
