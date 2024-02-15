@@ -843,7 +843,7 @@ function preDiagnostic() {
             } else if (score <= 80) {
                 resultTextEl.textContent = 'Modéré';
                 progressBar.style.width = '66%';
-                infoTextResult.innerHTML = `<p>Un diagnostic complet est conseillé pour identifier plus précisément les vulnérabilités de votre bien et vous proposer des solutions adaptées pour le protéger et limiter les délais de retour à la normale post-inondation. </p>`;
+                infoTextResult.innerHTML = `<p>Un diagnostic complet est conseillé pour identifier plus précisément les vulnérabilités de votre bien et vous proposer des solutions adaptées pour le protéger et limiter les délais de retour à la normale post-inondation.</p>`;
             } else {
                 resultTextEl.textContent = 'Fort';
                 progressBar.style.width = '100%';
@@ -945,10 +945,15 @@ function preDiagnostic() {
             // Continuez avec l'envoi des données
             const envois = userData && userData.envois ? userData.envois + 1 : 1;
 
+            const arrayTextDiag = ["La réalisation d’un diagnostic complet n’est pas forcément nécessaire (à confirmer auprès du SMBVL).", "Un diagnostic complet est conseillé pour identifier plus précisément les vulnérabilités de votre bien et vous proposer des solutions adaptées pour le protéger et limiter les délais de retour à la normale post-inondation.", "Un diagnostic complet est vivement recommandé afin de bénéficier d’un accompagnement personnalisé pour la mise en sécurité des occupants, de votre bien et de ses équipements."]
+            let textInfoDiag = '';
+
             if (typeDeBienInput === 'entreprise') {
                 formData.score = formData.score <= 45 ? 'Risque Léger' : formData.score <= 90 ? 'Risque Modéré' : 'Risque Fort';
+                formData.score = formData.score <= 45 ? textInfoDiag = arrayTextDiag[0] : formData.score <= 90 ? textInfoDiag = arrayTextDiag[1] : textInfoDiag = arrayTextDiag[2];
             } else {
                 formData.score = formData.score <= 40 ? 'Risque Léger' : formData.score <= 80 ? 'Risque Modéré' : 'Risque Fort';
+                formData.score = formData.score <= 40 ? textInfoDiag = arrayTextDiag[0] : formData.score <= 80 ? textInfoDiag = arrayTextDiag[1] : textInfoDiag = arrayTextDiag[2];
             }
             
             // données à envoyer
@@ -959,6 +964,7 @@ function preDiagnostic() {
                 nom_commune: communeData.nomCommune,
                 cadastre: communeData.cadastre,
                 aléas: communeData.niveauAlea,
+                textInfoDiag: textInfoDiag,
                 bâti_inondable: communeData.batiInondable,
                 éligible: communeData.isEligible ? 'Oui' : 'Non',
                 score: formData.score,
