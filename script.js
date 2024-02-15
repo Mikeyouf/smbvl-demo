@@ -948,12 +948,14 @@ function preDiagnostic() {
             const arrayTextDiag = ["La réalisation d’un diagnostic complet n’est pas forcément nécessaire (à confirmer auprès du SMBVL).", "Un diagnostic complet est conseillé pour identifier plus précisément les vulnérabilités de votre bien et vous proposer des solutions adaptées pour le protéger et limiter les délais de retour à la normale post-inondation.", "Un diagnostic complet est vivement recommandé afin de bénéficier d’un accompagnement personnalisé pour la mise en sécurité des occupants, de votre bien et de ses équipements."]
             let textInfoDiag = '';
 
+            console.log(formData.score);
+
             if (typeDeBienInput === 'entreprise') {
-                formData.score = formData.score <= 45 ? 'Risque Léger' : formData.score <= 90 ? 'Risque Modéré' : 'Risque Fort';
                 textInfoDiag = formData.score <= 45 ? textInfoDiag = arrayTextDiag[0] : formData.score <= 90 ? textInfoDiag = arrayTextDiag[1] : textInfoDiag = arrayTextDiag[2];
+                formData.score = formData.score <= 45 ? 'Risque Léger' : formData.score <= 90 ? 'Risque Modéré' : 'Risque Fort';
             } else {
-                formData.score = formData.score <= 40 ? 'Risque Léger' : formData.score <= 80 ? 'Risque Modéré' : 'Risque Fort';
                 textInfoDiag = formData.score <= 40 ? textInfoDiag = arrayTextDiag[0] : formData.score <= 80 ? textInfoDiag = arrayTextDiag[1] : textInfoDiag = arrayTextDiag[2];
+                formData.score = formData.score <= 40 ? 'Risque Léger' : formData.score <= 80 ? 'Risque Modéré' : 'Risque Fort';
             }
 
             console.log(textInfoDiag);
