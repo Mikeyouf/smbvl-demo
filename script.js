@@ -187,7 +187,6 @@ function choixCommune() {
         if (geoJSONLayer) {
             geoJSONLayer.clearLayers();
         }
-
         // Afficher le spinner avant de commencer le chargement
         showSpinner();
 
@@ -526,11 +525,28 @@ function preDiagnostic() {
         });
     });
 
+    //AFFICHE QUESTION 17 SI 16 = OUI
+    const question16Radios = document.querySelectorAll('input[name="question16"]');
+
+    // Itérez sur chaque bouton radio pour ajouter un écouteur d'événements
+    question16Radios.forEach(function (radio) {
+        radio.addEventListener('change', function () {
+            const isNoSelected = document.getElementById('q16a1').checked;
+
+            const question8 = document.getElementById('question-17');
+
+            if (isNoSelected) {
+                question8.style.display = 'block';
+            } else {
+                question8.style.display = 'none';
+            }
+        });
+    });
+
     function openPanel() {
         diagnosticPanel.classList.add('open');
         changeSection();
         closePanel();
-        // console.log("communeData :", communeData);
         // Mettre à jour les informations de la commune
         const communeInfosEl = document.getElementById('commune-infos');
         if (communeInfosEl && communeData) {
@@ -586,7 +602,6 @@ function preDiagnostic() {
 
     // INFO SECTIONS
     const infoSection = document.querySelectorAll('.section-info');
-    // console.log(infoSection3);
     infoSection.forEach(icon => {
         icon.addEventListener('mouseover', function () {
             openInfoPanelSection3(icon);
@@ -594,9 +609,7 @@ function preDiagnostic() {
     });
 
     function openInfoPanelSection3(icon) {
-        // Assurez-vous que le sélecteur utilise correctement les classes sans espace incorrect ou guillemet supplémentaire.
-        const infoContent = icon.closest('.header-question').nextElementSibling; // Cible directement l'élément suivant .header-question qui devrait être .infos-questions
-
+        const infoContent = icon.closest('.header-question').nextElementSibling;
         const dynamicContent = document.getElementById('dynamic-content');
         const infoPanel = document.getElementById('info-panel');
 
@@ -791,7 +804,7 @@ function preDiagnostic() {
         let buttonFinal = document.getElementById('diag-complet');
         let divElt = document.getElementById("info-commune");
 
-        buttonFinal.textContent = communeData.isEligible ? "Pour bénéficier d'un diagnostic complet" : "Pour en savoir plus, contactez-nous";
+        buttonFinal.textContent = communeData.isEligible ? "Bénéficier d'un diagnostic complet" : "En savoir plus et vérifier votre éligibilité au diagnostic complet";
         if(communeData.isEligible) {
             buttonFinal.addEventListener('click', function() {
                 divElt.classList.add('show');
@@ -809,14 +822,17 @@ function preDiagnostic() {
             if (score <= 45) {
                 resultTextEl.textContent = 'Peu exposé';
                 progressBar.style.width = '33%';
+                progressBar.style.backgroundColor = 'yellow';
                 infoTextResult.innerHTML = `<p>La réalisation d’un diagnostic complet n’est pas forcément nécessaire (à confirmer auprès du SMBVL).</p>`;
             } else if (score <= 90) {
                 resultTextEl.textContent = 'Modéré';
+                progressBar.style.backgroundColor = 'orange';
                 progressBar.style.width = '66%';
                 infoTextResult.innerHTML = `<p>Un diagnostic complet est conseillé pour identifier plus précisément les vulnérabilités de votre bien et vous proposer des solutions adaptées pour le protéger et limiter les délais de retour à la normale post-inondation. </p>`;
             } else {
                 resultTextEl.textContent = 'Fort';
                 progressBar.style.width = '100%';
+                progressBar.style.backgroundColor = '#b81547';
                 infoTextResult.innerHTML = `<p>Un diagnostic complet est vivement recommandé afin de bénéficier d’un accompagnement personnalisé pour la mise en sécurité des occupants, de votre bien et de ses équipements.</p>`;
             }
         } else {
@@ -929,17 +945,13 @@ function preDiagnostic() {
             // Continuez avec l'envoi des données
             const envois = userData && userData.envois ? userData.envois + 1 : 1;
 
-            // console.log("avant :", formData.score);
-
             if (typeDeBienInput === 'entreprise') {
                 formData.score = formData.score <= 45 ? 'Risque Léger' : formData.score <= 90 ? 'Risque Modéré' : 'Risque Fort';
             } else {
                 formData.score = formData.score <= 40 ? 'Risque Léger' : formData.score <= 80 ? 'Risque Modéré' : 'Risque Fort';
             }
-
-            // console.log("après :", formData.score);
             
-            // Exemple de données à envoyer
+            // données à envoyer
             const data = {
                 emailClient: emailClient,
                 validateEmail: validateEmail,
@@ -985,7 +997,6 @@ function preDiagnostic() {
                 question22_1: question22_1Input,
                 question22_2: question22_2Input,
             };
-
 
             // Utilisez la méthode .ref() avec l'ID "cadastre" pour ajouter les données
             const cadastreValue = communeData.cadastre;

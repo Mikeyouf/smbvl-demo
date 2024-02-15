@@ -1,6 +1,6 @@
 [
     {
-      "origin": ["http://127.0.0.1:5500"],
+      "origin": ["http://127.0.0.1:5500", "https://smbvl-demo.netlify.app/", "https://smbvlalabri.fr/"],
       "responseHeader": ["Content-Type"],
       "method": ["GET", "HEAD"],
       "maxAgeSeconds": 3600
