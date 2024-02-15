@@ -826,8 +826,8 @@ function preDiagnostic() {
                 infoTextResult.innerHTML = `<p>La réalisation d’un diagnostic complet n’est pas forcément nécessaire (à confirmer auprès du SMBVL).</p>`;
             } else if (score <= 90) {
                 resultTextEl.textContent = 'Modéré';
-                progressBar.style.backgroundColor = '#e27822';
                 progressBar.style.width = '66%';
+                progressBar.style.backgroundColor = '#e27822';
                 infoTextResult.innerHTML = `<p>Un diagnostic complet est conseillé pour identifier plus précisément les vulnérabilités de votre bien et vous proposer des solutions adaptées pour le protéger et limiter les délais de retour à la normale post-inondation. </p>`;
             } else {
                 resultTextEl.textContent = 'Fort';
