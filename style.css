@@ -119,8 +119,8 @@
 }
 
 .form-section {
-    margin-bottom: 20px;
-    padding: 20px 60px;
+    margin-bottom: 8px;
+    padding: 8px 60px;
     color: #004587;
 }
 
@@ -292,7 +292,7 @@
     max-width: 100%;
     background-color: #e0e0e0;
     border-radius: 5px;
-    margin: 20px 60px;
+    margin: 8px 60px;
 }
 
 #progress {
@@ -1090,7 +1090,7 @@ h4 {
 
     .header-infos,
     .form-section {
-        padding: 15px 40px;
+        padding: 8px 40px;
         /* Réduit le padding */
     }
 
