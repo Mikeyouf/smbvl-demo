@@ -950,11 +950,14 @@ function preDiagnostic() {
 
             if (typeDeBienInput === 'entreprise') {
                 formData.score = formData.score <= 45 ? 'Risque Léger' : formData.score <= 90 ? 'Risque Modéré' : 'Risque Fort';
-                formData.score = formData.score <= 45 ? textInfoDiag = arrayTextDiag[0] : formData.score <= 90 ? textInfoDiag = arrayTextDiag[1] : textInfoDiag = arrayTextDiag[2];
+                textInfoDiag = formData.score <= 45 ? textInfoDiag = arrayTextDiag[0] : formData.score <= 90 ? textInfoDiag = arrayTextDiag[1] : textInfoDiag = arrayTextDiag[2];
             } else {
                 formData.score = formData.score <= 40 ? 'Risque Léger' : formData.score <= 80 ? 'Risque Modéré' : 'Risque Fort';
-                formData.score = formData.score <= 40 ? textInfoDiag = arrayTextDiag[0] : formData.score <= 80 ? textInfoDiag = arrayTextDiag[1] : textInfoDiag = arrayTextDiag[2];
+                textInfoDiag = formData.score <= 40 ? textInfoDiag = arrayTextDiag[0] : formData.score <= 80 ? textInfoDiag = arrayTextDiag[1] : textInfoDiag = arrayTextDiag[2];
             }
+
+            console.log(textInfoDiag);
+            console.log(formData.score);
             
             // données à envoyer
             const data = {
