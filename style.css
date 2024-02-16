@@ -59,7 +59,7 @@
 #form-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     max-width: 100%;
     min-height: calc(100% - 48px);
     max-height: calc(100% - 48px);
@@ -73,14 +73,15 @@
     background-size: contain;
     background-position: bottom right;
     border-radius: 8px;
+    overflow-y: auto;
 }
 
 #form-container form {
     display: flex;
     flex-direction: column;
     height: 100% !important;
-    max-height: 85vh;
-    min-height: 85vh;
+    /* max-height: 85vh; */
+    min-height: 100vh;
     justify-content: flex-start;
     flex-grow: 1;
     border-radius: 8px;
@@ -194,7 +195,7 @@
 /* Styles pour les boutons de navigation */
 
 .navigation-buttons {
-    margin: 20px 0 0 60px;
+    margin: auto 0 8px 60px;
     display: flex;
     align-content: center;
     justify-content: flex-start;
@@ -1069,7 +1070,7 @@ h4 {
     }
 
     #form-container {
-        min-height: 90vh;
+        min-height: 100vh;
         margin: 10px 40px;
         padding: 0;
     }
@@ -1183,22 +1184,25 @@ h4 {
     }
 }
 
-@media only screen and (max-height: 900px) and (min-width: 1440px) {
-    /* FORMULAIRE DIAG */
-    .side-panel {
-        right: -80vw;
-        width: 80vw;
-        height: 100vh;
+@media only screen and (max-height: 1080px) and (min-width: 1920px) {
+    .info-commune {
+        width: 60vw;
+        right: calc(-60vw - 16px);
+        top: 15%;
     }
 
+    #choix-commune {
+        top: 40%;
+    }
+
+    /* FORMULAIRE DIAG */
     #form-container {
-        min-height: 90vh;
-        margin: 10px 40px;
+        height: 100%;
         padding: 0;
     }
 
     #form-container form {
-        min-height: 90vh;
+        min-height: 100vh;
         max-height: 90vh;
     }
 
