@@ -1,4 +1,5 @@
 /* SPINNER CHARGEMENT */
+
 .spinner-overlay {
     position: fixed;
     top: 0;
@@ -10,30 +11,39 @@
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    visibility: hidden; /* Cache le spinner par défaut */
-  }
-  
-  .spinner {
-    border: 4px solid rgba(0,0,0,.1);
+    visibility: hidden;
+    /* Cache le spinner par défaut */
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, .1);
     width: 40px;
     height: 40px;
     border-radius: 50%;
     border-left-color: #09f;
     animation: spin 1s ease infinite;
-  }
-
-  .loading-text {
-    color: #000; /* Ou toute autre couleur de votre choix */
-    font-size: 20px; /* Ajustez la taille de la police selon vos besoins */
-    margin-top: 20px; /* Espace entre le spinner et le texte */
-    text-align: center; /* Centrer le texte */
 }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  
+
+.loading-text {
+    color: #000;
+    /* Ou toute autre couleur de votre choix */
+    font-size: 20px;
+    /* Ajustez la taille de la police selon vos besoins */
+    margin-top: 20px;
+    /* Espace entre le spinner et le texte */
+    text-align: center;
+    /* Centrer le texte */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 
 /* FORM DIAG */
 
@@ -43,13 +53,17 @@
     right: -70vw;
     width: 70vw;
     height: 100vh;
-    min-height: 100%;
-    max-height: 100vh;
+    /* min-height: 100%;
+    max-height: 100%; */
     background-color: white;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.25);
     transition: right 0.5s;
-    overflow-y: hidden;
     z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100vh;
+    box-sizing: border-box;
 }
 
 .side-panel.open {
@@ -57,13 +71,18 @@
 }
 
 #form-container {
+    flex: 1;
     display: flex;
     flex-direction: column;
+    /* overflow: auto; */
     justify-content: space-around;
     max-width: 100%;
-    min-height: calc(100% - 48px);
-    max-height: calc(100% - 48px);
     margin: 20px 40px 20px 20px;
+    height: 100%;
+    /* height: 90%; */
+    /* min-height: calc(100% - 48px); */
+    /* max-height: calc(100% - 48px); */
+    /* margin: 20px 40px 20px 20px; */
     padding-bottom: 8px;
     background-color: white;
     border-radius: 8px;
@@ -73,18 +92,21 @@
     background-size: contain;
     background-position: bottom right;
     border-radius: 8px;
-    overflow-y: auto;
+    /* overflow-y: auto; */
 }
 
 #form-container form {
     display: flex;
     flex-direction: column;
-    height: 100% !important;
+    /* height: 100%; */
     /* max-height: 85vh; */
-    min-height: 100vh;
+    /* min-height: 100%; */
     justify-content: flex-start;
-    flex-grow: 1;
+    /* flex-grow: 1; */
     border-radius: 8px;
+    flex: 1;
+    /* Prend tout l'espace disponible */
+    overflow-y: auto;
 }
 
 .header-infos {
@@ -99,7 +121,7 @@
     flex-direction: column;
     height: 140px;
     min-height: 140px;
-    max-height: 140px;
+    /* max-height: 140px; */
     justify-content: center;
 }
 
@@ -206,8 +228,8 @@
 }
 
 #prev-button,
-#next-button, 
-#envois-mail-resultats, 
+#next-button,
+#envois-mail-resultats,
 #diag-complet {
     background-color: #004587;
     color: white;
@@ -259,7 +281,7 @@
     font-weight: bold;
 }
 
-#envois-mail-resultats, 
+#envois-mail-resultats,
 #diag-complet {
     padding: 20px 30px;
 }
@@ -312,7 +334,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    height: 100%; 
+    height: 100%;
 }
 
 .button-footer-infos {
@@ -953,7 +975,7 @@ h4 {
 .leaflet-popup-content {
     font-size: 14px;
     color: #014587
-        /* autres styles */
+    /* autres styles */
 }
 
 .leaflet-popup-content a {
@@ -1057,72 +1079,61 @@ h4 {
         right: calc(-60vw - 24px);
         top: 10%;
     }
-
     #choix-commune {
         top: 30%;
     }
-
     /* FORMULAIRE DIAG */
     .side-panel {
         right: -80vw;
         width: 80vw;
-        height: 100vh;
+        /* height: 100vh; */
     }
-
     #form-container {
-        min-height: 100vh;
+        /* min-height: 100vh; */
         margin: 10px 40px;
         padding: 0;
     }
-
-    #form-container form {
+    /* #form-container form {
         min-height: 90vh;
         max-height: 90vh;
-    }
-
+    } */
     #section-8 p {
         margin: 0;
     }
-
     .header-infos {
         max-height: 120px !important;
         min-height: 120px;
     }
-
     .header-infos,
     .form-section {
         padding: 8px 40px;
         /* Réduit le padding */
     }
-
     .header-question h3,
     .form-section h3,
     .question-label,
     .option-label {
         font-size: 14px;
     }
-
     .header-question img,
-    .bulle-info,
-    .bulle-info-2 {
+    .bulle-info {
         width: 24px;
     }
-
+    .bulle-info-2 {
+        width: 40px;
+    }
     .form-section-question {
         padding: 8px 0;
     }
-
     .form-section-question p,
     .form-section-question li {
         font-size: 14px;
         margin: 0.5em;
         padding: 8px 0;
     }
-
     .navigation-buttons {
         margin-top: 0;
     }
-
     .navigation-buttons #prev-button,
     .navigation-buttons #next-button {
         padding: 8px 15px;
@@ -1130,54 +1141,44 @@ h4 {
         font-size: 14px;
         /* Réduit la taille de la police des boutons */
     }
-
     .question-options {
         margin-top: 8px;
     }
-
     .question-options select {
         height: 32px;
         /* Ajuste la hauteur des éléments select */
         font-size: 12px;
         /* Réduit la taille de la police à l'intérieur du select */
     }
-
     .question-options input[type="text"] {
         min-height: 32px;
         /* Ajuste la hauteur des inputs de type texte */
     }
-
     #dynamic-content {
         padding: 40px;
         /* Ajuste le padding du contenu dynamique */
         font-size: 14px;
         /* Réduit la taille de la police du contenu dynamique */
     }
-
     #dynamic-content h3 {
         font-size: 14px;
         /* Ajuste la taille pour les titres à l'intérieur du contenu dynamique */
     }
-
     .infos-questions {
         font-size: 12px;
         /* Réduit la taille de la police pour les infos questions */
     }
-
     .accueil-text {
         padding-right: 40px;
         line-height: 18px;
     }
-
     .accueil-text p {
         margin: 0;
     }
-
     .accueil-text ul {
         margin: 0;
         padding-left: 20px;
     }
-
     .custom-list li {
         position: relative;
         padding-left: 20px;
@@ -1190,65 +1191,59 @@ h4 {
         right: calc(-60vw - 16px);
         top: 15%;
     }
-
     #choix-commune {
         top: 40%;
     }
-
     /* FORMULAIRE DIAG */
     #form-container {
-        height: 100%;
+        /* height: 95%; */
         padding: 0;
     }
-
-    #form-container form {
-        min-height: 100vh;
-        max-height: 90vh;
-    }
-
+    /* #form-container form {
+        min-height: 90vh;
+    } */
     #section-8 p {
         margin: 0;
     }
-
     .header-infos {
         max-height: 120px !important;
         min-height: 120px;
     }
-
+    .header-infos h2 {
+        margin-bottom: 8px;
+    }
     .header-infos,
     .form-section {
         padding: 15px 40px;
-        /* Réduit le padding */
     }
-
+    .header-infos h2 {
+        margin-bottom: 0 !important;
+    }
     .header-question h3,
     .form-section h3,
     .question-label,
     .option-label {
         font-size: 14px;
     }
-
     .header-question img,
-    .bulle-info,
-    .bulle-info-2 {
+    .bulle-info {
         width: 24px;
     }
-
+    .bulle-info-2 {
+        width: 40px;
+    }
     .form-section-question {
         padding: 8px 0;
     }
-
     .form-section-question p,
     .form-section-question li {
         font-size: 14px;
         margin: 0.5em;
         padding: 8px 0;
     }
-
     .navigation-buttons {
         margin-top: 0;
     }
-
     .navigation-buttons #prev-button,
     .navigation-buttons #next-button {
         padding: 8px 15px;
@@ -1256,54 +1251,44 @@ h4 {
         font-size: 14px;
         /* Réduit la taille de la police des boutons */
     }
-
     .question-options {
         margin-top: 8px;
     }
-
     .question-options select {
         height: 32px;
         /* Ajuste la hauteur des éléments select */
         font-size: 12px;
         /* Réduit la taille de la police à l'intérieur du select */
     }
-
     .question-options input[type="text"] {
         min-height: 32px;
         /* Ajuste la hauteur des inputs de type texte */
     }
-
     #dynamic-content {
         padding: 40px;
         /* Ajuste le padding du contenu dynamique */
         font-size: 14px;
         /* Réduit la taille de la police du contenu dynamique */
     }
-
     #dynamic-content h3 {
         font-size: 14px;
         /* Ajuste la taille pour les titres à l'intérieur du contenu dynamique */
     }
-
     .infos-questions {
         font-size: 12px;
         /* Réduit la taille de la police pour les infos questions */
     }
-
     .accueil-text {
         padding-right: 40px;
         line-height: 18px;
     }
-
     .accueil-text p {
         margin: 0;
     }
-
     .accueil-text ul {
         margin: 0;
         padding-left: 20px;
     }
-
     .custom-list li {
         position: relative;
         padding-left: 20px;
@@ -1314,7 +1299,6 @@ h4 {
     .info-commune {
         width: 60vw;
     }
-
     form {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -1323,23 +1307,19 @@ h4 {
         grid-gap: 16px;
         width: 100%;
     }
-
     input {
         grid-column: span 1;
     }
-
     input[type="submit"] {
         grid-column: span 2;
         /* fait que le bouton occupe les deux colonnes */
     }
-
     #adresse {
         grid-row: 4 !important;
         /* définir la ligne */
         grid-column: 1 / 3 !important;
         /* définir les colonnes */
     }
-
     label {
         font-size: 14px;
     }
@@ -1349,7 +1329,6 @@ h4 {
     .info-commune {
         width: 60vw;
     }
-
     form {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -1358,23 +1337,19 @@ h4 {
         grid-gap: 16px;
         width: 100%;
     }
-
     input {
         grid-column: span 1;
     }
-
     input[type="submit"] {
         grid-column: span 2;
         /* fait que le bouton occupe les deux colonnes */
     }
-
     #adresse {
         grid-row: 4 !important;
         /* définir la ligne */
         grid-column: 1 / 3 !important;
         /* définir les colonnes */
     }
-
     label {
         font-size: 14px;
     }
@@ -1385,14 +1360,12 @@ h4 {
         display: flex;
         flex-direction: column;
     }
-
     #map {
         /* max-height: 500px; */
         min-width: 100%;
         width: 100vw;
         min-height: 100vh;
     }
-
     .info-commune {
         min-width: 100vw;
         height: 100vh;
@@ -1402,40 +1375,33 @@ h4 {
         right: calc(-100vw - 24px);
         z-index: 1000;
     }
-
     #liens {
         width: 100%;
     }
-
     #liens div h2 {
         font-size: 14px;
         text-align: center;
         margin-top: 36px;
     }
-
     /* formulaire */
     form {
         flex-direction: column;
     }
-
     input,
     label {
         flex: unset;
         max-width: 90%;
         font-size: 14px;
     }
-
     #selectCommune {
         padding: 4px 8px;
     }
-
     #choix-commune {
         bottom: 5%;
         top: calc(100% - 148px);
         left: 0px;
         width: 70%;
     }
-
     #choix-commune.isVisible {
         left: -75%;
     }
