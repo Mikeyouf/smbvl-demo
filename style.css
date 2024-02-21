@@ -53,8 +53,6 @@
     right: -70vw;
     width: 70vw;
     height: 100vh;
-    /* min-height: 100%;
-    max-height: 100%; */
     background-color: white;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.25);
     transition: right 0.5s;
@@ -74,15 +72,10 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    /* overflow: auto; */
     justify-content: space-around;
     max-width: 100%;
     margin: 20px 40px 20px 20px;
     height: 100%;
-    /* height: 90%; */
-    /* min-height: calc(100% - 48px); */
-    /* max-height: calc(100% - 48px); */
-    /* margin: 20px 40px 20px 20px; */
     padding-bottom: 8px;
     background-color: white;
     border-radius: 8px;
@@ -92,20 +85,14 @@
     background-size: contain;
     background-position: bottom right;
     border-radius: 8px;
-    /* overflow-y: auto; */
 }
 
 #form-container form {
     display: flex;
     flex-direction: column;
-    /* height: 100%; */
-    /* max-height: 85vh; */
-    /* min-height: 100%; */
     justify-content: flex-start;
-    /* flex-grow: 1; */
     border-radius: 8px;
     flex: 1;
-    /* Prend tout l'espace disponible */
     overflow-y: auto;
 }
 
@@ -408,7 +395,7 @@
     background-color: white;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.25);
     transition: right 0.5s;
-    overflow-y: auto;
+    overflow: auto;
     z-index: 1001;
     border-left: 16px solid #b81547;
     background-image: url("./images/image-rouge-bulle-info.png");
@@ -1086,19 +1073,33 @@ h4 {
     .side-panel {
         right: -80vw;
         width: 80vw;
-        /* height: 100vh; */
     }
     #form-container {
         /* min-height: 100vh; */
         margin: 10px 40px;
         padding: 0;
     }
-    /* #form-container form {
-        min-height: 90vh;
-        max-height: 90vh;
-    } */
+    .info-panel {
+        right: calc(-40vw - 16px);
+        width: 40vw;
+    }
+    .img-infos {
+        max-width: 40%;
+        margin: 0 auto;
+    }
+    #dynamic-content {
+        overflow-y: auto;
+    }
+    #dynamic-content p {
+        margin: 8px 0;
+    }
     #section-8 p {
         margin: 0;
+    }
+    .liste-img {
+        max-width: 80px;
+        margin: 0;
+        padding-right: 24px;
     }
     .header-infos {
         max-height: 120px !important;
@@ -1133,6 +1134,7 @@ h4 {
     }
     .navigation-buttons {
         margin-top: 0;
+        margin-left: 40px;
     }
     .navigation-buttons #prev-button,
     .navigation-buttons #next-button {
@@ -1159,6 +1161,9 @@ h4 {
         /* Ajuste le padding du contenu dynamique */
         font-size: 14px;
         /* Réduit la taille de la police du contenu dynamique */
+    }
+    #dynamic-content p {
+        margin: 8px 0;
     }
     #dynamic-content h3 {
         font-size: 14px;
@@ -1195,13 +1200,17 @@ h4 {
         top: 40%;
     }
     /* FORMULAIRE DIAG */
+    .side-panel {
+        right: -80vw;
+        width: 80vw;
+    }
     #form-container {
-        /* height: 95%; */
         padding: 0;
     }
-    /* #form-container form {
-        min-height: 90vh;
-    } */
+    .info-panel {
+        right: calc(-40vw - 16px);
+        width: 40vw;
+    }
     #section-8 p {
         margin: 0;
     }
@@ -1243,40 +1252,33 @@ h4 {
     }
     .navigation-buttons {
         margin-top: 0;
+        margin-left: 40px;
     }
     .navigation-buttons #prev-button,
     .navigation-buttons #next-button {
         padding: 8px 15px;
-        /* Ajuste le padding des boutons */
         font-size: 14px;
-        /* Réduit la taille de la police des boutons */
     }
     .question-options {
         margin-top: 8px;
     }
     .question-options select {
         height: 32px;
-        /* Ajuste la hauteur des éléments select */
         font-size: 12px;
-        /* Réduit la taille de la police à l'intérieur du select */
     }
     .question-options input[type="text"] {
         min-height: 32px;
-        /* Ajuste la hauteur des inputs de type texte */
     }
     #dynamic-content {
-        padding: 40px;
-        /* Ajuste le padding du contenu dynamique */
+        padding: 30px;
+        overflow-y: auto;
         font-size: 14px;
-        /* Réduit la taille de la police du contenu dynamique */
     }
     #dynamic-content h3 {
         font-size: 14px;
-        /* Ajuste la taille pour les titres à l'intérieur du contenu dynamique */
     }
     .infos-questions {
         font-size: 12px;
-        /* Réduit la taille de la police pour les infos questions */
     }
     .accueil-text {
         padding-right: 40px;
@@ -1303,7 +1305,6 @@ h4 {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(6, auto);
-        /* définir le nombre de lignes */
         grid-gap: 16px;
         width: 100%;
     }
