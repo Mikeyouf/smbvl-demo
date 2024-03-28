@@ -275,10 +275,28 @@
     margin-top: 20px;
 }
 
-#progress-bar-container {
+/* #progress-bar-container {
     width: 100%;
     background-color: #e0e0e0;
     border-radius: 5px;
+} */
+
+#progress-bar-container {
+    display: flex;
+    width: 100%;
+    background-color: #ccc;
+    position: relative;
+    height: 20px;
+}
+
+.progress-segment {
+    flex: 1; /* Assurez-vous que les segments prennent une partie égale de l'espace */
+    display: flex;
+    justify-content: center; /* Centre le texte horizontalement */
+    align-items: center; /* Centre le texte verticalement */
+    color: white; /* Couleur du texte */
+    position: relative;
+    z-index: 1;
 }
 
 #progress-bar {
@@ -294,6 +312,20 @@
     background-color: #e0e0e0;
     border-radius: 5px;
     margin: 8px 60px;
+}
+
+.second-segment {
+    border-right: 1px solid #e0e0e0;
+    border-left: 1px solid #e0e0e0;
+}
+
+#progress-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #4CAF50; /* Couleur initiale, elle changera dynamiquement */
+    z-index: 0; /* Assurez-vous qu'il est derrière les segments de texte */
 }
 
 #progress {
