@@ -952,7 +952,7 @@ function preDiagnostic() {
             const arrayTextDiag = ["La réalisation d’un diagnostic complet n’est pas forcément nécessaire (à confirmer auprès du SMBVL).", "Un diagnostic complet est conseillé pour identifier plus précisément les vulnérabilités de votre bien et vous proposer des solutions adaptées pour le protéger et limiter les délais de retour à la normale post-inondation.", "Un diagnostic complet est vivement recommandé afin de bénéficier d’un accompagnement personnalisé pour la mise en sécurité des occupants, de votre bien et de ses équipements."]
             let textInfoDiag = '';
 
-            console.log(formData.score);
+            // console.log(formData.score);
 
             if (typeDeBienInput === 'entreprise') {
                 textInfoDiag = formData.score <= 45 ? textInfoDiag = arrayTextDiag[0] : formData.score <= 90 ? textInfoDiag = arrayTextDiag[1] : textInfoDiag = arrayTextDiag[2];
