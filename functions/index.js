@@ -7,7 +7,9 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-const {onRequest} = require("firebase-functions/v2/https");
+const {
+    onRequest
+} = require("firebase-functions/v2/https");
 const logger = require("firebase-functions/logger");
 
 const functions = require('firebase-functions');
@@ -22,10 +24,10 @@ exports.sendDataToMake = functions.database.ref('/form-diag/{cadastreValue}')
 
         // Envoie les données sous forme JSON
         return axios.post(makeWebhookURL, {
-            data: data // Vous pouvez structurer ceci comme nécessaire
-        })
-        .then(response => console.log('Réponse de Make:', response))
-        .catch(error => console.error('Erreur lors de l\'envoi à Make', error));
+                data: data // Vous pouvez structurer ceci comme nécessaire
+            })
+            .then(response => console.log('Réponse de Make:', response))
+            .catch(error => console.error('Erreur lors de l\'envoi à Make', error));
     });
 
 

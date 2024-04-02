@@ -79,55 +79,59 @@ const communeDataVariables = {
 
 // Je récupère la position de l'utilisateur si il est ok
 // Utilisation de la position de l'utilisateur
-let lat, lng, adresse, selectedCommune, communeIsCorrect = false, postaleCode, street;
+let lat, lng, adresse, selectedCommune, communeIsCorrect = false,
+    postaleCode, street;
 
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(async function (position) {
-        lat = position.coords.latitude;
-        lng = position.coords.longitude;
+            lat = position.coords.latitude;
+            lng = position.coords.longitude;
 
-        try {
-            const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`);
-            const result = await response.json();
-            adresse = `${result.address.road}, ${result.address.postcode} ${result.address.village}`;
-            postaleCode = result.address.postcode;
-            street = result.address.road;
-            selectedCommune = result.address.village || result.address.city;
+            try {
+                const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`);
+                const result = await response.json();
+                adresse = `${result.address.road}, ${result.address.postcode} ${result.address.village}`;
+                postaleCode = result.address.postcode;
+                street = result.address.road;
+                selectedCommune = result.address.village || result.address.city;
 
-            const communes = ["Bollène", "Bouchet", "Chamaret", "Colonzelle", "Grignan", "Grillon", "La Baume-de-Transit", "Lagarde-Paréol", "Le Pègue", "Mondragon", "Montbrison-sur-Lez", "Montjoux", "Montségur-sur-Lauzon", "Mornas", "Richerenches", "Rochegude", "Roche-Saint-Secret-Béconne", "Saint-Pantaléon-les-Vignes", "Suze-la-Rousse", "Taulignan", "Teyssières", "Tulette", "Valréas", "Venterol", "Vesc", "Vinsobres", "Visan"];
+                const communes = ["Bollène", "Bouchet", "Chamaret", "Colonzelle", "Grignan", "Grillon", "La Baume-de-Transit", "Lagarde-Paréol", "Le Pègue", "Mondragon", "Montbrison-sur-Lez", "Montjoux", "Montségur-sur-Lauzon", "Mornas", "Richerenches", "Rochegude", "Roche-Saint-Secret-Béconne", "Saint-Pantaléon-les-Vignes", "Suze-la-Rousse", "Taulignan", "Teyssières", "Tulette", "Valréas", "Venterol", "Vesc", "Vinsobres", "Visan"];
 
-            if (communes.includes(selectedCommune)) {
-                showSpinner();
-                let data = communeDataVariables[selectedCommune];
-                fetch(data).then(response => response.json()).then(data => {
-                    geoJSONLayer = L.geoJSON(data, {
-                        style: style,
-                        onEachFeature: onEachFeature,
-                        filter: function (feature, layer) {
-                            return feature.properties.nom_commune === selectedCommune;
-                        }
-                    }).addTo(map);
+                if (communes.includes(selectedCommune)) {
+                    showSpinner();
+                    let data = communeDataVariables[selectedCommune];
+                    fetch(data).then(response => response.json()).then(data => {
+                        geoJSONLayer = L.geoJSON(data, {
+                            style: style,
+                            onEachFeature: onEachFeature,
+                            filter: function (feature, layer) {
+                                return feature.properties.nom_commune === selectedCommune;
+                            }
+                        }).addTo(map);
+                        hideSpinner();
+                        let bounds = geoJSONLayer.getBounds();
+                        map.fitBounds(bounds, {
+                            maxZoom: 16
+                        });
+                    }).catch(error => {
+                        console.error('Erreur lors du chargement du GeoJSON:', error);
+                        hideSpinner();
+                    });
+                    communeIsCorrect = true;
+                } else {
                     hideSpinner();
-                    let bounds = geoJSONLayer.getBounds();
-                    map.fitBounds(bounds, { maxZoom: 16 });
-                }).catch(error => {
-                    console.error('Erreur lors du chargement du GeoJSON:', error);
-                    hideSpinner();
-                });
-                communeIsCorrect = true;
-            } else {
+                    boiteMessErreur.classList.toggle('goUp');
+                    communeIsCorrect = false;
+                }
+            } catch (error) {
+                console.error('Erreur lors de la requête Nominatim:', error);
                 hideSpinner();
-                boiteMessErreur.classList.toggle('goUp');
-                communeIsCorrect = false;
             }
-        } catch (error) {
-            console.error('Erreur lors de la requête Nominatim:', error);
-            hideSpinner();
-        }
-    }, function(error) {
-        console.error('Erreur de géolocalisation:', error);
-        choixCommune();
-    });
+        },
+        function (error) {
+            console.error('Erreur de géolocalisation:', error);
+            choixCommune();
+        });
 } else {
     console.warn('Géolocalisation non supportée par le navigateur.');
     choixCommune();
@@ -175,7 +179,7 @@ function showSpinner() {
 
 function hideSpinner() {
     document.getElementById('loadingSpinner').style.visibility = 'hidden';
-}  
+}
 
 // CHOIX COMMUNES
 let geoJSONLayer;
@@ -266,11 +270,11 @@ function onEachFeature(feature, layer) {
             + `<p class="eligible" >Niveau d\'aléa majorant : <b>${niveauAlea}</b></p>`
             + `<p class="eligible" >Le bâti est dans le zonage inondable du PPRi : <b>${batiInondable}</b></p>`
             + '<p class="btn-1">Pour estimer ma vulnérabilité <a id="open-form-btn"> > Je réalise mon pré-diagnostic en ligne</a></p>'
-            + '<p class="btn-2">Pour bénéficier d\'un diagnostic complet ou pour en savoir plus <a href="mailto:inondation@smbvl.fr"> > smbvl-alabri@smbvl.net</a></p>'
+            // + '<p class="btn-2">Pour bénéficier d\'un diagnostic complet ou pour en savoir plus <a href="mailto:inondation@smbvl.fr"> > smbvl-alabri@smbvl.net</a></p>'
             : '<p>Votre parcelle n\'est pas dans le zonage inondable du PPRi du bassin versant du Lez.</p>'
             + '<p class="non-eligible">Si votre bien a été impacté par une inondation, n\'hésitez pas à nous contacter pour signaler votre situation et obtenir davantage d\'informations.</p>'
             + '<p class="btn-1">Pour estimer ma vulnérabilité <a id="open-form-btn"> > Je réalise mon pré-diagnostic en ligne</a></p>'
-            + '<p class="btn-2">Pour signaler ma situation et en savoir plus <a href="mailto:inondation@smbvl.fr"> > smbvl-alabri@smbvl.net</a></p>'
+            // + '<p class="btn-2">Pour signaler ma situation et en savoir plus <a href="mailto:inondation@smbvl.fr"> > smbvl-alabri@smbvl.net</a></p>'
         }
     `;
 
@@ -387,11 +391,12 @@ function zoomToFeature(e) {
         </div>
         `;
 
-    if (isEligible) {
-        divElt.classList.add('show');
-    } else {
+    if (!isEligible) {
         divElt.classList.remove('show');
     }
+    // else {
+    //     divElt.classList.remove('show');
+    // }
 }
 
 let searchControl = L.Control.geocoder({
@@ -432,14 +437,14 @@ searchControl.on('markgeocode', function (e) {
 
                 geoJSONLayer.clearLayers();
                 geoJSONLayer.addData(data);
-                
+
                 // Cache le spinner une fois les données chargées
                 hideSpinner();
 
                 // Cache le menu latéral gauche
                 const houseDivElt = document.getElementById("choix-commune");
                 houseDivElt.classList.toggle('isVisible');
-                
+
                 communeIsCorrect = true;
             } else {
                 console.log("La commune n'est pas dans la liste.")
@@ -749,7 +754,7 @@ function preDiagnostic() {
 
     function calculateAndDisplayResult() {
         let score = 0; // Initialise le score
-        formData.score = 0; 
+        formData.score = 0;
 
         const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
         const radios = document.querySelectorAll('input[type="radio"]:checked');
@@ -775,51 +780,64 @@ function preDiagnostic() {
                 formData.score += val;
             }
         });
-        
-        if(niveauAlea === null) {
+
+        if (niveauAlea === null) {
             formData.score += 0;
-        }else if(niveauAlea === "Aléa faible") {
+        } else if (niveauAlea === "Aléa faible") {
             formData.score += 6;
-        }else if(niveauAlea === "Aléa modéré") {
+        } else if (niveauAlea === "Aléa modéré") {
             formData.score += 12;
-        }else {
+        } else {
             formData.score += 18;
         }
 
-        if(batiInondable) {
+        if (batiInondable) {
             formData.score += 6;
-        }else if(!batiInondable) {
+        } else if (!batiInondable) {
             formData.score += 4;
-        }else {
+        } else {
             formData.score += 0;
         }
 
         displayResult(formData.score);
     }
 
+    let buttonFinal = document.getElementById('diag-complet');
+    let divElt = document.getElementById("info-commune");
+
+    // Définitions des gestionnaires d'événements à l'extérieur de displayResult pour éviter les duplications
+    function handleEligibleClick() {
+        divElt.classList.add('show');
+        divElt.style.zIndex = '1000';
+    }
+
+    function handleNotEligibleClick() {
+        divElt.classList.remove('show');
+        divElt.style.zIndex = '1000';
+        window.location.href = "mailto:smbvl-alabri@smbvl.net";
+    }
+
     function displayResult(score) {
         let resultTextEl = document.getElementById('result-text');
-        let progressBar = document.getElementById('progress-bar');
         let progressIndicator = document.getElementById('progress-indicator');
         let infoTextResult = document.getElementById('info-text-resultat');
-        let buttonFinal = document.getElementById('diag-complet');
-        let divElt = document.getElementById("info-commune");
 
+        // Met à jour le texte du bouton en fonction de l'éligibilité
         buttonFinal.textContent = communeData.isEligible ? "Bénéficier d'un diagnostic complet" : "En savoir plus et vérifier votre éligibilité au diagnostic complet";
-        if(communeData.isEligible) {
-            buttonFinal.addEventListener('click', function() {
-                divElt.classList.add('show');
-                divElt.style.zIndex = '1000';
-            });
-        }else {
-            buttonFinal.addEventListener('click', function() {
-                divElt.classList.remove('show');
-                divElt.style.zIndex = '1000';
-                window.location.href = "mailto:smbvl-alabri@smbvl.net"; 
-            });
+
+        // Retire les écouteurs d'événements précédents avant d'en ajouter de nouveaux
+        buttonFinal.removeEventListener('click', handleEligibleClick);
+        buttonFinal.removeEventListener('click', handleNotEligibleClick);
+
+        // Ajoute le gestionnaire approprié basé sur l'éligibilité
+        if (communeData.isEligible) {
+            buttonFinal.addEventListener('click', handleEligibleClick);
+        } else {
+            buttonFinal.addEventListener('click', handleNotEligibleClick);
         }
 
-        if(typeDebien === "entreprise") {
+        // Logique pour ajuster l'affichage en fonction du score et du type de bien
+        if (typeDebien === "entreprise") {
             if (score <= 45) {
                 resultTextEl.textContent = 'Peu exposé';
                 progressIndicator.style.width = '33.33%';
@@ -829,7 +847,7 @@ function preDiagnostic() {
                 resultTextEl.textContent = 'Modéré';
                 progressIndicator.style.width = '66.66%';
                 progressIndicator.style.backgroundColor = '#e27822';
-                infoTextResult.innerHTML = `<p>Un diagnostic complet est conseillé pour identifier plus précisément les vulnérabilités de votre bien et vous proposer des solutions adaptées et personnalisées pour le protéger et limiter les délais de retour à la normale post-inondation. </p>`;
+                infoTextResult.innerHTML = `<p>Un diagnostic complet est conseillé pour identifier plus précisément les vulnérabilités de votre bien et vous proposer des solutions adaptées et personnalisées pour le protéger et limiter les délais de retour à la normale post-inondation.</p>`;
             } else {
                 resultTextEl.textContent = 'Fort';
                 progressIndicator.style.width = '100%';
@@ -855,6 +873,7 @@ function preDiagnostic() {
             }
         }
 
+        // Supposons que vous ayez une logique pour changer de section ici
         currentSectionIndex = totalSections - 1;
         changeSection();
     }
@@ -901,7 +920,7 @@ function preDiagnostic() {
 
             // SECTION 3
             const question5Input = document.querySelector('input[name="question5"]:checked') ? document.querySelector('input[name="question5"]:checked').getAttribute('datatext') : '';
-            
+
             // SECTION 4
             const question6Input = document.querySelector('input[name="question6"]:checked') ? document.querySelector('input[name="question6"]:checked').getAttribute('datatext') : '';
             const question7Input = document.querySelector('input[name="question7"]:checked') ? document.querySelector('input[name="question7"]:checked').getAttribute('datatext') : '';
@@ -964,7 +983,7 @@ function preDiagnostic() {
 
             console.log(textInfoDiag);
             console.log(formData.score);
-            
+
             // données à envoyer
             const data = {
                 emailClient: emailClient,

@@ -39,6 +39,7 @@
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -285,6 +286,7 @@
     margin-top: 20px;
 }
 
+
 /* #progress-bar-container {
     width: 100%;
     background-color: #e0e0e0;
@@ -300,11 +302,15 @@
 }
 
 .progress-segment {
-    flex: 1; /* Assurez-vous que les segments prennent une partie égale de l'espace */
+    flex: 1;
+    /* Assurez-vous que les segments prennent une partie égale de l'espace */
     display: flex;
-    justify-content: center; /* Centre le texte horizontalement */
-    align-items: center; /* Centre le texte verticalement */
-    color: white; /* Couleur du texte */
+    justify-content: center;
+    /* Centre le texte horizontalement */
+    align-items: center;
+    /* Centre le texte verticalement */
+    color: white;
+    /* Couleur du texte */
     position: relative;
     z-index: 1;
 }
@@ -338,8 +344,10 @@
     top: 0;
     left: 0;
     height: 100%;
-    background-color: #4CAF50; /* Couleur initiale, elle changera dynamiquement */
-    z-index: 0; /* Assurez-vous qu'il est derrière les segments de texte */
+    background-color: #4CAF50;
+    /* Couleur initiale, elle changera dynamiquement */
+    z-index: 0;
+    /* Assurez-vous qu'il est derrière les segments de texte */
 }
 
 #progress {
@@ -999,7 +1007,7 @@ h4 {
 .leaflet-popup-content {
     font-size: 14px;
     color: #014587
-    /* autres styles */
+        /* autres styles */
 }
 
 .leaflet-popup-content a {
@@ -1100,79 +1108,97 @@ h4 {
         width: 60vw;
         min-width: 60vw;
         max-height: 90vh;
-        right: calc(-60vw - 24px);
+        right: calc(-80vw - 24px);
         top: 10%;
     }
+
     #choix-commune {
         top: 30%;
     }
+
     /* FORMULAIRE DIAG */
     .side-panel {
         right: -80vw;
         width: 80vw;
     }
+
     #form-container {
         /* min-height: 100vh; */
         margin: 10px 40px;
         padding: 0;
     }
+
     .info-panel {
         right: calc(-40vw - 16px);
         width: 40vw;
     }
+
     .img-infos {
         max-width: 40%;
         margin: 0 auto;
     }
+
     #dynamic-content {
         overflow-y: auto;
     }
+
     #dynamic-content p {
         margin: 8px 0;
     }
+
     #section-8 p {
         margin: 0;
     }
+
     .liste-img {
         max-width: 80px;
         margin: 0;
         padding-right: 24px;
     }
+
     .header-infos {
         max-height: 120px !important;
         min-height: 120px;
     }
+
     .header-infos,
     .form-section {
         padding: 8px 40px;
         /* Réduit le padding */
     }
+
     .header-question h3,
     .form-section h3,
     .question-label,
     .option-label {
         font-size: 14px;
     }
+
     .header-question img,
     .bulle-info {
         width: 24px;
     }
+
     .bulle-info-2 {
         width: 40px;
     }
+
     .form-section-question {
         padding: 8px 0;
     }
+
     .form-section-question p,
     .form-section-question li {
         font-size: 14px;
         margin: 0.5em;
         padding: 8px 0;
     }
+
     .navigation-buttons {
         margin-top: 0;
         margin-left: 40px;
     }
+
     .navigation-buttons #prev-button,
     .navigation-buttons #next-button {
         padding: 8px 15px;
@@ -1180,47 +1206,58 @@ h4 {
         font-size: 14px;
         /* Réduit la taille de la police des boutons */
     }
+
     .question-options {
         margin-top: 8px;
     }
+
     .question-options select {
         height: 32px;
         /* Ajuste la hauteur des éléments select */
         font-size: 12px;
         /* Réduit la taille de la police à l'intérieur du select */
     }
+
     .question-options input[type="text"] {
         min-height: 32px;
         /* Ajuste la hauteur des inputs de type texte */
     }
+
     #dynamic-content {
         padding: 40px;
         /* Ajuste le padding du contenu dynamique */
         font-size: 14px;
         /* Réduit la taille de la police du contenu dynamique */
     }
+
     #dynamic-content p {
         margin: 8px 0;
     }
+
     #dynamic-content h3 {
         font-size: 14px;
         /* Ajuste la taille pour les titres à l'intérieur du contenu dynamique */
     }
+
     .infos-questions {
         font-size: 12px;
         /* Réduit la taille de la police pour les infos questions */
     }
+
     .accueil-text {
         padding-right: 40px;
         line-height: 18px;
     }
+
     .accueil-text p {
         margin: 0;
     }
+
     .accueil-text ul {
         margin: 0;
         padding-left: 20px;
     }
+
     .custom-list li {
         position: relative;
         padding-left: 20px;
@@ -1233,101 +1270,127 @@ h4 {
         right: calc(-60vw - 16px);
         top: 15%;
     }
+
     #choix-commune {
         top: 40%;
     }
+
     /* FORMULAIRE DIAG */
     .side-panel {
         right: -80vw;
         width: 80vw;
     }
+
     #form-container {
         padding: 0;
     }
+
     .info-panel {
         right: calc(-40vw - 16px);
         width: 40vw;
     }
+
     #section-8 p {
         margin: 0;
     }
+
     .header-infos {
         max-height: 120px !important;
         min-height: 120px;
     }
+
     .header-infos h2 {
         margin-bottom: 8px;
     }
+
     .header-infos,
     .form-section {
         padding: 15px 40px;
     }
+
     .header-infos h2 {
         margin-bottom: 0 !important;
     }
+
     .header-question h3,
     .form-section h3,
     .question-label,
     .option-label {
         font-size: 14px;
     }
+
     .header-question img,
     .bulle-info {
         width: 24px;
     }
+
     .bulle-info-2 {
         width: 40px;
     }
+
     .form-section-question {
         padding: 8px 0;
     }
+
     .form-section-question p,
     .form-section-question li {
         font-size: 14px;
         margin: 0.5em;
         padding: 8px 0;
     }
+
     .navigation-buttons {
         margin-top: 0;
         margin-left: 40px;
     }
+
     .navigation-buttons #prev-button,
     .navigation-buttons #next-button {
         padding: 8px 15px;
         font-size: 14px;
     }
+
     .question-options {
         margin-top: 8px;
     }
+
     .question-options select {
         height: 32px;
         font-size: 12px;
     }
+
     .question-options input[type="text"] {
         min-height: 32px;
     }
+
     #dynamic-content {
         padding: 30px;
         overflow-y: auto;
         font-size: 14px;
     }
+
     #dynamic-content h3 {
         font-size: 14px;
     }
+
     .infos-questions {
         font-size: 12px;
     }
+
     .accueil-text {
         padding-right: 40px;
         line-height: 18px;
     }
+
     .accueil-text p {
         margin: 0;
     }
+
     .accueil-text ul {
         margin: 0;
         padding-left: 20px;
     }
+
     .custom-list li {
         position: relative;
         padding-left: 20px;
@@ -1338,6 +1401,7 @@ h4 {
     .info-commune {
         width: 60vw;
     }
+
     form {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -1345,19 +1409,23 @@ h4 {
         grid-gap: 16px;
         width: 100%;
     }
+
     input {
         grid-column: span 1;
     }
+
     input[type="submit"] {
         grid-column: span 2;
         /* fait que le bouton occupe les deux colonnes */
     }
+
     #adresse {
         grid-row: 4 !important;
         /* définir la ligne */
         grid-column: 1 / 3 !important;
         /* définir les colonnes */
     }
+
     label {
         font-size: 14px;
     }
@@ -1367,6 +1435,7 @@ h4 {
     .info-commune {
         width: 60vw;
     }
+
     form {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -1375,19 +1444,23 @@ h4 {
         grid-gap: 16px;
         width: 100%;
     }
+
     input {
         grid-column: span 1;
     }
+
     input[type="submit"] {
         grid-column: span 2;
         /* fait que le bouton occupe les deux colonnes */
     }
+
     #adresse {
         grid-row: 4 !important;
         /* définir la ligne */
         grid-column: 1 / 3 !important;
         /* définir les colonnes */
     }
+
     label {
         font-size: 14px;
     }
@@ -1398,12 +1471,14 @@ h4 {
         display: flex;
         flex-direction: column;
     }
+
     #map {
         /* max-height: 500px; */
         min-width: 100%;
         width: 100vw;
         min-height: 100vh;
     }
+
     .info-commune {
         min-width: 100vw;
         height: 100vh;
@@ -1413,33 +1488,40 @@ h4 {
         right: calc(-100vw - 24px);
         z-index: 1000;
     }
+
     #liens {
         width: 100%;
     }
+
     #liens div h2 {
         font-size: 14px;
         text-align: center;
         margin-top: 36px;
     }
+
     /* formulaire */
     form {
         flex-direction: column;
     }
+
     input,
     label {
         flex: unset;
         max-width: 90%;
         font-size: 14px;
     }
+
     #selectCommune {
         padding: 4px 8px;
     }
+
     #choix-commune {
         bottom: 5%;
         top: calc(100% - 148px);
         left: 0px;
         width: 70%;
     }
+
     #choix-commune.isVisible {
         left: -75%;
     }
