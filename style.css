@@ -219,7 +219,8 @@
 #prev-button,
 #next-button,
 #envois-mail-resultats,
-#diag-complet {
+#diag-complet,
+#email-contact-link {
     background-color: #004587;
     color: white;
     padding: 10px 20px;
@@ -230,10 +231,13 @@
     min-width: 120px;
     height: 35px;
     transition: all 0.3s ease-in;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
 }
 
-#diag-complet {
-    height: 56px;
+#diag-complet,
+#email-contact-link {
+    height: 59px;
 }
 
 #email-section {
@@ -271,14 +275,16 @@
 }
 
 #envois-mail-resultats,
-#diag-complet {
+#diag-complet,
+#email-contact-link {
     padding: 20px 30px;
 }
 
 #prev-button:hover,
 #next-button:hover,
 #envois-mail-resultats:hover,
-#diag-complet:hover {
+#diag-complet:hover,
+#email-contact-link:hover {
     background-color: #B81447;
 }
 
@@ -1040,6 +1046,19 @@ h4 {
     text-align: center;
     font-size: 15px;
 }
+
+.btn {
+    text-decoration: none;
+    height: 56px;
+}
+
+
+/* .btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background-color: #286090;
+    border-color: #204d74;
+} */
 
 .btn-1 a {
     display: inline-block;

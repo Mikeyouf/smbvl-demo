@@ -804,6 +804,14 @@ function preDiagnostic() {
 
     let buttonFinal = document.getElementById('diag-complet');
     let divElt = document.getElementById("info-commune");
+    let contenaireButton = document.getElementById('button-footer-infos');
+    let emailLink = document.createElement('a');
+    emailLink.id = 'email-contact-link';
+    emailLink.textContent = 'En savoir plus et vérifier votre éligibilité au diagnostic complet';
+    emailLink.href = "mailto:smbvl-alabri@smbvl.net";
+    emailLink.classList.add('btn', 'btn-primary'); // Utilise des classes pour le style
+    contenaireButton.appendChild(emailLink);
+
 
     // Définitions des gestionnaires d'événements à l'extérieur de displayResult pour éviter les duplications
     function handleEligibleClick() {
@@ -832,7 +840,21 @@ function preDiagnostic() {
         // Ajoute le gestionnaire approprié basé sur l'éligibilité
         if (communeData.isEligible) {
             buttonFinal.addEventListener('click', handleEligibleClick);
+            // Vérifie si le lien existe déjà, sinon le crée et l'ajoute
+            if (!document.getElementById('email-contact-link')) {
+                let emailLink = document.createElement('a');
+                emailLink.id = 'email-contact-link';
+                emailLink.textContent = 'En savoir plus et vérifier votre éligibilité au diagnostic complet';
+                emailLink.href = "mailto:smbvl-alabri@smbvl.net";
+                emailLink.classList.add('btn', 'btn-primary');
+                contenaireButton.appendChild(emailLink);
+            }
         } else {
+            // Supprime le lien si non éligible ou s'il existe déjà
+            let existingLink = document.getElementById('email-contact-link');
+            if (existingLink) {
+                contenaireButton.removeChild(existingLink);
+            }
             buttonFinal.addEventListener('click', handleNotEligibleClick);
         }
 
