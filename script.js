@@ -270,11 +270,11 @@ function onEachFeature(feature, layer) {
             + `<p class="eligible" >Niveau d\'aléa majorant : <b>${niveauAlea}</b></p>`
             + `<p class="eligible" >Le bâti est dans le zonage inondable du PPRi : <b>${batiInondable}</b></p>`
             + '<p class="btn-1">Pour estimer ma vulnérabilité <a id="open-form-btn"> > Je réalise mon pré-diagnostic en ligne</a></p>'
-            // + '<p class="btn-2">Pour bénéficier d\'un diagnostic complet ou pour en savoir plus <a href="mailto:inondation@smbvl.fr"> > smbvl-alabri@smbvl.net</a></p>'
+            + '<p class="btn-2">Pour bénéficier d\'un diagnostic complet ou pour en savoir plus <a href="mailto:inondation@smbvl.fr"> > smbvl-alabri@smbvl.net</a></p>'
             : '<p>Votre parcelle n\'est pas dans le zonage inondable du PPRi du bassin versant du Lez.</p>'
             + '<p class="non-eligible">Si votre bien a été impacté par une inondation, n\'hésitez pas à nous contacter pour signaler votre situation et obtenir davantage d\'informations.</p>'
             + '<p class="btn-1">Pour estimer ma vulnérabilité <a id="open-form-btn"> > Je réalise mon pré-diagnostic en ligne</a></p>'
-            // + '<p class="btn-2">Pour signaler ma situation et en savoir plus <a href="mailto:inondation@smbvl.fr"> > smbvl-alabri@smbvl.net</a></p>'
+            + '<p class="btn-2">Pour signaler ma situation et en savoir plus <a href="mailto:inondation@smbvl.fr"> > smbvl-alabri@smbvl.net</a></p>'
         }
     `;
 
@@ -829,9 +829,10 @@ function preDiagnostic() {
         let resultTextEl = document.getElementById('result-text');
         let progressIndicator = document.getElementById('progress-indicator');
         let infoTextResult = document.getElementById('info-text-resultat');
+        console.log("score : ", score);
 
         // Met à jour le texte du bouton en fonction de l'éligibilité
-        buttonFinal.textContent = communeData.isEligible ? "Bénéficier d'un diagnostic complet" : "En savoir plus et vérifier votre éligibilité au diagnostic complet";
+        // buttonFinal.textContent = communeData.isEligible ? "Bénéficier d'un diagnostic complet" : "En savoir plus et vérifier votre éligibilité au diagnostic complet";
 
         // Retire les écouteurs d'événements précédents avant d'en ajouter de nouveaux
         buttonFinal.removeEventListener('click', handleEligibleClick);
@@ -857,39 +858,43 @@ function preDiagnostic() {
             }
             buttonFinal.addEventListener('click', handleNotEligibleClick);
         }
-
+        let scorePercentageEntreprise = (score / 134) * 100;
+        let scorePercentageHabitation = (score / 120) * 100;
         // Logique pour ajuster l'affichage en fonction du score et du type de bien
         if (typeDebien === "entreprise") {
             if (score <= 45) {
-                resultTextEl.textContent = 'Peu exposé';
-                progressIndicator.style.width = '33.33%';
+                console.log("score < 45 : ", score);
+                resultTextEl.textContent = 'Vulnérabilité faible';
+                progressIndicator.style.width = `${scorePercentageEntreprise}%`;
                 progressIndicator.style.backgroundColor = '#f4cd37';
                 infoTextResult.innerHTML = `<p>La réalisation d’un diagnostic complet n’est pas forcément nécessaire (à confirmer auprès du SMBVL).</p>`;
             } else if (score <= 90) {
-                resultTextEl.textContent = 'Modéré';
-                progressIndicator.style.width = '66.66%';
+                console.log("score < 90 : ", score);
+                resultTextEl.textContent = 'Vulnérabilité moyenne';
+                progressIndicator.style.width = `${scorePercentageEntreprise}%`;
                 progressIndicator.style.backgroundColor = '#e27822';
                 infoTextResult.innerHTML = `<p>Un diagnostic complet est conseillé pour identifier plus précisément les vulnérabilités de votre bien et vous proposer des solutions adaptées et personnalisées pour le protéger et limiter les délais de retour à la normale post-inondation.</p>`;
             } else {
-                resultTextEl.textContent = 'Fort';
-                progressIndicator.style.width = '100%';
+                console.log("score > 90 : ", score);
+                resultTextEl.textContent = 'Vulnérabilité modérée';
+                progressIndicator.style.width = `${scorePercentageEntreprise}%`;
                 progressIndicator.style.backgroundColor = '#b81547';
                 infoTextResult.innerHTML = `<p>Un diagnostic complet est vivement recommandé afin de bénéficier d’un accompagnement personnalisé pour la mise en sécurité des occupants, de votre bien et de ses équipements.</p>`;
             }
         } else {
             if (score <= 40) {
-                resultTextEl.textContent = 'Peu exposé';
-                progressIndicator.style.width = '33.33%';
+                resultTextEl.textContent = 'Vulnérabilité faible';
+                progressIndicator.style.width = `${scorePercentageHabitation}%`;
                 progressIndicator.style.backgroundColor = '#f4cd37';
                 infoTextResult.innerHTML = `<p>La réalisation d’un diagnostic complet n’est pas forcément nécessaire (à confirmer auprès du SMBVL).</p>`;
             } else if (score <= 80) {
-                resultTextEl.textContent = 'Modéré';
-                progressIndicator.style.width = '66.66%';
+                resultTextEl.textContent = 'Vulnérabilité moyenne';
+                progressIndicator.style.width = `${scorePercentageHabitation}%`;
                 progressIndicator.style.backgroundColor = '#e27822';
                 infoTextResult.innerHTML = `<p>Un diagnostic complet est conseillé pour identifier plus précisément les vulnérabilités de votre bien et vous proposer des solutions adaptées et personnalisées pour le protéger et limiter les délais de retour à la normale post-inondation.</p>`;
             } else {
-                resultTextEl.textContent = 'Fort';
-                progressIndicator.style.width = '100%';
+                resultTextEl.textContent = 'Vulnérabilité modérée';
+                progressIndicator.style.width = `${scorePercentageHabitation}%`;
                 progressIndicator.style.backgroundColor = '#b81547';
                 infoTextResult.innerHTML = `<p>Un diagnostic complet est vivement recommandé afin de bénéficier d’un accompagnement personnalisé pour la mise en sécurité des occupants, de votre bien et de ses équipements.</p>`;
             }
