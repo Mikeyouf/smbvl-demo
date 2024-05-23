@@ -340,9 +340,9 @@ function zoomToFeature(e) {
     let parentElt = document.getElementById("liens");
     let divElt = document.getElementById("info-commune");
 
-    parentElt.innerHTML = isEligible ? `
+    parentElt.innerHTML = `
         <div>
-          <h2>2. Je suis éligible, je complète le formulaire</h2>  
+          <h2>Je complète le formulaire</h2>
           <form action="/success.html" method="POST" data-netlify="true" name="contact-eligibilite" netlify-honeypot="bot-field">
             <p class="hidden" hidden>
                 <label>
@@ -384,16 +384,11 @@ function zoomToFeature(e) {
             <input type="submit" value="Envoyer">
           </form>
         </div>
-        ` :
-        `
-        <div>
-            <p class="message">Vous n'êtes pas éligible</p>
-        </div>
         `;
 
-    if (!isEligible) {
-        divElt.classList.remove('show');
-    }
+    // if (!isEligible) {
+    //     divElt.classList.remove('show');
+    // }
     // else {
     //     divElt.classList.remove('show');
     // }
@@ -421,7 +416,6 @@ searchControl.on('markgeocode', function (e) {
             postaleCode = result.address.postcode;
             street = result.address.road;
             selectedCommune = String(result.address.city || result.address.village);
-            console.log("selectedCommune :", selectedCommune);
 
             const communes = ["Bollène", "Bouchet", "Chamaret", "Colonzelle", "Grignan", "Grillon", "La Baume-de-Transit", "Lagarde-Paréol", "Le Pègue", "Mondragon", "Montbrison-sur-Lez", "Montjoux", "Montségur-sur-Lauzon", "Mornas", "Richerenches", "Rochegude", "Roche-Saint-Secret-Béconne", "Saint-Pantaléon-les-Vignes", "Suze-la-Rousse", "Taulignan", "Teyssières", "Tulette", "Valréas", "Venterol", "Vesc", "Vinsobres", "Visan"];
             if (communes.includes(selectedCommune)) {
@@ -447,7 +441,6 @@ searchControl.on('markgeocode', function (e) {
 
                 communeIsCorrect = true;
             } else {
-                console.log("La commune n'est pas dans la liste.")
                 boiteMessErreur.classList.toggle('goUp');
                 communeIsCorrect = false;
                 hideSpinner();
@@ -484,12 +477,10 @@ function preDiagnostic() {
 
     // AFFICHE LES QUESTIONS ENTREPRISE
     var selectTypeDeBien = document.getElementById('type-de-bien');
-    // console.log(selectTypeDeBien);
 
     selectTypeDeBien.addEventListener('change', function () {
         var value = this.value;
         typeDebien = value;
-        // console.log(typeDebien);
         var question1_1 = document.getElementById('question-1-1');
         var question1_2 = document.getElementById('question-1-2');
         var question15_1 = document.getElementById('question-15-1');
@@ -817,6 +808,7 @@ function preDiagnostic() {
     function handleEligibleClick() {
         divElt.classList.add('show');
         divElt.style.zIndex = '1000';
+        diagnosticPanel.classList.remove('open');
     }
 
     function handleNotEligibleClick() {
@@ -829,7 +821,6 @@ function preDiagnostic() {
         let resultTextEl = document.getElementById('result-text');
         let progressIndicator = document.getElementById('progress-indicator');
         let infoTextResult = document.getElementById('info-text-resultat');
-        console.log("score : ", score);
 
         // Met à jour le texte du bouton en fonction de l'éligibilité
         // buttonFinal.textContent = communeData.isEligible ? "Bénéficier d'un diagnostic complet" : "En savoir plus et vérifier votre éligibilité au diagnostic complet";
@@ -838,44 +829,42 @@ function preDiagnostic() {
         buttonFinal.removeEventListener('click', handleEligibleClick);
         buttonFinal.removeEventListener('click', handleNotEligibleClick);
 
-        // Ajoute le gestionnaire approprié basé sur l'éligibilité
-        if (communeData.isEligible) {
-            buttonFinal.addEventListener('click', handleEligibleClick);
-            // Vérifie si le lien existe déjà, sinon le crée et l'ajoute
-            if (!document.getElementById('email-contact-link')) {
-                let emailLink = document.createElement('a');
-                emailLink.id = 'email-contact-link';
-                emailLink.textContent = 'En savoir plus et vérifier votre éligibilité au diagnostic complet';
-                emailLink.href = "mailto:smbvl-alabri@smbvl.net";
-                emailLink.classList.add('btn', 'btn-primary');
-                contenaireButton.appendChild(emailLink);
-            }
-        } else {
-            // Supprime le lien si non éligible ou s'il existe déjà
-            let existingLink = document.getElementById('email-contact-link');
-            if (existingLink) {
-                contenaireButton.removeChild(existingLink);
-            }
-            buttonFinal.addEventListener('click', handleNotEligibleClick);
-        }
+        // // Ajoute le gestionnaire approprié basé sur l'éligibilité
+        // if (communeData.isEligible) {
+        //     buttonFinal.addEventListener('click', handleEligibleClick);
+        //     // Vérifie si le lien existe déjà, sinon le crée et l'ajoute
+        //     if (!document.getElementById('email-contact-link')) {
+        //         let emailLink = document.createElement('a');
+        //         emailLink.id = 'email-contact-link';
+        //         emailLink.textContent = 'En savoir plus et vérifier votre éligibilité au diagnostic complet';
+        //         emailLink.href = "mailto:smbvl-alabri@smbvl.net";
+        //         emailLink.classList.add('btn', 'btn-primary');
+        //         contenaireButton.appendChild(emailLink);
+        //     }
+        // } else {
+        //     // Supprime le lien si non éligible ou s'il existe déjà
+        //     let existingLink = document.getElementById('email-contact-link');
+        //     if (existingLink) {
+        //         contenaireButton.removeChild(existingLink);
+        //     }
+        //     buttonFinal.addEventListener('click', handleNotEligibleClick);
+        // }
+        buttonFinal.addEventListener('click', handleEligibleClick);
         let scorePercentageEntreprise = (score / 134) * 100;
         let scorePercentageHabitation = (score / 120) * 100;
         // Logique pour ajuster l'affichage en fonction du score et du type de bien
         if (typeDebien === "entreprise") {
             if (score <= 45) {
-                console.log("score < 45 : ", score);
                 resultTextEl.textContent = 'Vulnérabilité faible';
                 progressIndicator.style.width = `${scorePercentageEntreprise}%`;
                 progressIndicator.style.backgroundColor = '#f4cd37';
                 infoTextResult.innerHTML = `<p>La réalisation d’un diagnostic complet n’est pas forcément nécessaire (à confirmer auprès du SMBVL).</p>`;
             } else if (score <= 90) {
-                console.log("score < 90 : ", score);
                 resultTextEl.textContent = 'Vulnérabilité moyenne';
                 progressIndicator.style.width = `${scorePercentageEntreprise}%`;
                 progressIndicator.style.backgroundColor = '#e27822';
                 infoTextResult.innerHTML = `<p>Un diagnostic complet est conseillé pour identifier plus précisément les vulnérabilités de votre bien et vous proposer des solutions adaptées et personnalisées pour le protéger et limiter les délais de retour à la normale post-inondation.</p>`;
             } else {
-                console.log("score > 90 : ", score);
                 resultTextEl.textContent = 'Vulnérabilité modérée';
                 progressIndicator.style.width = `${scorePercentageEntreprise}%`;
                 progressIndicator.style.backgroundColor = '#b81547';
@@ -998,8 +987,6 @@ function preDiagnostic() {
             const arrayTextDiag = ["La réalisation d’un diagnostic complet n’est pas forcément nécessaire (à confirmer auprès du SMBVL).", "Un diagnostic complet est conseillé pour identifier plus précisément les vulnérabilités de votre bien et vous proposer des solutions adaptées pour le protéger et limiter les délais de retour à la normale post-inondation.", "Un diagnostic complet est vivement recommandé afin de bénéficier d’un accompagnement personnalisé pour la mise en sécurité des occupants, de votre bien et de ses équipements."]
             let textInfoDiag = '';
 
-            // console.log(formData.score);
-
             if (typeDeBienInput === 'entreprise') {
                 textInfoDiag = formData.score <= 45 ? textInfoDiag = arrayTextDiag[0] : formData.score <= 90 ? textInfoDiag = arrayTextDiag[1] : textInfoDiag = arrayTextDiag[2];
                 formData.score = formData.score <= 45 ? 'Risque Léger' : formData.score <= 90 ? 'Risque Modéré' : 'Risque Fort';
@@ -1007,9 +994,6 @@ function preDiagnostic() {
                 textInfoDiag = formData.score <= 40 ? textInfoDiag = arrayTextDiag[0] : formData.score <= 80 ? textInfoDiag = arrayTextDiag[1] : textInfoDiag = arrayTextDiag[2];
                 formData.score = formData.score <= 40 ? 'Risque Léger' : formData.score <= 80 ? 'Risque Modéré' : 'Risque Fort';
             }
-
-            console.log(textInfoDiag);
-            console.log(formData.score);
 
             // données à envoyer
             const data = {
@@ -1069,7 +1053,6 @@ function preDiagnostic() {
                     infoDiv.textContent = "Une erreur s'est produite lors de l'envoi du formulaire.";
                     infoDiv.style.color = 'red';
                 } else {
-                    console.log("Données envoyées avec succès !");
                     infoDiv.textContent = "Formulaire envoyé avec succès !";
                     infoDiv.style.color = 'green';
                 }
