@@ -343,7 +343,7 @@ function zoomToFeature(e) {
     parentElt.innerHTML = `
         <div>
           <h2>Je complète le formulaire</h2>
-          <form action="/success.html" method="POST" data-netlify="true" name="contact-eligibilite" netlify-honeypot="bot-field">
+          <form action="/success.html" method="POST" data-netlify="true" name="contact-eligibilite" netlify netlify-honeypot="bot-field">
             <p class="hidden" hidden>
                 <label>
                     Don’t fill this out if you’re human: <input name="bot-field" />
