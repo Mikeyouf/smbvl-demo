@@ -1531,3 +1531,173 @@ h4 {
     left: -75%;
   }
 }
+
+/* Mobile Devices */
+@media (max-width: 767px) {
+  .side-panel {
+    width: 100vw;
+    right: -100vw;
+  }
+
+  .side-panel.open {
+    right: 0;
+  }
+
+  #form-container {
+    margin: 8px;
+    /* padding: 10px; */
+  }
+
+  .header-infos {
+    padding: 10px 20px;
+  }
+
+  .header-infos h2 {
+    font-size: 14px;
+  }
+
+  #commune-infos {
+    margin-top: 8px;
+    font-size: 12px;
+  }
+  .info-panel {
+    right: calc(-100vw - 40px);
+    width: 100vw;
+  }
+
+  .form-section-question {
+    padding: 8px 0;
+  }
+
+  .form-section {
+    padding: 8px;
+  }
+
+  .navigation-buttons {
+    margin: 8px 0;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  #email-section {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  #email-section input[type="email"] {
+    width: 80%;
+  }
+
+  .footer-infos {
+    margin-top: 20px;
+  }
+
+  #dynamic-content {
+    padding: 20px;
+  }
+
+  .question-options select {
+    width: 100%;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  .question-options input[type="text"] {
+    background-color: #bdcedf;
+    border: none;
+    outline: none;
+    padding: 12px 24px;
+    width: 100%;
+    min-height: 40px;
+    box-sizing: border-box;
+  }
+
+  /* .question-options label {
+    margin-bottom: 8px;
+  } */
+}
+
+/* Tablet Devices */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .side-panel {
+    width: 100vw;
+    right: -100vw;
+  }
+
+  .side-panel.open {
+    right: 0;
+  }
+
+  #form-container {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .header-infos {
+    padding: 20px 40px;
+  }
+
+  .form-section {
+    padding: 8px 40px;
+  }
+
+  .navigation-buttons {
+    margin: 8px 0;
+    justify-content: center;
+  }
+
+  #email-section input[type="email"] {
+    width: 50%;
+  }
+
+  .footer-infos {
+    margin-top: 30px;
+  }
+
+  #dynamic-content {
+    padding: 40px;
+  }
+}
+
+/* Desktop Devices */
+@media (min-width: 1025px) {
+  .side-panel {
+    width: 70vw;
+    right: -70vw;
+  }
+
+  .side-panel.open {
+    right: 0;
+  }
+
+  #form-container {
+    margin: 20px 40px;
+    padding: 20px;
+  }
+
+  .header-infos {
+    padding: 20px 60px;
+  }
+
+  .form-section {
+    padding: 8px 60px;
+  }
+
+  .navigation-buttons {
+    margin: 8px 0;
+    justify-content: flex-start;
+  }
+
+  #email-section input[type="email"] {
+    width: 30%;
+  }
+
+  .footer-infos {
+    margin-top: 40px;
+  }
+
+  #dynamic-content {
+    padding: 60px;
+  }
+}
