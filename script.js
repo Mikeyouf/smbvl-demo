@@ -314,6 +314,13 @@ function resetHighlight(e) {
     });
 }
 
+function closeSearchBar() {
+    const geocoderDiv = document.querySelector('.leaflet-control-geocoder.leaflet-bar.leaflet-control');
+    if (geocoderDiv) {
+        geocoderDiv.classList.remove('leaflet-control-geocoder-expanded');
+    }
+}
+
 let communeData = {};
 
 function zoomToFeature(e) {
@@ -386,6 +393,7 @@ function zoomToFeature(e) {
         </div>
         `;
 
+    closeSearchBar();
     // if (!isEligible) {
     //     divElt.classList.remove('show');
     // }
