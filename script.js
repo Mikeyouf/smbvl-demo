@@ -466,7 +466,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // FORM DIAG
-
 function preDiagnostic() {
     const diagnosticPanel = document.getElementById('diagnostic-panel');
     const sections = document.querySelectorAll('.form-section');
@@ -547,7 +546,9 @@ function preDiagnostic() {
         });
     });
 
-    function openPanel() {
+    // ... code existant ...
+
+    function openPanel(e) {
         diagnosticPanel.classList.add('open');
         changeSection();
         closePanel();
@@ -555,16 +556,19 @@ function preDiagnostic() {
         const communeInfosEl = document.getElementById('commune-infos');
         if (communeInfosEl && communeData) {
             communeInfosEl.innerHTML = `➔<span class="info-label"> Commune :</span> ${communeData.nomCommune} ➔
-                <span class="info-label"> Bâti Inondable :</span> ${communeData.batiInondable}` +
+            <span class="info-label"> Bâti Inondable :</span> ${communeData.batiInondable}` +
                 (communeData.niveauAlea !== null ? ` ➔ <span class="info-label"> Niveau d'Aléa :</span> ${communeData.niveauAlea}` : '') +
                 ` ➔ <span class="info-label"> Éligible :</span> ${communeData.isEligible ? 'Oui' : 'Non'}`;
         }
-        const infoImg = document.getElementById('bulle-info'); // Remplacez par l'ID de votre image
-        // Gérer le survol ou le clic
-        if (infoImg) {
-            infoImg.addEventListener('mouseover', openInfoPanel);
-            infoImg.addEventListener('click', openInfoPanel);
-        }
+        const infoImg = document.querySelectorAll('.bulle-info');
+        console.log("infoImg : ", infoImg); // Remplacez par l'ID de votre image
+
+        infoImg.forEach(icon => {
+            icon.addEventListener('click', function (e) {
+                console.log("icon : ", icon);
+                openInfoPanel(e, icon);
+            });
+        });
     }
 
     function closePanel() {
@@ -575,39 +579,40 @@ function preDiagnostic() {
         formContainer.addEventListener('click', function () {
             infoPanel.classList.remove('open');
         });
-
-        // Fermer le panneau lorsque la souris quitte la zone du panneau d'informations
-        infoPanel.addEventListener('mouseleave', function () {
-            infoPanel.classList.remove('open');
-        });
     }
 
     // Sélectionnez toutes les icônes d'information (bulle-info)
     const infoIcons = document.querySelectorAll('.bulle-info');
 
     infoIcons.forEach(icon => {
-        icon.addEventListener('mouseover', function () {
-            openInfoPanel(icon);
+        icon.addEventListener('click', function (e) {
+            openInfoPanel(e, icon);
         });
     });
 
-    function openInfoPanel(icon) {
+    function openInfoPanel(event, icon) {
+        event.stopPropagation();
         // Trouver le parent le plus proche de l'icône et ensuite trouver 'infos-questions' à l'intérieur de ce parent
         const parent = icon.closest('.form-section-question');
+        console.log("parent : ", parent);
         const infoContent = parent.querySelector('.infos-questions');
         const dynamicContent = document.getElementById('dynamic-content');
         const infoPanel = document.getElementById('info-panel');
+        console.log("infoPanel : ", infoPanel);
 
-        if (infoContent) {
+        if (infoContent && dynamicContent && infoPanel) {
+            console.log("infoContent : ", infoContent);
             dynamicContent.innerHTML = infoContent.innerHTML;
             infoPanel.classList.add('open');
+            console.log("infoPanel.classList : ", infoPanel.classList);
+            console.log("Class 'open' added to infoPanel:", infoPanel.classList);
         }
     }
 
     // INFO SECTIONS
     const infoSection = document.querySelectorAll('.section-info');
     infoSection.forEach(icon => {
-        icon.addEventListener('mouseover', function () {
+        icon.addEventListener('click', function () {
             openInfoPanelSection3(icon);
         });
     });
@@ -626,7 +631,7 @@ function preDiagnostic() {
     // OBJECTIFS SECTION 1
     const objectifsInfoIcon = document.getElementById('objectifs-infos');
     if (objectifsInfoIcon) {
-        objectifsInfoIcon.addEventListener('mouseover', function () {
+        objectifsInfoIcon.addEventListener('click', function () {
             openObjectifsInfoPanel();
         });
     }
@@ -1075,5 +1080,6 @@ function preDiagnostic() {
         submitToFirebase();
     });
 }
+
 // Appeler preDiagnostic une seule fois lors du chargement de la page
 document.addEventListener('DOMContentLoaded', preDiagnostic);

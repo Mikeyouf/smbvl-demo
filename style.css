@@ -448,6 +448,10 @@
   background-position: top right;
 }
 
+.info-panel.open {
+  right: 0; /* Ajout de cette règle pour rendre le panneau visible */
+}
+
 .img-infos {
   max-width: 60%;
   margin: 0 auto;
@@ -509,7 +513,7 @@
 }
 
 .info-panel.open {
-  right: 0;
+  right: 0 !important;
 }
 
 .header-question {
@@ -1124,6 +1128,9 @@ h4 {
     right: calc(-50vw - 16px);
     width: 50vw;
     max-height: 100vh;
+  }
+  .info-panel.open {
+    right: 0;
   }
 
   #section-8 p {
