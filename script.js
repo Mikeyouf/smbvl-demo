@@ -257,7 +257,7 @@ function toggleHouseBtn() {
 toggleHouseBtn();
 
 function onEachFeature(feature, layer) {
-    // je récupère si éligible ou pas
+    // Je récupère si éligible ou pas
     let isEligible = feature.properties.surface_ppri_m2 > 0;
 
     let niveauAlea = feature.properties.alea_majorant;
@@ -266,11 +266,11 @@ function onEachFeature(feature, layer) {
     const popupElt = `
         ${
             isEligible 
-            ? '<p class="eligible" >Votre parcelle est dans le zonage inondable du PPRi du bassin versant du Lez. </p>'
-            + `<p class="eligible" >Niveau d\'aléa majorant : <b>${niveauAlea}</b></p>`
-            + `<p class="eligible" >Le bâti est dans le zonage inondable du PPRi : <b>${batiInondable}</b></p>`
+            ? '<p class="eligible">Votre parcelle est dans le zonage inondable du PPRi du bassin versant du Lez.</p>'
+            + `<p class="eligible">Niveau d\'aléa majorant : <b>${niveauAlea}</b></p>`
+            + `<p class="eligible">Le bâti est dans le zonage inondable du PPRi : <b>${batiInondable}</b></p>`
             + '<p class="btn-1">Pour estimer ma vulnérabilité <a id="open-form-btn"> > Je réalise mon pré-diagnostic en ligne</a></p>'
-            + '<p class="btn-2">Pour bénéficier d\'un diagnostic complet ou pour en savoir plus <a href="mailto:inondation@smbvl.fr"> > smbvl-alabri@smbvl.net</a></p>'
+            + '<p class="btn-2">Pour bénéficier d\'un diagnostic complet ou pour en savoir plus<br> <a href="mailto:inondation@smbvl.fr"> > smbvl-alabri@smbvl.net</a></p>'
             : '<p>Votre parcelle n\'est pas dans le zonage inondable du PPRi du bassin versant du Lez.</p>'
             + '<p class="non-eligible">Si votre bien a été impacté par une inondation, n\'hésitez pas à nous contacter pour signaler votre situation et obtenir davantage d\'informations.</p>'
             + '<p class="btn-1">Pour estimer ma vulnérabilité <a id="open-form-btn"> > Je réalise mon pré-diagnostic en ligne</a></p>'
@@ -278,11 +278,25 @@ function onEachFeature(feature, layer) {
         }
     `;
 
-    layer.bindPopup(popupElt);
+    // Options du popup avec décalage
+    var popupOptions = {
+        offset: L.point(0, 50) // Décale le popup de 50 pixels vers le bas
+    };
+
+    // Création du popup avec les options de décalage
+    layer.bindPopup(popupElt, popupOptions);
+
     layer.on({
         mouseover: highlightFeature,
         mouseout: resetHighlight,
-        click: zoomToFeature
+        click: function (e) {
+            var center = layer.getBounds().getCenter();
+            var popup = L.popup(popupOptions)
+                .setLatLng(center)
+                .setContent(popupElt)
+                .openOn(layer._map);
+            zoomToFeature(e);
+        }
     });
 }
 
@@ -559,7 +573,7 @@ function preDiagnostic() {
                 (communeData.niveauAlea !== null ? ` ➔ <span class="info-label"> Niveau d'Aléa :</span> ${communeData.niveauAlea}` : '') +
                 ` ➔ <span class="info-label"> Éligible :</span> ${communeData.isEligible ? 'Oui' : 'Non'}`;
         }
-        const infoImg = document.getElementById('bulle-info'); // Remplacez par l'ID de votre image
+        const infoImg = document.getElementById('bulle-info');
         // Gérer le survol ou le clic
         if (infoImg) {
             infoImg.addEventListener('mouseover', openInfoPanel);
