@@ -453,7 +453,8 @@
 }
 
 .info-panel.open {
-  right: 0; /* Ajout de cette règle pour rendre le panneau visible */
+  right: 0;
+  /* Ajout de cette règle pour rendre le panneau visible */
 }
 
 .img-infos {
@@ -1141,6 +1142,7 @@ h4 {
     width: 50vw;
     max-height: 100vh;
   }
+
   .info-panel.open {
     right: 0;
   }
@@ -1269,6 +1271,7 @@ h4 {
   .side-panel {
     right: -80vw;
     width: 80vw;
+    overflow: auto;
   }
 
   #form-container {
