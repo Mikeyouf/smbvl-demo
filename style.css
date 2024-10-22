@@ -45,6 +45,7 @@
   }
 }
 
+
 /* FORM DIAG */
 
 .side-panel {
@@ -187,17 +188,20 @@
   height: 80px;
 }
 
+
 /* Masquer toutes les sections sauf la première */
 
 .form-section {
   display: none;
 }
 
+
 /* Afficher uniquement la section active */
 
 .form-section.active {
   display: block;
 }
+
 
 /* Styles pour les boutons de navigation */
 
@@ -449,7 +453,8 @@
 }
 
 .info-panel.open {
-  right: 0; /* Ajout de cette règle pour rendre le panneau visible */
+  right: 0;
+  /* Ajout de cette règle pour rendre le panneau visible */
 }
 
 .img-infos {
@@ -532,7 +537,7 @@
   margin: 0;
 }
 
-.header-question > .bulle-info {
+.header-question>.bulle-info {
   width: 24px;
 }
 
@@ -721,6 +726,7 @@ input[type="submit"]:hover {
   color: white;
 }
 
+
 /* A supprimer pour l'intégration dans la page */
 
 html,
@@ -902,6 +908,7 @@ h4 {
   display: none;
 }
 
+
 /* PAGE SUCCESS */
 
 #message-success {
@@ -939,6 +946,7 @@ h4 {
   border: 2px solid #fff;
 }
 
+
 /* ICONE DE RECHERCHE */
 
 .leaflet-control-geocoder {
@@ -975,6 +983,7 @@ h4 {
   background-color: #fff !important;
 }
 
+
 /* ZOOM CONTROL */
 
 .leaflet-control-zoom a {
@@ -987,6 +996,7 @@ h4 {
   line-height: 48px;
   color: #fff;
 }
+
 
 /* leaflet-control-layers */
 
@@ -1005,6 +1015,7 @@ h4 {
 .leaflet-popup-content {
   font-size: 14px;
   color: #014587;
+  min-width: 400px;
 }
 
 .leaflet-popup-content a {
@@ -1015,12 +1026,14 @@ h4 {
   color: coral;
 }
 
+
 /* BOUTONS POPUP */
 
 .leaflet-popup-content-wrapper p {
-  text-align: justify;
+  text-align: center;
   font-size: 16px;
 }
+
 
 /* .leaflet-popup-content-wrapper .eligible {
     text-align: center;
@@ -1129,6 +1142,7 @@ h4 {
     width: 50vw;
     max-height: 100vh;
   }
+
   .info-panel.open {
     right: 0;
   }
@@ -1257,6 +1271,7 @@ h4 {
   .side-panel {
     right: -80vw;
     width: 80vw;
+    overflow: auto;
   }
 
   #form-container {
@@ -1531,7 +1546,9 @@ h4 {
   }
 }
 
+
 /* Mobile Devices */
+
 @media (max-width: 767px) {
   .side-panel {
     width: 100vw;
@@ -1559,6 +1576,7 @@ h4 {
     margin-top: 8px;
     font-size: 12px;
   }
+
   .info-panel {
     right: calc(-100vw - 40px);
     width: 100vw;
@@ -1640,7 +1658,9 @@ h4 {
   }
 }
 
+
 /* Tablet Devices */
+
 @media (min-width: 768px) and (max-width: 1024px) {
   .side-panel {
     width: 100vw;
@@ -1682,7 +1702,9 @@ h4 {
   }
 }
 
+
 /* Desktop Devices */
+
 @media (min-width: 1025px) {
   .side-panel {
     width: 70vw;
