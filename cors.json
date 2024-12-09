@@ -4,7 +4,9 @@
       "http://127.0.0.1:5500",
       "https://smbvl-demo.netlify.app/",
       "https://smbvlalabri.fr/",
-      "https://marnalabri.s4-tastewp.com/carte-test/"
+      "https://marnalabri.s4-tastewp.com/carte-test/",
+      "https://www.lezalabri.fr/carte.html",
+      "https://www.lezalabri.fr/"
     ],
     "responseHeader": ["Content-Type"],
     "method": ["GET", "HEAD"],

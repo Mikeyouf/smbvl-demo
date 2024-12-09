@@ -194,7 +194,6 @@ function choixCommune() {
         // Afficher le spinner avant de commencer le chargement
         showSpinner();
 
-        // Utilisez `communeDataVariables` ici au lieu de `communeDataUrls`
         const geoJsonUrl = communeDataVariables[selectedCommune];
 
         try {
@@ -892,7 +891,7 @@ function preDiagnostic() {
                 progressIndicator.style.backgroundColor = '#e27822';
                 infoTextResult.innerHTML = `<p>Un diagnostic complet est conseillé pour identifier plus précisément les vulnérabilités de votre bien et vous proposer des solutions adaptées et personnalisées pour le protéger et limiter les délais de retour à la normale post-inondation.</p>`;
             } else {
-                resultTextEl.textContent = 'Vulnérabilité modérée';
+                resultTextEl.textContent = 'Vulnérabilité forte';
                 progressIndicator.style.width = `${scorePercentageEntreprise}%`;
                 progressIndicator.style.backgroundColor = '#b81547';
                 infoTextResult.innerHTML = `<p>Un diagnostic complet est vivement recommandé afin de bénéficier d’un accompagnement personnalisé pour la mise en sécurité des occupants, de votre bien et de ses équipements.</p>`;
@@ -909,7 +908,7 @@ function preDiagnostic() {
                 progressIndicator.style.backgroundColor = '#e27822';
                 infoTextResult.innerHTML = `<p>Un diagnostic complet est conseillé pour identifier plus précisément les vulnérabilités de votre bien et vous proposer des solutions adaptées et personnalisées pour le protéger et limiter les délais de retour à la normale post-inondation.</p>`;
             } else {
-                resultTextEl.textContent = 'Vulnérabilité modérée';
+                resultTextEl.textContent = 'Vulnérabilité forte';
                 progressIndicator.style.width = `${scorePercentageHabitation}%`;
                 progressIndicator.style.backgroundColor = '#b81547';
                 infoTextResult.innerHTML = `<p>Un diagnostic complet est vivement recommandé afin de bénéficier d’un accompagnement personnalisé pour la mise en sécurité des occupants, de votre bien et de ses équipements.</p>`;
